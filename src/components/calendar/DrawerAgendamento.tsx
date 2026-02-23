@@ -252,7 +252,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         {/* Data Inicial */}
                                         <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
                                             <div className="flex items-center gap-1.5 ml-1">
-                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Início</label>
+                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Data Inicial</label>
                                             </div>
                                             <div className="flex gap-2 items-center">
                                                 <Input
@@ -268,7 +268,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                         {/* Data Final */}
                                         <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
-                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Fim</label>
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Data Final</label>
                                             <div className="flex gap-2 items-center">
                                                 <Input
                                                     type="text"
@@ -290,8 +290,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
                                     </div>
 
-                                    {/* Linha 2: Tipo de Agendamento (Sobe para dividir espaço com o avatar) */}
-                                    <div className="w-full md:w-[82%] -mt-1">
+                                    {/* Linha 2: Tipo de Agendamento */}
+                                    <div className="w-full md:w-[82%] mt-1 md:mt-1.5">
                                         <div className="space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Tipo de Agendamento</label>
                                             <Select value={tipo} onValueChange={setTipo}>
@@ -335,7 +335,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             </div>
 
                             {/* Linha 3: Observação */}
-                            <div className="space-y-1 relative mt-2">
+                            <div className="space-y-1 relative mt-3 md:mt-4">
                                 <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Observação</label>
                                 <textarea
                                     value={observacao}
