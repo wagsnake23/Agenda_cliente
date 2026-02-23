@@ -257,16 +257,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 setDataInicio(e.target.value);
                                                 updateRangeFromInputs(e.target.value, dataFim);
                                             }}
-                                            className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
+                                            className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
                                             onClick={() => setIsCalendarModalOpen(true)}
                                         />
                                     </div>
 
-                                    {/* Botão Emoji 3D Central */}
                                     <button
                                         type="button"
                                         onClick={() => setIsCalendarModalOpen(true)}
-                                        className="h-11 flex items-center justify-center hover:scale-125 active:scale-90 transition-all group"
+                                        className="h-10 md:h-11 flex items-center justify-center hover:scale-125 active:scale-90 transition-all group"
                                         title="Abrir Calendário"
                                     >
                                         <span className="text-2xl drop-shadow-md group-hover:rotate-12 transition-transform">📅</span>
@@ -283,14 +282,14 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 setDataFim(e.target.value);
                                                 updateRangeFromInputs(dataInicio, e.target.value);
                                             }}
-                                            className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
+                                            className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
                                             onClick={() => setIsCalendarModalOpen(true)}
                                         />
                                     </div>
 
                                     <div className="w-[60px] md:w-[80px] space-y-1.2 md:space-y-1.5 shrink-0">
                                         <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
-                                        <div className="h-11 rounded-xl bg-blue-50/50 border border-blue-100 flex items-center justify-center">
+                                        <div className="h-10 md:h-11 rounded-xl bg-blue-50/50 border border-blue-100 flex items-center justify-center">
                                             <span className="text-blue-600 font-black text-sm">{totalDias}</span>
                                         </div>
                                     </div>
@@ -299,7 +298,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 <div className="space-y-1.5">
                                     <label className="text-[12px] font-bold text-slate-500 uppercase ml-1">Tipo de Agendamento</label>
                                     <Select value={tipo} onValueChange={setTipo}>
-                                        <SelectTrigger className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
+                                        <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
                                             <SelectValue placeholder="Selecione o tipo..." />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -323,7 +322,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         value={observacao}
                                         onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
                                         placeholder="Alguma observação importante..."
-                                        className="w-full min-h-[90px] p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
+                                        className="w-full min-h-[80px] md:min-h-[90px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
                                     />
                                     <div className="absolute bottom-2 right-3 text-[10px] font-bold text-slate-400">
                                         {observacao.length}/100
@@ -342,7 +341,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             setAgendamentoEditando(null);
                                         }}
                                         variant="outline"
-                                        className="flex-1 h-12 rounded-2xl text-[1rem] font-black uppercase tracking-wider border-red-200 text-red-600 hover:text-red-900 hover:bg-red-50 hover:border-red-300 transition-all duration-300 shadow-sm"
+                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider border-red-200 text-red-600 hover:text-red-900 hover:bg-red-50 hover:border-red-300 transition-all duration-300 shadow-sm"
                                     >
                                         Cancelar
                                     </Button>
@@ -351,7 +350,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     onClick={handleAgendar}
                                     disabled={!isFormValid}
                                     className={cn(
-                                        "h-12 rounded-2xl text-[1rem] font-black uppercase tracking-wider transition-all duration-300",
+                                        "h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider transition-all duration-300",
                                         modoEdicao ? "flex-1" : "w-full",
                                         isFormValid
                                             ? "bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:scale-[1.02] active:scale-[0.98]"
