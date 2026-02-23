@@ -22,7 +22,7 @@ interface CalendarDayProps {
   } | null;
   onDayClick: (day: number) => void;
   agendamentos?: any[];
-  onViewAgendamento?: (date: string) => void;
+  onViewAgendamento?: (date: string, id?: string) => void;
   month?: number;
   year?: number;
   selectedPeriod?: { start: string, end: string } | null;

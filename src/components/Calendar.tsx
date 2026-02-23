@@ -48,6 +48,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'view'>('create');
   const [selectedDrawerDate, setSelectedDrawerDate] = useState<string | undefined>();
+  const [selectedAgendamentoId, setSelectedAgendamentoId] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<{ start: string, end: string } | null>(null);
 
   const toggleHighlightPeriod = (period: { start: string, end: string } | null) => {
@@ -111,16 +112,28 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     setIsDrawerOpen(true);
   };
 
-  const handleOpenViewDrawer = (date: string) => {
+  const handleOpenViewDrawer = (date: string, agendamentoId?: string) => {
     setDrawerMode('view');
     setSelectedDrawerDate(date);
+    setSelectedAgendamentoId(agendamentoId || null);
     setIsDrawerOpen(true);
   };
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false);
     setSelectedPeriod(null);
+    setSelectedAgendamentoId(null);
   };
+
+  // Sincroniza o destaque do calendário com o agendamento selecionado
+  useEffect(() => {
+    if (selectedAgendamentoId) {
+      const ag = agendamentos.find(a => a.id === selectedAgendamentoId);
+      if (ag) {
+        setSelectedPeriod({ start: ag.dataInicio, end: ag.dataFim });
+      }
+    }
+  }, [selectedAgendamentoId, agendamentos]);
 
   // Array otimizado para cobrir a faixa de anos do seletor (6 anos = 72 meses)
   const baseDate = useMemo(() => {
@@ -363,6 +376,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                     anchorRef={null as any}
                     selectedPeriod={selectedPeriod}
                     onSelectPeriod={toggleHighlightPeriod}
+                    selectedAgendamentoId={selectedAgendamentoId}
+                    setSelectedAgendamentoId={setSelectedAgendamentoId}
                   />
                 </div>
               </div>

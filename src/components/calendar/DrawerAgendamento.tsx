@@ -44,6 +44,8 @@ interface DrawerAgendamentoProps {
     anchorRef: React.RefObject<HTMLDivElement>;
     selectedPeriod?: { start: string, end: string } | null;
     onSelectPeriod?: (period: { start: string, end: string } | null) => void;
+    selectedAgendamentoId?: string | null;
+    setSelectedAgendamentoId?: (id: string | null) => void;
 }
 
 const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
@@ -59,6 +61,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     anchorRef,
     selectedPeriod,
     onSelectPeriod,
+    selectedAgendamentoId,
+    setSelectedAgendamentoId,
 }) => {
     const [dataInicio, setDataInicio] = useState(initialDate || '');
     const [dataFim, setDataFim] = useState(initialDate || '');
@@ -119,6 +123,16 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             setTotalDias(0);
         }
     }, [dataInicio, dataFim]);
+
+    // Efeito para scrollar até o agendamento selecionado
+    useEffect(() => {
+        if (isOpen && selectedAgendamentoId) {
+            const element = document.getElementById(`agendamento-${selectedAgendamentoId}`);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, [isOpen, selectedAgendamentoId]);
 
     if (!isOpen) return null;
 
@@ -371,9 +385,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         return `${start} - ${end}${year}`;
                                     };
 
-                                    const isSelected = selectedPeriod?.start === agenda.dataInicio && selectedPeriod?.end === agenda.dataFim;
+                                    const isSelected = (selectedPeriod?.start === agenda.dataInicio && selectedPeriod?.end === agenda.dataFim) ||
+                                        (selectedAgendamentoId === agenda.id);
 
                                     const handleCardClick = () => {
+                                        if (setSelectedAgendamentoId) {
+                                            setSelectedAgendamentoId(agenda.id);
+                                        }
                                         if (onSelectPeriod) {
                                             onSelectPeriod({ start: agenda.dataInicio, end: agenda.dataFim });
                                         }
@@ -382,6 +400,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     return (
                                         <div
                                             key={agenda.id}
+                                            id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
                                                 "p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",

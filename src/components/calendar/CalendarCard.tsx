@@ -18,7 +18,7 @@ interface CalendarCardProps {
     position?: 'left' | 'right' | 'center' | 'far';
     mode?: CalendarMode;
     agendamentos?: any[];
-    onViewAgendamento?: (date: string) => void;
+    onViewAgendamento?: (date: string, id?: string) => void;
     selectedPeriod?: { start: string, end: string } | null;
 }
 

@@ -10,7 +10,7 @@ interface AgendamentosDisplayProps {
     month: number;
     year: number;
     highlightedDay: number | null;
-    onViewAgendamento: (date: string) => void;
+    onViewAgendamento: (date: string, id?: string) => void;
 }
 
 const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
@@ -102,7 +102,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                         return (
                             <div
                                 key={agendamento.id}
-                                onClick={() => onViewAgendamento(agendamento.dataInicio)}
+                                onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
                                 className={cn(
                                     "cursor-pointer transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5 pl-0 md:pl-[28px] hover:opacity-80 active:scale-95 origin-left",
                                     "text-[13px] md:text-[14px] lg:text-[15px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
