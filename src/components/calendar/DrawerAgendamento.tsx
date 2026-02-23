@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Edit2, Trash2, User, Calendar as CalendarIcon } from 'lucide-react';
+import { X, Edit2, Trash2, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -29,6 +29,7 @@ export interface Agendamento {
     observacao?: string;
     userName?: string;
     userPhoto?: string;
+    createdAt?: string;
 }
 
 interface DrawerAgendamentoProps {
@@ -244,59 +245,80 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     {mode === 'create' || modoEdicao ? (
                         <div className="flex flex-col gap-0">
                             {/* ESTRUTURA REORGANIZADA: DUAS COLUNAS (ESQUERDA: INPUTS | DIREITA: AVATAR) */}
-                            <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6 w-full bg-white pb-1 relative">
+                            <div className="flex flex-col md:flex-row items-start gap-3 md:gap-6 w-full bg-white pb-1 relative">
                                 {/* Coluna Esquerda: Stack de Datas e Tipo */}
-                                <div className="flex-1 flex flex-col gap-3.5">
-                                    {/* Linha 1: Datas e Dias */}
-                                    <div className="flex items-start gap-2.5 md:gap-3.5 w-full mt-2 md:mt-3">
-                                        {/* Data Inicial */}
-                                        <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
-                                            <div className="flex items-center gap-1.5 ml-1">
-                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Data Inicial</label>
+                                <div className="flex-1 flex flex-col gap-3.5 md:gap-3.5 w-full">
+                                    {/* Linha 1: Datas e Avatar (no Mobile) */}
+                                    <div className="flex flex-row items-start gap-2.5 md:gap-3.5 w-full mt-2 md:mt-3">
+                                        {/* Bloco de Datas: Início e Fim */}
+                                        <div className="flex-1 flex items-start gap-2 md:gap-3.5">
+                                            {/* Data Inicial */}
+                                            <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
+                                                <div className="flex items-center gap-1.5 ml-1">
+                                                    <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Data Inicial</label>
+                                                </div>
+                                                <div className="flex gap-2 items-center">
+                                                    <Input
+                                                        type="text"
+                                                        value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
+                                                        readOnly
+                                                        onKeyDown={(e) => e.preventDefault()}
+                                                        className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2.5 md:px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
+                                                        onClick={() => setIsCalendarModalOpen(true)}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="flex gap-2 items-center">
-                                                <Input
-                                                    type="text"
-                                                    value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
-                                                    readOnly
-                                                    onKeyDown={(e) => e.preventDefault()}
-                                                    className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
-                                                    onClick={() => setIsCalendarModalOpen(true)}
-                                                />
+
+                                            {/* Data Final */}
+                                            <div className="space-y-1.5 flex-1 md:w-[36%] min-w-0">
+                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Data Final</label>
+                                                <div className="flex gap-2 items-center">
+                                                    <Input
+                                                        type="text"
+                                                        value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
+                                                        readOnly
+                                                        onKeyDown={(e) => e.preventDefault()}
+                                                        className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-2.5 md:px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
+                                                        onClick={() => setIsCalendarModalOpen(true)}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {/* Campo Dias (Aparece ao lado das datas em Desktop) */}
+                                            <div className="hidden md:block space-y-1.5 w-[70px] shrink-0">
+                                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Dias</label>
+                                                <div className="h-10 md:h-11 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                                    <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {/* Data Final */}
-                                        <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
-                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Data Final</label>
-                                            <div className="flex gap-2 items-center">
-                                                <Input
-                                                    type="text"
-                                                    value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
-                                                    readOnly
-                                                    onKeyDown={(e) => e.preventDefault()}
-                                                    className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
-                                                    onClick={() => setIsCalendarModalOpen(true)}
-                                                />
+                                        {/* Avatar no Mobile (Dentro da mesma linha das datas) */}
+                                        <div className="flex md:hidden flex-col items-center justify-center shrink-0 w-[68px] -mt-1">
+                                            <div className="w-[64px] h-[64px] rounded-xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white">
+                                                {agendamentoEditando?.userPhoto ? (
+                                                    <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
+                                                        <User className="size-8" />
+                                                    </div>
+                                                )}
                                             </div>
-                                        </div>
-
-                                        {/* Campo Dias */}
-                                        <div className="space-y-1.5 w-[65px] md:w-[70px] shrink-0">
-                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Dias</label>
-                                            <div className="h-10 md:h-11 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
-                                                <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
+                                            <div className="text-center mt-1 min-w-0">
+                                                <span className="text-[8.5px] font-bold text-slate-500 uppercase tracking-tight block truncate w-full">
+                                                    {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? "Novo" : "Usuário")}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Linha 2: Tipo de Agendamento */}
-                                    <div className="w-full md:w-[82%] mt-1 md:mt-1.5">
-                                        <div className="space-y-1">
+                                    {/* Linha 2 (Mobile): Tipo + Dias | (Desktop): Tipo de Agendamento */}
+                                    <div className="flex flex-row items-end gap-2.5 md:gap-0 w-full md:w-[95%] -mt-2.5 md:mt-1.5">
+                                        <div className="w-[74%] md:flex-1 space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Tipo de Agendamento</label>
                                             <Select value={tipo} onValueChange={setTipo}>
                                                 <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
-                                                    <SelectValue placeholder="Selecione o tipo..." />
+                                                    <SelectValue placeholder="Selecione..." />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="🛌 Abonada">🛌 Abonada</SelectItem>
@@ -312,11 +334,19 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </SelectContent>
                                             </Select>
                                         </div>
+
+                                        {/* Campo Dias no Mobile (Ao lado do Tipo) */}
+                                        <div className="flex md:hidden flex-col space-y-1 w-[60px] shrink-0 ml-1">
+                                            <label className="text-[10px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
+                                            <div className="h-10 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                                <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Coluna Direita: Perfil / Avatar (Independente da stack da esquerda) */}
-                                <div className="flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
+                                {/* Coluna Direita (Apenas Desktop): Avatar */}
+                                <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
                                     <div className="w-16 h-16 md:w-[88px] md:h-[88px] rounded-2xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white transition-transform hover:scale-105">
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -348,8 +378,18 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 </div>
                             </div>
 
+                            {/* Data de Criação Informativa */}
+                            {agendamentoEditando?.createdAt && (
+                                <div className="mt-5 flex items-center gap-1.5 text-slate-400 ml-1">
+                                    <Clock className="size-3.5" />
+                                    <span className="text-[11px] md:text-xs font-normal">
+                                        Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM 'de' yyyy 'às' HH:mm", { locale: ptBR })}
+                                    </span>
+                                </div>
+                            )}
+
                             <div className={cn(
-                                "mt-auto pt-4 flex gap-4",
+                                "mt-auto pt-3 flex gap-4",
                                 modoEdicao ? "flex-row" : "flex-col"
                             )}>
                                 {modoEdicao && (
