@@ -245,44 +245,51 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         <>
                             <div className="space-y-4">
                                 {/* Linha única para Datas e Total */}
-                                <div className="flex flex-row items-end gap-3 w-full">
-                                    <div className="flex-1 space-y-1.5 min-w-0">
-                                        <label className="text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Data Inicial</label>
-                                        <div className="relative w-full">
-                                            <Input
-                                                type="date"
-                                                value={dataInicio}
-                                                onChange={(e) => {
-                                                    setDataInicio(e.target.value);
-                                                    updateRangeFromInputs(e.target.value, dataFim);
-                                                }}
-                                                className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs pl-2 pr-10"
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={() => setIsCalendarModalOpen(true)}
-                                                className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 rounded-lg flex items-center justify-center text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-                                            >
-                                                <CalendarIcon size={18} />
-                                            </button>
-                                        </div>
+                                <div className="flex flex-row items-end gap-2 md:gap-3 w-full">
+                                    <div className="flex-1 space-y-1.2 md:space-y-1.5 min-w-0">
+                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Início</label>
+                                        <Input
+                                            type="date"
+                                            value={dataInicio}
+                                            readOnly
+                                            onKeyDown={(e) => e.preventDefault()}
+                                            onChange={(e) => {
+                                                setDataInicio(e.target.value);
+                                                updateRangeFromInputs(e.target.value, dataFim);
+                                            }}
+                                            className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
+                                            onClick={() => setIsCalendarModalOpen(true)}
+                                        />
                                     </div>
 
-                                    <div className="flex-1 space-y-1.5 min-w-0">
-                                        <label className="text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Data Final</label>
+                                    {/* Botão Emoji 3D Central */}
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsCalendarModalOpen(true)}
+                                        className="h-11 flex items-center justify-center hover:scale-125 active:scale-90 transition-all group"
+                                        title="Abrir Calendário"
+                                    >
+                                        <span className="text-2xl drop-shadow-md group-hover:rotate-12 transition-transform">📅</span>
+                                    </button>
+
+                                    <div className="flex-1 space-y-1.2 md:space-y-1.5 min-w-0">
+                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Fim</label>
                                         <Input
                                             type="date"
                                             value={dataFim}
+                                            readOnly
+                                            onKeyDown={(e) => e.preventDefault()}
                                             onChange={(e) => {
                                                 setDataFim(e.target.value);
                                                 updateRangeFromInputs(dataInicio, e.target.value);
                                             }}
-                                            className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2"
+                                            className="h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
+                                            onClick={() => setIsCalendarModalOpen(true)}
                                         />
                                     </div>
 
-                                    <div className="w-[80px] space-y-1.5 shrink-0">
-                                        <label className="text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
+                                    <div className="w-[60px] md:w-[80px] space-y-1.2 md:space-y-1.5 shrink-0">
+                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
                                         <div className="h-11 rounded-xl bg-blue-50/50 border border-blue-100 flex items-center justify-center">
                                             <span className="text-blue-600 font-black text-sm">{totalDias}</span>
                                         </div>
