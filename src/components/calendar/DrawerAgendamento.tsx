@@ -211,7 +211,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 )}
             >
                 {/* Header do Drawer */}
-                <div className="flex items-center justify-between p-3 md:p-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
+                <div className="flex items-center justify-between p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
                     <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] flex items-center gap-1.5 md:gap-2 whitespace-nowrap">
                         {modoEdicao ? (
                             <span>EDITAR AGENDAMENTO</span>
@@ -240,63 +240,78 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 </div>
 
                 {/* Conteúdo */}
-                <div className="flex-1 overflow-y-auto p-4 md:p-6 md:pt-4 md:pb-8 flex flex-col gap-4">
+                <div className="flex-1 overflow-y-auto p-4 md:p-6 md:pt-3 md:pb-8 flex flex-col gap-4">
                     {mode === 'create' || modoEdicao ? (
-                        <>
-                            <div className="space-y-4">
-                                {/* Linha única para Datas e Total */}
-                                <div className="flex flex-row items-end gap-2 md:gap-3 w-full">
-                                    <div className="flex-1 space-y-1.2 md:space-y-1.5 min-w-0">
-                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Início</label>
-                                        <Input
-                                            type="date"
-                                            value={dataInicio}
-                                            readOnly
-                                            onKeyDown={(e) => e.preventDefault()}
-                                            onChange={(e) => {
-                                                setDataInicio(e.target.value);
-                                                updateRangeFromInputs(e.target.value, dataFim);
-                                            }}
-                                            className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
-                                            onClick={() => setIsCalendarModalOpen(true)}
-                                        />
+                        <div className="space-y-2.5">
+                            {/* Linha 1: Datas e Perfil */}
+                            <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6 w-full bg-white">
+                                {/* Bloco de Datas - Ajustado para alinhar topo das labels com o avatar */}
+                                <div className="flex-1 flex items-start gap-2.5 md:gap-3 w-full mt-1.5 md:mt-2">
+                                    {/* Data Inicial */}
+                                    <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
+                                        <div className="flex items-center gap-1.5 ml-1">
+                                            <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none">Início</label>
+                                            <CalendarIcon className="w-3 h-3 md:w-3.5 md:h-3.5 text-blue-500/60" />
+                                        </div>
+                                        <div className="flex gap-2 items-center">
+                                            <Input
+                                                type="text"
+                                                value={dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : ''}
+                                                readOnly
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
+                                                onClick={() => setIsCalendarModalOpen(true)}
+                                            />
+                                        </div>
                                     </div>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => setIsCalendarModalOpen(true)}
-                                        className="h-10 md:h-11 flex items-center justify-center hover:scale-125 active:scale-90 transition-all group"
-                                        title="Abrir Calendário"
-                                    >
-                                        <span className="text-2xl drop-shadow-md group-hover:rotate-12 transition-transform">📅</span>
-                                    </button>
-
-                                    <div className="flex-1 space-y-1.2 md:space-y-1.5 min-w-0">
-                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Fim</label>
-                                        <Input
-                                            type="date"
-                                            value={dataFim}
-                                            readOnly
-                                            onKeyDown={(e) => e.preventDefault()}
-                                            onChange={(e) => {
-                                                setDataFim(e.target.value);
-                                                updateRangeFromInputs(dataInicio, e.target.value);
-                                            }}
-                                            className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-xs px-2 cursor-pointer"
-                                            onClick={() => setIsCalendarModalOpen(true)}
-                                        />
+                                    {/* Data Final */}
+                                    <div className="space-y-1.5 w-full md:w-[36%] min-w-0">
+                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Fim</label>
+                                        <div className="flex gap-2 items-center">
+                                            <Input
+                                                type="text"
+                                                value={dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : ''}
+                                                readOnly
+                                                onKeyDown={(e) => e.preventDefault()}
+                                                className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700 text-[13px] md:text-sm px-3 cursor-pointer flex-1 appearance-none bg-white shadow-sm"
+                                                onClick={() => setIsCalendarModalOpen(true)}
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="w-[60px] md:w-[80px] space-y-1.2 md:space-y-1.5 shrink-0">
-                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate">Dias</label>
-                                        <div className="h-10 md:h-11 rounded-xl bg-blue-50/50 border border-blue-100 flex items-center justify-center">
-                                            <span className="text-blue-600 font-black text-sm">{totalDias}</span>
+                                    {/* Campo Dias (Agora na Linha 1) */}
+                                    <div className="space-y-1.5 w-[65px] md:w-[70px] shrink-0">
+                                        <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none">Dias</label>
+                                        <div className="h-10 md:h-11 rounded-xl bg-blue-50/40 border border-blue-100 flex items-center justify-center shadow-sm">
+                                            <span className="text-blue-700 font-extrabold text-sm">{totalDias}</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="space-y-1.5">
-                                    <label className="text-[12px] font-bold text-slate-500 uppercase ml-1">Tipo de Agendamento</label>
+                                {/* Perfil Alinhado à Direita */}
+                                <div className="flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2">
+                                    <div className="w-14 h-14 md:w-[72px] md:h-[72px] rounded-2xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white transition-transform hover:scale-105">
+                                        {agendamentoEditando?.userPhoto ? (
+                                            <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
+                                                <User className="size-8 md:size-9" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="text-center mt-1.5 min-w-0">
+                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[85px]">
+                                            {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? "Novo" : "Usuário")}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Linha 2: Tipo de Agendamento */}
+                            <div className="w-full md:w-[72%] -mt-1">
+                                <div className="space-y-1">
+                                    <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Tipo de Agendamento</label>
                                     <Select value={tipo} onValueChange={setTipo}>
                                         <SelectTrigger className="h-10 md:h-11 rounded-xl border-slate-200 focus:border-blue-500 focus:ring-blue-500 transition-all font-medium text-slate-700">
                                             <SelectValue placeholder="Selecione o tipo..." />
@@ -315,18 +330,19 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </SelectContent>
                                     </Select>
                                 </div>
+                            </div>
 
-                                <div className="space-y-1.5 relative">
-                                    <label className="text-[12px] font-bold text-slate-500 uppercase ml-1">Observação</label>
-                                    <textarea
-                                        value={observacao}
-                                        onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
-                                        placeholder="Alguma observação importante..."
-                                        className="w-full min-h-[80px] md:min-h-[90px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
-                                    />
-                                    <div className="absolute bottom-2 right-3 text-[10px] font-bold text-slate-400">
-                                        {observacao.length}/100
-                                    </div>
+                            {/* Linha 3: Observação */}
+                            <div className="space-y-1 relative">
+                                <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block">Observação</label>
+                                <textarea
+                                    value={observacao}
+                                    onChange={(e) => setObservacao(e.target.value.slice(0, 100))}
+                                    placeholder="Alguma observação importante..."
+                                    className="w-full min-h-[80px] md:min-h-[90px] p-2.5 md:p-3 rounded-xl border border-slate-200 bg-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-slate-700 text-sm resize-none outline-none"
+                                />
+                                <div className="absolute bottom-2 right-3 text-[10px] font-bold text-slate-400">
+                                    {observacao.length}/100
                                 </div>
                             </div>
 
@@ -360,7 +376,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     {modoEdicao ? 'Salvar' : 'Agendar'}
                                 </Button>
                             </div>
-                        </>
+                        </div>
                     ) : (
                         <div className="space-y-4">
                             {agendamentosNoDia.length === 0 ? (
@@ -506,113 +522,104 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             </div>
 
             {/* Modal Centralizado do Calendário */}
-            {isCalendarModalOpen && createPortal(
-                <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-200 pointer-events-auto">
-                    <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCalendarModalOpen(false)} />
-                    <div className="relative bg-white rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-100 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
-                        <div className="w-full flex justify-between items-center p-4 md:px-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
-                            <h3 className="font-bold text-white uppercase tracking-[1px] text-sm">Selecione o Período</h3>
-                            <button
-                                onClick={() => setIsCalendarModalOpen(false)}
-                                className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90"
-                                title="Fechar"
-                            >
-                                <X size={18} strokeWidth={3} />
-                            </button>
-                        </div>
-                        <div className="px-4 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
-                            <Calendar
-                                mode="range"
-                                selected={dateRange}
-                                onSelect={handleSelectRange}
-                                showOutsideDays={false}
-                                locale={ptBR}
-                                modifiers={{
-                                    agendado: (date: Date) => {
-                                        const dStr = format(date, 'yyyy-MM-dd');
-                                        return todosAgendamentos?.some(a => a.dataInicio <= dStr && a.dataFim >= dStr);
-                                    }
-                                }}
-                                modifiersClassNames={{
-                                    agendado: "after:content-[''] after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-blue-500 after:rounded-full font-bold relative text-blue-800 bg-blue-50"
-                                }}
-                                className="bg-white"
-                                classNames={{
-                                    months: "flex flex-col sm:flex-row w-full justify-center max-w-full",
-                                    month: "w-full flex flex-col",
-                                    caption: "order-1 flex justify-center pt-0 relative items-center pb-2",
-                                    caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-slate-800",
-                                    nav: "space-x-1 flex items-center bg-slate-50 rounded-lg p-0.5 shadow-sm border border-slate-100",
-                                    nav_button: "h-7 w-7 bg-transparent p-0 text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center rounded-md hover:bg-slate-200/50",
-                                    nav_button_previous: "absolute left-0",
-                                    nav_button_next: "absolute right-0",
-                                    table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1.5 border-spacing-x-1 max-w-full",
-                                    head_row: "flex w-full justify-center gap-1",
-                                    head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[13px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
-                                    row: "flex w-full justify-center gap-1 group relative",
-                                    cell: "h-10 w-10 md:h-12 md:w-12 text-center p-0 m-0 relative focus-within:z-20 bg-transparent text-slate-700 first:text-slate-700 last:text-slate-700",
-                                    day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[13px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-200 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400",
-                                    day_range_start: "day-range-start !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
-                                    day_range_end: "day-range-end !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
-                                    day_range_middle: "aria-selected:!bg-[#DBEAFE] aria-selected:!text-[#1E3A8A] !shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_1px_rgba(0,0,0,0.05)] font-bold",
-                                    day_selected: "font-bold !bg-[#93C5FD] !text-[#1E40AF]",
-                                    day_today: "ring-2 ring-inset ring-[#C62828] font-black shadow-[0_4px_12px_-4px_rgba(198,40,40,0.25)] z-10",
-                                    day_outside: "text-transparent bg-transparent opacity-0 pointer-events-none shadow-none",
-                                    day_disabled: "text-slate-300 opacity-50 font-normal grayscale pointer-events-none",
-                                }}
-                                components={{
-                                    IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
-                                    IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-                                    Footer: () => {
-                                        const rInicio = dateRange?.from ? format(dateRange.from, 'dd/MM/yyyy') : 'XX/XX/XXXX';
-                                        const rFim = dateRange?.to ? format(dateRange.to, 'dd/MM/yyyy') : '—';
-                                        let rCount = 1;
-                                        if (dateRange?.from && dateRange?.to) {
-                                            const d1 = new Date(dateRange.from);
-                                            d1.setHours(0, 0, 0, 0);
-                                            const d2 = new Date(dateRange.to);
-                                            d2.setHours(0, 0, 0, 0);
-                                            rCount = Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-                                            if (rCount < 1) rCount = 1;
+            {
+                isCalendarModalOpen && createPortal(
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center animate-in fade-in duration-200 pointer-events-auto">
+                        <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCalendarModalOpen(false)} />
+                        <div className="relative bg-white rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-100 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
+                            <div className="w-full flex justify-between items-center p-4 md:px-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
+                                <h3 className="font-bold text-white uppercase tracking-[1px] text-sm">Selecione o Período</h3>
+                                <button
+                                    onClick={() => setIsCalendarModalOpen(false)}
+                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90"
+                                    title="Fechar"
+                                >
+                                    <X size={18} strokeWidth={3} />
+                                </button>
+                            </div>
+                            <div className="px-4 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
+                                <Calendar
+                                    mode="range"
+                                    selected={dateRange}
+                                    onSelect={handleSelectRange}
+                                    showOutsideDays={false}
+                                    locale={ptBR}
+                                    modifiers={{
+                                        agendado: (date: Date) => {
+                                            const dStr = format(date, 'yyyy-MM-dd');
+                                            return todosAgendamentos?.some(a => a.dataInicio <= dStr && a.dataFim >= dStr);
                                         }
-
-                                        return (
-                                            <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-2 px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 shadow-sm mx-auto max-w-[320px] sm:max-w-full">
-                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                    <span>Inicial:</span>
-                                                    <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
+                                    }}
+                                    modifiersClassNames={{
+                                        agendado: "after:content-[''] after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-blue-500 after:rounded-full font-bold relative text-blue-800 bg-blue-50"
+                                    }}
+                                    className="bg-white"
+                                    classNames={{
+                                        months: "flex flex-col sm:flex-row w-full justify-center max-w-full",
+                                        month: "w-full flex flex-col",
+                                        caption: "order-1 flex justify-center pt-0 relative items-center pb-2",
+                                        caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-slate-800",
+                                        nav: "space-x-1 flex items-center bg-slate-50 rounded-lg p-0.5 shadow-sm border border-slate-100",
+                                        nav_button: "h-7 w-7 bg-transparent p-0 text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center rounded-md hover:bg-slate-200/50",
+                                        nav_button_previous: "absolute left-0",
+                                        nav_button_next: "absolute right-0",
+                                        table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1.5 border-spacing-x-1 max-w-full",
+                                        head_row: "flex w-full justify-center gap-1",
+                                        head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[13px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
+                                        row: "flex w-full justify-center gap-1 group relative",
+                                        cell: "h-10 w-10 md:h-12 md:w-12 text-center p-0 m-0 relative focus-within:z-20 bg-transparent text-slate-700 first:text-slate-700 last:text-slate-700",
+                                        day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[13px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-200 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400",
+                                        day_range_start: "day-range-start !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
+                                        day_range_end: "day-range-end !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
+                                        day_range_middle: "aria-selected:!bg-[#DBEAFE] aria-selected:!text-[#1E3A8A] !shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_1px_rgba(0,0,0,0.05)] font-bold",
+                                        day_selected: "font-bold !bg-[#93C5FD] !text-[#1E40AF]",
+                                        day_today: "ring-2 ring-inset ring-[#C62828] font-black shadow-[0_4px_12px_-4px_rgba(198,40,40,0.25)] z-10",
+                                        day_outside: "text-transparent bg-transparent opacity-0 pointer-events-none shadow-none",
+                                        day_disabled: "text-slate-300 opacity-50 font-normal grayscale pointer-events-none",
+                                    }}
+                                    components={{
+                                        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
+                                        IconRight: () => <ChevronRight className="h-4 w-4" />,
+                                        Footer: () => {
+                                            const rInicio = dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : 'XX/XX/XXXX';
+                                            const rFim = dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : '—';
+                                            return (
+                                                <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-2 px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 shadow-sm mx-auto max-w-[320px] sm:max-w-full">
+                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                        <span>Inicial:</span>
+                                                        <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
+                                                    </div>
+                                                    <span className="text-slate-300 hidden sm:block">|</span>
+                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                        <span>Final:</span>
+                                                        <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
+                                                    </div>
+                                                    <span className="text-slate-300 hidden sm:block">|</span>
+                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                        <span>Total:</span>
+                                                        <strong className="text-[#1E40AF] font-semibold">{totalDias} {totalDias === 1 ? 'dia' : 'dias'}</strong>
+                                                    </div>
                                                 </div>
-                                                <span className="text-slate-300 hidden sm:block">|</span>
-                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                    <span>Final:</span>
-                                                    <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
+                                            );
+                                        },
+                                        DayContent: (props: { date: Date }) => {
+                                            const dStr = format(props.date, 'yyyy-MM-dd');
+                                            const ags = todosAgendamentos?.filter(a => a.dataInicio <= dStr && a.dataFim >= dStr);
+                                            const titleText = ags?.length > 0 ? ags.map(a => `${a.tipo.split(' ')[0]} ${a.userName || 'Usuário'}`).join('\n') : undefined;
+                                            return (
+                                                <div title={titleText} className="w-full h-full flex flex-col items-center justify-center relative cursor-pointer">
+                                                    <span>{props.date.getDate()}</span>
                                                 </div>
-                                                <span className="text-slate-300 hidden sm:block">|</span>
-                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                    <span>Total:</span>
-                                                    <strong className="text-[#1E40AF] font-semibold">{rCount} {rCount === 1 ? 'dia' : 'dias'}</strong>
-                                                </div>
-                                            </div>
-                                        );
-                                    },
-                                    DayContent: (props) => {
-                                        const dStr = format(props.date, 'yyyy-MM-dd');
-                                        const ags = todosAgendamentos?.filter(a => a.dataInicio <= dStr && a.dataFim >= dStr);
-                                        const title = ags?.length > 0 ? ags.map(a => `${a.tipo.split(' ')[0]} ${a.userName || 'Usuário'}`).join('\n') : undefined;
-
-                                        return (
-                                            <div title={title} className="w-full h-full flex flex-col items-center justify-center relative cursor-pointer">
-                                                <span>{props.date.getDate()}</span>
-                                            </div>
-                                        );
-                                    }
-                                }}
-                            />
+                                            );
+                                        }
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                </div>,
-                document.body
-            )}
+                    </div>,
+                    document.body
+                )
+            }
         </div>
     );
 };
