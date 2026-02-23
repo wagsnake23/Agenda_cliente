@@ -144,7 +144,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
         ),
 
         // 👇 COR DO TEXTO PRESERVADA
-        dayData.colors.text,
+        isSelected ? "text-black drop-shadow-none" : dayData.colors.text,
 
         // =========================
         // DIA DE HOJE

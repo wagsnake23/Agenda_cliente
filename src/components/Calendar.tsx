@@ -8,6 +8,7 @@ import TodayButton from './calendar/TodayButton';
 import HolidayMessages from './calendar/HolidayMessages';
 import BirthdayMessages from './calendar/BirthdayMessages';
 import MoonPhasesDisplay from './calendar/MoonPhasesDisplay';
+import AgendamentosDisplay from './calendar/AgendamentosDisplay';
 import { useCalendarData } from '@/hooks/use-calendar-data';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useHolidayMessages } from '@/hooks/use-holiday-messages';
@@ -355,6 +356,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                     mode={drawerMode}
                     initialDate={selectedDrawerDate}
                     agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                    todosAgendamentos={agendamentos}
                     onSave={salvarAgendamento}
                     onDelete={excluirAgendamento}
                     onUpdate={editarAgendamento}
@@ -401,14 +403,30 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
         <div className="max-w-[1600px] mx-auto w-full mt-4 lg:mt-[-20px] flex flex-col gap-4 lg:pb-16 lg:pl-8">
           <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-8 items-stretch">
-            <div className={`w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-2 ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
-              <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
+            {/* 1º - Agendamentos */}
+            <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1">
+              <AgendamentosDisplay
+                agendamentos={agendamentos}
+                month={month}
+                year={year}
+                highlightedDay={highlightedDay}
+                onViewAgendamento={handleOpenViewDrawer}
+              />
             </div>
-            <div className="w-full lg:flex-1 lg:min-w-[370px] order-2 lg:order-3">
+
+            {/* 2º e 3º - Feriados e Eventos + Fases da Lua */}
+            <div className="w-full lg:flex-1 lg:min-w-[370px] order-2 lg:order-2 flex flex-col gap-2 md:gap-4 lg:gap-8">
+              <div className={`w-full flex-1 ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
+                <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
+              </div>
+              <div className="w-full">
+                <MoonPhasesDisplay moonPhases={moonPhases} month={month} />
+              </div>
+            </div>
+
+            {/* 4º - Aniversariantes (SEM QUALQUER ALTERAÇÃO NA ESTRUTURA) */}
+            <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
               <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} />
-            </div>
-            <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-1">
-              <MoonPhasesDisplay moonPhases={moonPhases} month={month} />
             </div>
           </div>
         </div>
