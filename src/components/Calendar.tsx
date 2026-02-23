@@ -358,7 +358,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
               <div className="relative w-full h-full max-w-[1600px] mx-auto">
                 <div className={cn(
-                  "absolute pointer-events-auto transition-all duration-500 ease-in-out",
+                  "hidden md:block absolute pointer-events-auto transition-all duration-500 ease-in-out",
                   "w-full h-full md:h-full lg:h-full",
                   "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0", // Max height and top alignment
                   isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
@@ -419,7 +419,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         <div className="max-w-[1600px] mx-auto w-full mt-4 lg:mt-[-20px] flex flex-col gap-4 lg:pb-16 lg:pl-8">
           <div className="flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-8 items-stretch">
             {/* 1º - Agendamentos */}
-            <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1">
+            <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-4">
               <AgendamentosDisplay
                 agendamentos={agendamentos}
                 month={month}
@@ -427,6 +427,26 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 highlightedDay={highlightedDay}
                 onViewAgendamento={handleOpenViewDrawer}
               />
+
+              {/* Lista Mobile Inline (abaixo do card amarelo) */}
+              <div className="md:hidden w-full">
+                <DrawerAgendamento
+                  isOpen={isDrawerOpen}
+                  onClose={handleCloseDrawer}
+                  mode={drawerMode}
+                  initialDate={selectedDrawerDate}
+                  agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                  todosAgendamentos={agendamentos}
+                  onSave={salvarAgendamento}
+                  onDelete={excluirAgendamento}
+                  onUpdate={editarAgendamento}
+                  anchorRef={null as any}
+                  selectedPeriod={selectedPeriod}
+                  onSelectPeriod={toggleHighlightPeriod}
+                  selectedAgendamentoId={selectedAgendamentoId}
+                  setSelectedAgendamentoId={setSelectedAgendamentoId}
+                />
+              </div>
             </div>
 
             {/* 2º e 3º - Feriados e Eventos + Fases da Lua */}

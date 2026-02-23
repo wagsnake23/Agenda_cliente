@@ -197,19 +197,22 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     return (
         <div
             className={cn(
-                "absolute top-0 left-0 w-full h-full z-[60] flex flex-col items-center justify-start pointer-events-none p-0",
-                "animate-in fade-in zoom-in-95 duration-300 md:relative md:animate-none"
+                "w-full z-[60] flex flex-col items-center justify-start p-0",
+                "md:absolute md:top-0 md:left-0 md:h-full md:pointer-events-none md:animate-in md:fade-in md:zoom-in-95 md:duration-300",
+                // Removemos o 'hidden md:flex' pois o isDrawerOpen já controla a existência no Calendar.tsx
+                // No mobile, ele deve ser visível se isOpen for true
+                !isOpen && "hidden"
             )}
         >
             <div
                 className={cn(
                     "bg-white rounded-2xl md:rounded-[29px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-[#0F172A]/[0.05]",
-                    "w-full h-full pointer-events-auto flex flex-col overflow-hidden"
+                    "w-full h-full md:pointer-events-auto flex flex-col overflow-hidden"
                 )}
             >
                 {/* Header do Drawer */}
-                <div className="flex items-center justify-between p-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
-                    <h2 className="text-[1.1rem] font-bold text-white uppercase tracking-[1px] flex items-center gap-2">
+                <div className="flex items-center justify-between p-3 md:p-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
+                    <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] flex items-center gap-1.5 md:gap-2 whitespace-nowrap">
                         {modoEdicao ? (
                             <span>EDITAR AGENDAMENTO</span>
                         ) : mode === 'create' ? (
@@ -229,15 +232,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     </h2>
                     <button
                         onClick={onClose}
-                        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-lg active:scale-90"
+                        className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-lg active:scale-90"
                         title="Fechar"
                     >
-                        <X size={20} strokeWidth={4} />
+                        <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={4} />
                     </button>
                 </div>
 
                 {/* Conteúdo */}
-                <div className="flex-1 overflow-y-auto p-5 md:p-6 md:pt-4 md:pb-8 flex flex-col gap-4">
+                <div className="flex-1 overflow-y-auto p-4 md:p-6 md:pt-4 md:pb-8 flex flex-col gap-4">
                     {mode === 'create' || modoEdicao ? (
                         <>
                             <div className="space-y-4">
@@ -403,72 +406,72 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
-                                                "p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
+                                                "p-2.5 md:p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
-                                                    ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.02]"
+                                                    ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className="grid grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-3.5 gap-y-1 items-center relative">
+                                            <div className="grid grid-cols-[65px_1fr_auto_40px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2.5 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
-                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1.5 pr-2 border-r border-black/[0.06] self-stretch my-0.5">
-                                                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
+                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 pr-2 border-r border-black/[0.06] self-stretch my-0.5">
+                                                    <div className="w-11 h-11 md:w-14 md:h-14 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
                                                         {agenda.userPhoto ? (
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                                <User size={22} />
+                                                                <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <span className="text-[10px] font-bold text-slate-500 leading-tight text-center break-words max-w-[70px] uppercase">
+                                                    <span className="text-[9px] md:text-[10px] font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
                                                         {agenda.userName || "Usuário"}
                                                     </span>
                                                 </div>
 
                                                 {/* COLUNA 2: CONTEÚDO */}
-                                                <div className="col-start-2 row-start-1 flex items-center gap-2 overflow-hidden py-0.5">
-                                                    <span className="text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>
-                                                    <span className="text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
+                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5">
+                                                    <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>
+                                                    <span className="text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 row-start-2 flex items-center gap-1.5 overflow-hidden">
-                                                    <span className="text-[12px] leading-none opacity-70">📅</span>
-                                                    <span className="text-[clamp(11px,0.85vw,12px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
+                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden">
+                                                    <span className="text-[11px] md:text-[12px] leading-none opacity-70">📅</span>
+                                                    <span className="text-[10.5px] md:text-[clamp(11px,0.85vw,12px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis block">
                                                         {renderPeriod()}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
-                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[10.5px] text-slate-500 leading-tight py-0.5 pr-2 break-words">
+                                                    <div className="col-start-2 col-span-2 row-start-3 italic text-[9.5px] md:text-[10.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words">
                                                         "{agenda.observacao}"
                                                     </div>
                                                 )}
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
                                                 <div className="col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    <span className="px-2 py-0.5 rounded-full bg-red-50 text-red-700/90 text-[9.5px] font-bold uppercase tracking-tight shadow-sm border border-red-100/60">
+                                                    <span className="px-1.5 md:px-2 py-0.5 rounded-full bg-red-50 text-red-700/90 text-[8.5px] md:text-[9.5px] font-bold uppercase tracking-tight shadow-sm border border-red-100/60 leading-none block">
                                                         {agenda.status}
                                                     </span>
                                                 </div>
                                                 <div className="col-start-3 row-start-2 justify-self-end mt-0.5">
-                                                    <span className="text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
+                                                    <span className="text-[11px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
                                                         {agenda.totalDias} dias
                                                     </span>
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
-                                                <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-3 -mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
+                                                <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-2.5 md:-my-3 -mr-2.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
                                                     <button
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             setModoEdicao(true);
                                                             setAgendamentoEditando(agenda);
                                                         }}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
+                                                        className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all group/btn"
                                                         title="Editar"
                                                     >
-                                                        <Edit2 size={15} className="group-hover/btn:scale-110 transition-transform" />
+                                                        <Edit2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
                                                     </button>
 
                                                     <div className="w-[50%] h-[1px] bg-black/[0.06] my-0.5" />
@@ -480,10 +483,10 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                                 onDelete?.(agenda.id);
                                                             }
                                                         }}
-                                                        className="w-8 h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
+                                                        className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition-all group/btn"
                                                         title="Excluir"
                                                     >
-                                                        <Trash2 size={15} className="group-hover/btn:scale-110 transition-transform" />
+                                                        <Trash2 className="w-3.5 h-3.5 md:w-[15px] md:h-[15px] group-hover/btn:scale-110 transition-transform" />
                                                     </button>
                                                 </div>
                                             </div>
