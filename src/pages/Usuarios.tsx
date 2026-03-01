@@ -128,8 +128,15 @@ const UserModal: React.FC<{
                     }
                 });
 
-                if (functionError) throw functionError;
-                if (functionData?.error) throw new Error(functionData.error);
+                if (functionError) {
+                    console.error("Erro invoke:", functionError);
+                    throw new Error(functionError.message || 'Erro de rede ou permissão');
+                }
+
+                if (functionData && functionData.success === false) {
+                    console.error("Erro na função:", functionData.error);
+                    throw new Error(functionData.error || 'Erro desconhecido no servidor');
+                }
 
                 toast.success('Usuário criado com sucesso!');
             }

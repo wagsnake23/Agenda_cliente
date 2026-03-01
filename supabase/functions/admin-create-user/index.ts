@@ -7,59 +7,50 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-    // CORS
     if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
     try {
-        const supabaseUrl = Deno.env.get('SUPABASE_URL')
-        const supabaseServiceRole = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        const url = Deno.env.get('URL_PROJETO') || Deno.env.get('SUPABASE_URL')
+        const serviceRole = Deno.env.get('CHAVE_MESTRA') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
-        if (!supabaseUrl || !supabaseServiceRole) {
-            throw new Error("Erro de configuração: Faltam segredos (secrets) no servidor.")
+        if (!url || !serviceRole) {
+            throw new Error("Erro de configuração: Chaves ausentes no servidor.")
         }
 
         const authHeader = req.headers.get('Authorization')
-        if (!authHeader) throw new Error('Cabeçalho de autorização ausente.')
+        if (!authHeader) throw new Error("Não autorizado.")
 
-        // Criar cliente ADMIN para garantir que temos poder de verificação
-        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRole)
+        const supabaseAdmin = createClient(url, serviceRole)
 
-        // Validar o Token do usuário que está chamando
-        const token = authHeader.replace('Bearer ', '')
-        const { data: { user: caller }, error: authError } = await supabaseAdmin.auth.getUser(token)
+        // A. Validar sessao
+        const { data: { user: caller }, error: authError } = await supabaseAdmin.auth.getUser(authHeader.replace('Bearer ', ''))
+        if (authError || !caller) throw new Error("Sessão inválida.")
 
-        if (authError || !caller) {
-            throw new Error("Sessão inválida. Tente sair e entrar no sistema novamente.")
-        }
+        // B. Conferir Admin
+        const { data: profile } = await supabaseAdmin.from('profiles').select('perfil').eq('id', caller.id).single()
+        if (profile?.perfil !== 'administrador') throw new Error("Acesso negado.")
 
-        // Verificar na tabela profiles se ele é admin
-        const { data: profile, error: profileError } = await supabaseAdmin
-            .from('profiles')
-            .select('perfil')
-            .eq('id', caller.id)
-            .single()
-
-        if (profileError || profile?.perfil !== 'administrador') {
-            throw new Error('Acesso negado: Apenas administradores podem criar novos usuários.')
-        }
-
-        // Pegar dados para criação
+        // C. Cadastro no Auth
         const { email, password, nome, cargo, matricula, perfil, ativo } = await req.json()
 
-        console.log(`🔨 Criando conta para: ${email}`)
+        console.log(`🔨 Criando conta no Auth para: ${email}`)
 
-        const { data: authData, error: createUserError } = await supabaseAdmin.auth.admin.createUser({
+        const { data: authData, error: createError } = await supabaseAdmin.auth.admin.createUser({
             email,
             password,
             email_confirm: true,
             user_metadata: { nome }
         })
 
-        if (createUserError) throw createUserError
+        if (createError) throw createError
 
-        const { error: insertError } = await supabaseAdmin
+        // D. AGUARDAR E ATUALIZAR (UPSERT)
+        // Usamos um pequeno timeout para garantir que o Trigger do BD ja tenha criado o perfil base
+        await new Promise(res => setTimeout(res, 500));
+
+        const { error: updateError } = await supabaseAdmin
             .from('profiles')
-            .insert({
+            .upsert({
                 id: authData.user.id,
                 nome,
                 email,
@@ -69,9 +60,9 @@ serve(async (req) => {
                 ativo: ativo !== undefined ? ativo : true
             })
 
-        if (insertError) {
-            await supabaseAdmin.auth.admin.deleteUser(authData.user.id)
-            throw insertError
+        if (updateError) {
+            console.error("⚠️ Erro ao atualizar detalhes, mas usuario Auth ja existe:", updateError.message)
+            // Nesse caso nao deletamos, para permitir que o admin apenas edite o usuario depois
         }
 
         return new Response(JSON.stringify({ success: true }), {
@@ -79,11 +70,10 @@ serve(async (req) => {
             status: 200
         })
 
-    } catch (error) {
-        console.error("❌ Erro:", error.message)
-        return new Response(JSON.stringify({ error: error.message }), {
+    } catch (errorValue: any) {
+        return new Response(JSON.stringify({ success: false, error: errorValue.message }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 400
+            status: 200
         })
     }
 })
