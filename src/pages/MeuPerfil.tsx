@@ -386,137 +386,112 @@ const MeuPerfil: React.FC = () => {
                             {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
                             <div className="md:col-span-7 bg-[#FAFAFA] rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-200/50 p-6 sm:p-8 flex flex-col h-full">
                                 <div className="mb-6 flex items-center gap-3 border-b border-slate-200/60 pb-4">
-                                    <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
-                                        <User size={16} className="stroke-[2.5]" />
-                                    </div>
+                                    <span className="text-2xl select-none filter drop-shadow-sm">👤</span>
                                     <h3 className="font-bold text-slate-700 text-sm tracking-widest uppercase">
                                         Informações Pessoais
                                     </h3>
                                 </div>
 
-                                <div className="space-y-5 flex-1">
-                                    {/* Nome */}
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div className="sm:col-span-1">
-                                            <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                                <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
-                                                    <User size={12} />
-                                                </div>
-                                                Nome Completo <span className="text-red-400">*</span>
-                                            </label>
-                                            <input
-                                                {...form.register('nome')}
-                                                type="text"
-                                                placeholder="Seu nome"
-                                                className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
-                                            />
-                                            {form.formState.errors.nome && (
-                                                <p className="text-red-500 text-xs mt-1.5 ml-1">
-                                                    {form.formState.errors.nome.message}
-                                                </p>
-                                            )}
-                                        </div>
-
-                                        <div className="sm:col-span-1">
-                                            <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                                <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
-                                                    <Hash size={12} />
-                                                </div>
-                                                Apelido
-                                            </label>
-                                            <input
-                                                {...form.register('apelido')}
-                                                type="text"
-                                                placeholder="Como prefere ser chamado"
-                                                className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
-                                            />
-                                        </div>
+                                <div className="grid grid-cols-12 gap-x-4 gap-y-5">
+                                    {/* LINHA 1: Nome (9) e Matrícula (3) */}
+                                    <div className="col-span-12 md:col-span-9">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">📝</span>
+                                            Nome Completo <span className="text-red-400">*</span>
+                                        </label>
+                                        <input
+                                            {...form.register('nome')}
+                                            type="text"
+                                            placeholder="Seu nome"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        />
+                                        {form.formState.errors.nome && (
+                                            <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
+                                                {form.formState.errors.nome.message}
+                                            </p>
+                                        )}
                                     </div>
 
-                                    {/* Email (não editável) */}
-                                    <div>
-                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                            <div className="w-5 h-5 rounded-md bg-orange-100 flex items-center justify-center text-orange-600">
-                                                <Mail size={12} />
-                                            </div>
+                                    <div className="col-span-12 md:col-span-3">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">🆔</span>
+                                            Matrícula <span className="text-red-400">*</span>
+                                        </label>
+                                        <input
+                                            {...form.register('matricula')}
+                                            type="text"
+                                            placeholder="Nº"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        />
+                                        {form.formState.errors.matricula && (
+                                            <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
+                                                {form.formState.errors.matricula.message}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* LINHA 2: Apelido (6) e Cargo (6) */}
+                                    <div className="col-span-12 md:col-span-6">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">🏷️</span>
+                                            Apelido
+                                        </label>
+                                        <input
+                                            {...form.register('apelido')}
+                                            type="text"
+                                            placeholder="Como prefere ser chamado"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        />
+                                    </div>
+
+                                    <div className="col-span-12 md:col-span-6">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">🎖️</span>
+                                            Cargo <span className="text-red-400">*</span>
+                                        </label>
+                                        <input
+                                            {...form.register('cargo')}
+                                            type="text"
+                                            placeholder="Ex: Soldado BM"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        />
+                                        {form.formState.errors.cargo && (
+                                            <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
+                                                {form.formState.errors.cargo.message}
+                                            </p>
+                                        )}
+                                    </div>
+
+                                    {/* LINHA 3: Email (12) */}
+                                    <div className="col-span-12">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">📧</span>
                                             Email
                                         </label>
                                         <input
                                             type="email"
                                             value={profile?.email || ''}
                                             readOnly
-                                            className="w-full h-12 px-4 rounded-xl border border-slate-200/60 bg-slate-100 text-slate-500 text-sm font-medium cursor-not-allowed shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200/60 bg-slate-100/50 text-slate-400 text-sm font-medium cursor-not-allowed shadow-sm"
                                         />
-                                        <p className="text-slate-400 text-[11px] mt-1.5 ml-1">
-                                            O email não pode ser alterado
-                                        </p>
                                     </div>
 
-                                    {/* Data de Nascimento */}
-                                    <div>
-                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                            <div className="w-5 h-5 rounded-md bg-red-100 flex items-center justify-center text-red-600">
-                                                <CalendarIcon size={12} />
-                                            </div>
+                                    {/* LINHA 4: Data Nascimento (12) */}
+                                    <div className="col-span-12">
+                                        <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                            <span className="text-sm">🎂</span>
                                             Data de Nascimento
                                         </label>
                                         <input
                                             {...form.register('data_nascimento')}
                                             type="date"
-                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
+                                            className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                         />
-                                        {form.formState.errors.data_nascimento && (
-                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
-                                                {form.formState.errors.data_nascimento.message}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    {/* Cargo */}
-                                    <div>
-                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                            <div className="w-5 h-5 rounded-md bg-purple-100 flex items-center justify-center text-purple-600">
-                                                <Briefcase size={12} />
-                                            </div>
-                                            Cargo <span className="text-red-400">*</span>
-                                        </label>
-                                        <input
-                                            {...form.register('cargo')}
-                                            type="text"
-                                            placeholder="Ex: Soldado BM, Cabo BM, Sargento BM..."
-                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
-                                        />
-                                        {form.formState.errors.cargo && (
-                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
-                                                {form.formState.errors.cargo.message}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    {/* Matrícula */}
-                                    <div>
-                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
-                                            <div className="w-5 h-5 rounded-md bg-emerald-100 flex items-center justify-center text-emerald-600">
-                                                <Hash size={12} />
-                                            </div>
-                                            Matrícula <span className="text-red-400">*</span>
-                                        </label>
-                                        <input
-                                            {...form.register('matricula')}
-                                            type="text"
-                                            placeholder="Número de matrícula"
-                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
-                                        />
-                                        {form.formState.errors.matricula && (
-                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
-                                                {form.formState.errors.matricula.message}
-                                            </p>
-                                        )}
                                     </div>
                                 </div>
 
                                 {/* ── Botão Salvar ─────────────────────────────── */}
-                                <div className="mt-8 pt-6 border-t border-slate-200/60">
+                                <div className="mt-10 pt-6 border-t border-slate-200/60">
                                     <button
                                         type="submit"
                                         disabled={saving || uploadingPhoto}
