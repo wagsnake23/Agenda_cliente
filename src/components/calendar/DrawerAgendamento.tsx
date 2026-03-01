@@ -18,6 +18,7 @@ import { DateRange } from 'react-day-picker';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export interface Agendamento {
     id: string;
@@ -65,6 +66,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     selectedAgendamentoId,
     setSelectedAgendamentoId,
 }) => {
+    const { profile } = useAuth();
     const [dataInicio, setDataInicio] = useState(initialDate || '');
     const [dataFim, setDataFim] = useState(initialDate || '');
     const [tipo, setTipo] = useState<string>('');
@@ -316,6 +318,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             <div className="w-[64px] h-[64px] rounded-xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white">
                                                 {agendamentoEditando?.userPhoto ? (
                                                     <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
+                                                ) : mode === 'create' && profile?.foto_url ? (
+                                                    <img src={profile.foto_url} alt={profile.nome} className="w-full h-full object-cover" />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
                                                         <User className="size-8" />
@@ -324,7 +328,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             </div>
                                             <div className="text-center mt-1 min-w-0">
                                                 <span className="text-[8.5px] font-bold text-slate-500 uppercase tracking-tight block truncate w-full">
-                                                    {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? "Novo" : "Usuário")}
+                                                    {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' && profile?.nome ? profile.nome.split(' ')[0] : (mode === 'create' ? "Novo" : "Usuário"))}
                                                 </span>
                                             </div>
                                         </div>
@@ -368,6 +372,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <div className="w-16 h-16 md:w-[88px] md:h-[88px] rounded-2xl overflow-hidden shadow-md border-2 border-white ring-4 ring-blue-50/15 bg-white transition-transform hover:scale-105">
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
+                                        ) : mode === 'create' && profile?.foto_url ? (
+                                            <img src={profile.foto_url} alt={profile.nome} className="w-full h-full object-cover" />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
                                                 <User className="size-9 md:size-11" />
@@ -376,7 +382,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     </div>
                                     <div className="text-center mt-1.5 min-w-0">
                                         <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[85px]">
-                                            {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? "Novo" : "Usuário")}
+                                            {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' && profile?.nome ? profile.nome.split(' ')[0] : (mode === 'create' ? "Novo" : "Usuário"))}
                                         </span>
                                     </div>
                                 </div>
