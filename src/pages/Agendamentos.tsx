@@ -171,7 +171,7 @@ const AgendamentosPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#EFF3F6] flex flex-col">
+        <div className="min-h-screen bg-[#EFF3F6] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
@@ -181,7 +181,7 @@ const AgendamentosPage: React.FC = () => {
             />
 
             <div className="w-full lg:pt-[74px]">
-                <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-6">
+                <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-3 pb-6 md:py-6">
                     {/* Cabeçalho do Módulo */}
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-3">
@@ -213,7 +213,7 @@ const AgendamentosPage: React.FC = () => {
                             <select
                                 value={filterStatus}
                                 onChange={e => setFilterStatus(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[150px]"
+                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[180px]"
                             >
                                 <option value="">Todos os Status</option>
                                 <option value="pendente">Pendente</option>
@@ -225,7 +225,7 @@ const AgendamentosPage: React.FC = () => {
                             <select
                                 value={filterUsuario}
                                 onChange={e => setFilterUsuario(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[180px]"
+                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[200px]"
                             >
                                 <option value="">Todos os Usuários</option>
                                 {usuariosUnicos.map(u => (
@@ -236,7 +236,7 @@ const AgendamentosPage: React.FC = () => {
                             <select
                                 value={filterTipo}
                                 onChange={e => setFilterTipo(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[180px]"
+                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none w-full md:w-[220px]"
                             >
                                 <option value="">Todos os Tipos</option>
                                 <option value="🛌 Abonada">🛌 Abonada</option>
@@ -251,7 +251,7 @@ const AgendamentosPage: React.FC = () => {
                                 <option value="😷 Outros">😷 Outros</option>
                             </select>
 
-                            <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                            <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm w-full md:w-auto">
                                 <button
                                     onClick={handlePreviousMonth}
                                     className="h-9 px-2 hover:bg-slate-50 text-slate-400 hover:text-blue-600 transition-all border-r border-slate-100"
@@ -263,7 +263,7 @@ const AgendamentosPage: React.FC = () => {
                                     type="month"
                                     value={filterPeriodo}
                                     onChange={e => setFilterPeriodo(e.target.value)}
-                                    className="h-9 px-3 bg-transparent text-slate-600 text-sm font-bold focus:outline-none transition-all appearance-none cursor-pointer"
+                                    className="h-9 px-3 bg-transparent text-slate-600 text-sm font-bold focus:outline-none transition-all appearance-none cursor-pointer flex-1"
                                 />
                                 <button
                                     onClick={handleNextMonth}

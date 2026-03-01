@@ -174,7 +174,7 @@ const Header = () => {
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-10 h-10 md:w-12 md:h-12 object-contain relative -left-1 transition-transform duration-300 hover:scale-105 shrink-0"
+                            className="w-10 h-10 md:w-12 md:h-12 object-contain ml-1 transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
                             className="text-[1.1rem] md:text-[1.6rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
