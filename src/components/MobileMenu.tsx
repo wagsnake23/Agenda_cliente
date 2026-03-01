@@ -128,7 +128,7 @@ const MobileMenu = () => {
                                 onClick={handleAgendar}
                                 className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
+                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📝</span>
                                 <span className="font-bold text-sm">Agendar</span>
                             </button>
 
@@ -137,7 +137,7 @@ const MobileMenu = () => {
                                 onClick={() => handleNav('/agendamentos')}
                                 className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🗓️</span>
+                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📋</span>
                                 <span className="font-bold text-sm">Agendamentos</span>
                             </button>
 
@@ -168,7 +168,7 @@ const MobileMenu = () => {
                                 onClick={() => handleNav(`/agendamentos?usuario=${profile?.id}`)}
                                 className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🗓️</span>
+                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
                                 <span className="font-bold text-sm">Minha Agenda</span>
                             </button>
 
