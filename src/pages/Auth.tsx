@@ -104,7 +104,7 @@ const AuthPage: React.FC = () => {
                 <div className="text-center mb-8 flex flex-col items-center">
                     <img src="/logo.png" alt="Calendario" className="w-20 h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.4)] object-contain filter brightness-[1.1] mb-4 transform hover:scale-110 transition-transform duration-500" />
 
-                    <h1 className="text-white font-black text-2xl uppercase tracking-[3px] drop-shadow-md">
+                    <h1 className="text-white font-black text-xl uppercase tracking-[3px] drop-shadow-md">
                         Calendário de Prontidão
                     </h1>
                 </div>
