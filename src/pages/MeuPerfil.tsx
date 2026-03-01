@@ -370,6 +370,8 @@ const MeuPerfil: React.FC = () => {
                                     {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
                                 </button>
 
+                                <p className="text-slate-400 text-[11px] mt-2 mb-1">JPG, PNG ou WebP · máx. 5MB</p>
+
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -377,13 +379,11 @@ const MeuPerfil: React.FC = () => {
                                         setConfirmPassword('');
                                         setShowPasswordModal(true);
                                     }}
-                                    className="w-full h-11 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 text-sm font-semibold flex items-center justify-center gap-2 transition-all mt-3 hover:bg-slate-100 hover:border-slate-300"
+                                    className="w-full h-11 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all mt-4 shadow-md hover:shadow-lg border border-orange-600/50"
                                 >
-                                    <Lock size={16} className="text-slate-400" />
+                                    <Lock size={16} className="text-white/90" />
                                     Alterar Senha de Acesso
                                 </button>
-
-                                <p className="text-slate-400 text-[11px] mt-3">JPG, PNG ou WebP · máx. 5MB</p>
                             </div>
 
                             {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
