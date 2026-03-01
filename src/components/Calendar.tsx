@@ -48,7 +48,7 @@ const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][n
   totalDias: ag.dias,
   status: ag.status || 'pendente',
   observacao: ag.observacao || undefined,
-  userName: ag.profiles?.nome || undefined,
+  userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
   userPhoto: ag.profiles?.foto_url || undefined,
   createdAt: ag.created_at,
 });

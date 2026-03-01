@@ -75,13 +75,13 @@ const AgendamentosPage: React.FC = () => {
     const [alterandoStatusId, setAlterandoStatusId] = useState<string | null>(null);
 
     const usuariosUnicos = useMemo(() => {
-        const map = new Map<string, string>();
+        const map = new Map<string, { nome: string, apelido: string | null }>();
         agendamentos.forEach(a => {
             if (a.profiles?.id) {
-                map.set(a.profiles.id, a.profiles.nome);
+                map.set(a.profiles.id, { nome: a.profiles.nome, apelido: a.profiles.apelido || null });
             }
         });
-        return Array.from(map.entries()).map(([id, nome]) => ({ id, nome }));
+        return Array.from(map.entries()).map(([id, info]) => ({ id, ...info }));
     }, [agendamentos]);
 
     const filtrados = useMemo(() => {
@@ -185,7 +185,7 @@ const AgendamentosPage: React.FC = () => {
                                 >
                                     <option value="">Todos os Usuários</option>
                                     {usuariosUnicos.map(u => (
-                                        <option key={u.id} value={u.id}>{u.nome}</option>
+                                        <option key={u.id} value={u.id}>{u.apelido || u.nome}</option>
                                     ))}
                                 </select>
                             )}
@@ -266,7 +266,7 @@ const AgendamentosPage: React.FC = () => {
                                                                         </div>
                                                                     )}
                                                                     <span className="text-slate-700 text-sm font-medium whitespace-nowrap">
-                                                                        {ag.profiles?.nome || '—'}
+                                                                        {ag.profiles?.apelido || ag.profiles?.nome || '—'}
                                                                     </span>
                                                                 </div>
                                                             </td>

@@ -539,8 +539,8 @@ const MeuPerfil: React.FC = () => {
 
             {/* Modal de Alterar Senha */}
             {showPasswordModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
-                    <div className="bg-white w-[98%] sm:w-full max-w-sm rounded-[32px] overflow-hidden shadow-2xl border-4 border-white animate-in zoom-in-95 duration-200">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
+                    <div className="bg-slate-50 w-[98%] max-w-[98%] sm:max-w-sm rounded-[32px] overflow-hidden shadow-2xl border-4 border-white animate-in zoom-in-95 duration-200">
                         <div className="relative p-6 sm:p-8">
                             <button
                                 onClick={() => setShowPasswordModal(false)}

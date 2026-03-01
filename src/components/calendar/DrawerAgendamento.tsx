@@ -348,7 +348,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             </div>
                                             <div className="text-center mt-1 min-w-0">
                                                 <span className="text-[8.5px] font-bold text-slate-500 uppercase tracking-tight block truncate w-full">
-                                                    {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' && profile?.nome ? profile.nome.split(' ')[0] : (mode === 'create' ? "Novo" : "Usuário"))}
+                                                    {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                                 </span>
                                             </div>
                                         </div>
@@ -402,7 +402,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     </div>
                                     <div className="text-center mt-1.5 min-w-0">
                                         <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[85px]">
-                                            {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' && profile?.nome ? profile.nome.split(' ')[0] : (mode === 'create' ? "Novo" : "Usuário"))}
+                                            {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                         </span>
                                     </div>
                                 </div>

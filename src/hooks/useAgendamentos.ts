@@ -20,7 +20,7 @@ export const useAgendamentos = () => {
                 .select(`
           *,
           profiles:user_id (
-            id, nome, email, foto_url, cargo, matricula, perfil
+            id, nome, apelido, email, foto_url, cargo, matricula, perfil
           )
         `)
                 .order('data_inicial', { ascending: true });
@@ -76,7 +76,7 @@ export const useAgendamentos = () => {
                 .select(`
           *,
           profiles:user_id (
-            id, nome, email, foto_url, cargo, matricula, perfil
+            id, nome, apelido, email, foto_url, cargo, matricula, perfil
           )
         `)
                 .single();
@@ -125,7 +125,7 @@ export const useAgendamentos = () => {
                 .select(`
           *,
           profiles:user_id (
-            id, nome, email, foto_url, cargo, matricula, perfil
+            id, nome, apelido, email, foto_url, cargo, matricula, perfil
           )
         `)
                 .single();
