@@ -266,15 +266,28 @@ const UsuariosPage: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         setDeletingId(id);
-        const { error } = await supabase.from('profiles').update({ ativo: false }).eq('id', id);
-        if (error) {
-            toast.error('Erro ao desativar usuário');
-        } else {
-            toast.success('Usuário desativado');
+        try {
+            // Chamando a função RPC do banco de dados que acabamos de criar via SQL
+            const { data, error } = await supabase.rpc('delete_user_admin', {
+                target_user_id: id
+            });
+
+            if (error) throw error;
+
+            // A função RPC retorna { success: boolean, error?: string }
+            if (data?.success === false) {
+                throw new Error(data.error);
+            }
+
+            toast.success('Usuário excluído permanentemente!');
             fetchUsuarios();
+        } catch (err: any) {
+            console.error("Erro ao deletar:", err);
+            toast.error(err.message || 'Erro ao excluir usuário');
+        } finally {
+            setDeletingId(null);
+            setConfirmDelete(null);
         }
-        setDeletingId(null);
-        setConfirmDelete(null);
     };
 
     const handleToggleAtivo = async (user: Profile) => {
@@ -296,7 +309,7 @@ const UsuariosPage: React.FC = () => {
                 open={!!confirmDelete}
                 onConfirm={() => confirmDelete && handleDelete(confirmDelete)}
                 onCancel={() => setConfirmDelete(null)}
-                message="Desativar este usuário? Ele não poderá mais fazer login."
+                message="Tem certeza que deseja EXCLUIR permanentemente este usuário? Esta ação removerá o acesso e o perfil dele do sistema."
             />
             <UserModal
                 open={modalOpen}
