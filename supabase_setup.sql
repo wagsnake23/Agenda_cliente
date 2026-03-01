@@ -1,28 +1,38 @@
 -- ============================================================
--- CORRIGIR RECURSÃO INFINITA NAS POLÍTICAS RLS
+-- ATUALIZAÇÃO DE SEGURANÇA E VISIBILIDADE (RLS)
 -- Rodar no SQL Editor do Supabase
 -- ============================================================
 
 -- ────────────────────────────────────────────────────────────
--- PASSO 1: Remover TODAS as políticas antigas das duas tabelas
+-- PASSO 1: Limpeza Completa (Remover Políticas Antigas)
 -- ────────────────────────────────────────────────────────────
-DROP POLICY IF EXISTS "profiles_select_own"              ON public.profiles;
-DROP POLICY IF EXISTS "profiles_select_admin"            ON public.profiles;
-DROP POLICY IF EXISTS "profiles_insert_own"              ON public.profiles;
-DROP POLICY IF EXISTS "profiles_update_own"              ON public.profiles;
-DROP POLICY IF EXISTS "profiles_update_admin"            ON public.profiles;
-
-DROP POLICY IF EXISTS "agendamentos_select_own"          ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_select_admin"        ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_insert_own"          ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_update_own"          ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_update_admin"        ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_delete_admin"        ON public.agendamentos;
-DROP POLICY IF EXISTS "agendamentos_delete_own_pendente" ON public.agendamentos;
+DO $$ 
+BEGIN
+    -- Limpa políticas de profiles
+    DROP POLICY IF EXISTS "profiles_select_own" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_select_admin" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_insert_own" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_update_own" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_update_admin" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_select_authenticated" ON public.profiles;
+    DROP POLICY IF EXISTS "profiles_all_admin" ON public.profiles;
+    
+    -- Limpa políticas de agendamentos
+    DROP POLICY IF EXISTS "agendamentos_select_own" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_select_admin" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_insert_own" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_update_own" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_update_admin" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_delete_admin" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_delete_own_pendente" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_select_authenticated" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_all_own" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_all_admin" ON public.agendamentos;
+    DROP POLICY IF EXISTS "agendamentos_update_delete_own" ON public.agendamentos;
+END $$;
 
 -- ────────────────────────────────────────────────────────────
--- PASSO 2: Criar função helper que verifica perfil SEM acionar RLS
--- SECURITY DEFINER = executa como owner da função, ignorando RLS
+-- PASSO 2: Função Helper para Perfil
 -- ────────────────────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION public.get_my_perfil()
 RETURNS TEXT
@@ -38,77 +48,62 @@ AS $$
 $$;
 
 -- ────────────────────────────────────────────────────────────
--- PASSO 3: Recriar políticas de profiles (sem auto-referência)
+-- PASSO 3: Políticas da Tabela 'profiles'
 -- ────────────────────────────────────────────────────────────
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
--- Usuário vê o próprio perfil
-CREATE POLICY "profiles_select_own"
+-- VISIBILIDADE: Todos os usuários autenticados (Conferentes e Admins) podem ver todos os perfis
+-- Isso permite ver os avatars e nomes dos outros usuários no sistema.
+CREATE POLICY "profiles_select_authenticated"
   ON public.profiles FOR SELECT
-  USING (auth.uid() = id);
+  TO authenticated
+  USING (true);
 
--- Admin vê todos — usa a função helper (sem recursão!)
-CREATE POLICY "profiles_select_admin"
-  ON public.profiles FOR SELECT
-  USING (public.get_my_perfil() = 'administrador');
-
--- Usuário pode inserir apenas o próprio perfil (signup)
-CREATE POLICY "profiles_insert_own"
-  ON public.profiles FOR INSERT
-  WITH CHECK (auth.uid() = id);
-
--- Usuário atualiza o próprio perfil
+-- EDIÇÃO: Usuário só edita o próprio perfil
 CREATE POLICY "profiles_update_own"
   ON public.profiles FOR UPDATE
+  TO authenticated
   USING (auth.uid() = id)
   WITH CHECK (auth.uid() = id);
 
--- Admin atualiza qualquer perfil — usa helper
-CREATE POLICY "profiles_update_admin"
-  ON public.profiles FOR UPDATE
+-- ADMIN: Admin pode gerenciar qualquer perfil
+CREATE POLICY "profiles_all_admin"
+  ON public.profiles FOR ALL
+  TO authenticated
   USING (public.get_my_perfil() = 'administrador');
 
 -- ────────────────────────────────────────────────────────────
--- PASSO 4: Recriar políticas de agendamentos (usando helper)
+-- PASSO 4: Políticas da Tabela 'agendamentos'
 -- ────────────────────────────────────────────────────────────
+ALTER TABLE public.agendamentos ENABLE ROW LEVEL SECURITY;
 
--- Usuário vê os próprios agendamentos
-CREATE POLICY "agendamentos_select_own"
+-- VISIBILIDADE: Todos os usuários autenticados podem ver todos os agendamentos registrados
+-- Garante que Conferentes visualizem o mapa completo de escalas.
+CREATE POLICY "agendamentos_select_authenticated"
   ON public.agendamentos FOR SELECT
+  TO authenticated
+  USING (true);
+
+-- CRIAÇÃO: Usuário pode criar agendamentos apenas para si mesmo
+CREATE POLICY "agendamentos_insert_authenticated"
+  ON public.agendamentos FOR INSERT
+  TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+
+-- EDIÇÃO/EXCLUSÃO PRÓPRIA: Usuários podem gerenciar seus próprios agendamentos
+CREATE POLICY "agendamentos_manage_own"
+  ON public.agendamentos FOR ALL
+  TO authenticated
   USING (auth.uid() = user_id);
 
--- Admin vê todos
-CREATE POLICY "agendamentos_select_admin"
-  ON public.agendamentos FOR SELECT
-  USING (public.get_my_perfil() = 'administrador');
-
--- Usuário cria agendamento para si mesmo
-CREATE POLICY "agendamentos_insert_own"
-  ON public.agendamentos FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
--- Usuário edita os próprios agendamentos
-CREATE POLICY "agendamentos_update_own"
-  ON public.agendamentos FOR UPDATE
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
-
--- Admin edita qualquer agendamento (incluindo mudar status)
-CREATE POLICY "agendamentos_update_admin"
-  ON public.agendamentos FOR UPDATE
-  USING (public.get_my_perfil() = 'administrador');
-
--- Usuário pode excluir os próprios agendamentos pendentes
-CREATE POLICY "agendamentos_delete_own_pendente"
-  ON public.agendamentos FOR DELETE
-  USING (auth.uid() = user_id AND status = 'pendente');
-
--- Admin pode excluir qualquer agendamento
-CREATE POLICY "agendamentos_delete_admin"
-  ON public.agendamentos FOR DELETE
+-- ADMIN: Admin pode gerenciar TUDO (mudar status de qualquer um, excluir qualquer um)
+CREATE POLICY "agendamentos_all_admin"
+  ON public.agendamentos FOR ALL
+  TO authenticated
   USING (public.get_my_perfil() = 'administrador');
 
 -- ────────────────────────────────────────────────────────────
--- VERIFICAÇÃO: Confirmar que as políticas foram criadas
+-- VERIFICAÇÃO FINAL
 -- ────────────────────────────────────────────────────────────
 SELECT tablename, policyname, cmd
 FROM pg_policies

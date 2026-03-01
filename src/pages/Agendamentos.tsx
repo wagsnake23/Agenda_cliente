@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, RefreshCw, User } from 'lucide-react';
+import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
@@ -117,6 +117,18 @@ const AgendamentosPage: React.FC = () => {
         setAlterandoStatusId(null);
     };
 
+    const handlePreviousMonth = () => {
+        const currentDate = filterPeriodo ? new Date(filterPeriodo + '-02') : new Date();
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        setFilterPeriodo(format(currentDate, 'yyyy-MM'));
+    };
+
+    const handleNextMonth = () => {
+        const currentDate = filterPeriodo ? new Date(filterPeriodo + '-02') : new Date();
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        setFilterPeriodo(format(currentDate, 'yyyy-MM'));
+    };
+
     const formatDate = (d: string) => {
         try {
             return format(parseISO(d), 'dd/MM/yyyy', { locale: ptBR });
@@ -177,25 +189,39 @@ const AgendamentosPage: React.FC = () => {
                                 <option value="cancelado">Cancelado</option>
                             </select>
 
-                            {isAdmin && (
-                                <select
-                                    value={filterUsuario}
-                                    onChange={e => setFilterUsuario(e.target.value)}
-                                    className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[180px]"
-                                >
-                                    <option value="">Todos os Usuários</option>
-                                    {usuariosUnicos.map(u => (
-                                        <option key={u.id} value={u.id}>{u.apelido || u.nome}</option>
-                                    ))}
-                                </select>
-                            )}
+                            <select
+                                value={filterUsuario}
+                                onChange={e => setFilterUsuario(e.target.value)}
+                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all appearance-none min-w-[180px]"
+                            >
+                                <option value="">Todos os Usuários</option>
+                                {usuariosUnicos.map(u => (
+                                    <option key={u.id} value={u.id}>{u.apelido || u.nome}</option>
+                                ))}
+                            </select>
 
-                            <input
-                                type="month"
-                                value={filterPeriodo}
-                                onChange={e => setFilterPeriodo(e.target.value)}
-                                className="h-9 px-3 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-medium focus:outline-none focus:border-blue-400 transition-all"
-                            />
+                            <div className="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                                <button
+                                    onClick={handlePreviousMonth}
+                                    className="h-9 px-2 hover:bg-slate-50 text-slate-400 hover:text-blue-600 transition-all border-r border-slate-100"
+                                    title="Mês Anterior"
+                                >
+                                    <ChevronLeft size={18} />
+                                </button>
+                                <input
+                                    type="month"
+                                    value={filterPeriodo}
+                                    onChange={e => setFilterPeriodo(e.target.value)}
+                                    className="h-9 px-3 bg-transparent text-slate-600 text-sm font-bold focus:outline-none transition-all appearance-none cursor-pointer"
+                                />
+                                <button
+                                    onClick={handleNextMonth}
+                                    className="h-9 px-2 hover:bg-slate-50 text-slate-400 hover:text-blue-600 transition-all border-l border-slate-100"
+                                    title="Próximo Mês"
+                                >
+                                    <ChevronRight size={18} />
+                                </button>
+                            </div>
 
                             {(filterStatus || filterUsuario || filterPeriodo) && (
                                 <button
@@ -236,7 +262,7 @@ const AgendamentosPage: React.FC = () => {
                                     <table className="w-full">
                                         <thead>
                                             <tr className="bg-gradient-to-r from-slate-50 to-gray-50 border-b border-gray-100">
-                                                {isAdmin && <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Usuário</th>}
+                                                <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Usuário</th>
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Período</th>
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Dias</th>
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Tipo</th>
@@ -253,24 +279,22 @@ const AgendamentosPage: React.FC = () => {
                                                         key={ag.id}
                                                         className={`border-b border-gray-50 hover:bg-blue-50/30 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}`}
                                                     >
-                                                        {isAdmin && (
-                                                            <td className="px-4 py-3">
-                                                                <div className="flex items-center gap-2">
-                                                                    {ag.profiles?.foto_url ? (
-                                                                        <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-7 h-7 rounded-lg object-cover" />
-                                                                    ) : (
-                                                                        <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
-                                                                            <span className="text-blue-600 text-[10px] font-bold">
-                                                                                {ag.profiles?.nome?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || 'U'}
-                                                                            </span>
-                                                                        </div>
-                                                                    )}
-                                                                    <span className="text-slate-700 text-sm font-medium whitespace-nowrap">
-                                                                        {ag.profiles?.apelido || ag.profiles?.nome || '—'}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        )}
+                                                        <td className="px-4 py-3">
+                                                            <div className="flex items-center gap-2">
+                                                                {ag.profiles?.foto_url ? (
+                                                                    <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-7 h-7 rounded-lg object-cover" />
+                                                                ) : (
+                                                                    <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
+                                                                        <span className="text-blue-600 text-[10px] font-bold">
+                                                                            {ag.profiles?.nome?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || 'U'}
+                                                                        </span>
+                                                                    </div>
+                                                                )}
+                                                                <span className="text-slate-700 text-sm font-medium whitespace-nowrap">
+                                                                    {ag.profiles?.apelido || ag.profiles?.nome || '—'}
+                                                                </span>
+                                                            </div>
+                                                        </td>
                                                         <td className="px-4 py-3">
                                                             <div className="text-slate-700 text-sm font-medium">
                                                                 {formatDate(ag.data_inicial)}
@@ -339,32 +363,23 @@ const AgendamentosPage: React.FC = () => {
                                         <div key={ag.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
                                             <div className="flex items-start justify-between mb-3">
                                                 <div className="flex items-center gap-2">
-                                                    {isAdmin && (
-                                                        <>
-                                                            {ag.profiles?.foto_url ? (
-                                                                <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-8 h-8 rounded-lg object-cover" />
-                                                            ) : (
-                                                                <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                                                                    <User size={14} className="text-blue-500" />
-                                                                </div>
-                                                            )}
-                                                            <div>
-                                                                <p className="text-slate-700 text-sm font-bold">{ag.profiles?.nome || 'Usuário'}</p>
-                                                            </div>
-                                                        </>
+                                                    {ag.profiles?.foto_url ? (
+                                                        <img src={ag.profiles.foto_url} alt={ag.profiles.nome} className="w-8 h-8 rounded-lg object-cover" />
+                                                    ) : (
+                                                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                                                            <User size={14} className="text-blue-500" />
+                                                        </div>
                                                     )}
-                                                    {!isAdmin && (
-                                                        <span className="text-slate-700 font-bold text-sm">{ag.tipo_agendamento}</span>
-                                                    )}
+                                                    <div>
+                                                        <p className="text-slate-700 text-sm font-bold">{ag.profiles?.nome || 'Usuário'}</p>
+                                                        <span className="text-slate-500 text-[10px] uppercase font-bold tracking-tight">{ag.tipo_agendamento}</span>
+                                                    </div>
                                                 </div>
                                                 <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${st.className}`}>
                                                     {st.label}
                                                 </span>
                                             </div>
-                                            {isAdmin && (
-                                                <p className="text-slate-600 text-sm mb-2">{ag.tipo_agendamento}</p>
-                                            )}
-                                            <div className="flex items-center gap-4 text-xs text-slate-500">
+                                            <div className="flex items-center gap-4 text-xs text-slate-500 mb-2">
                                                 <span>📅 {formatDate(ag.data_inicial)} → {formatDate(ag.data_final)}</span>
                                                 <span className="font-bold text-blue-700">{ag.dias} dias</span>
                                             </div>
