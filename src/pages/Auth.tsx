@@ -144,13 +144,13 @@ const AuthPage: React.FC = () => {
                                         Email
                                     </label>
                                     <div className="relative">
-                                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">📧</span>
                                         <input
                                             {...loginForm.register('email')}
                                             type="email"
                                             placeholder="seu@email.com"
                                             autoComplete="email"
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-4 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                     </div>
                                     {loginForm.formState.errors.email && (
@@ -163,18 +163,18 @@ const AuthPage: React.FC = () => {
                                         Senha
                                     </label>
                                     <div className="relative">
-                                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">🔐</span>
                                         <input
                                             {...loginForm.register('password')}
                                             type={showPassword ? 'text' : 'password'}
-                                            placeholder="Mínimo 6 caracteres"
+                                            placeholder="••••••••"
                                             autoComplete="current-password"
-                                            className="w-full h-12 pl-10 pr-12 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-12 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                                         >
                                             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                                         </button>
@@ -187,12 +187,12 @@ const AuthPage: React.FC = () => {
                                 <button
                                     type="submit"
                                     disabled={loginForm.formState.isSubmitting}
-                                    className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black uppercase tracking-wider text-sm shadow-[0_8px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_24px_rgba(37,99,235,0.45)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="w-full h-12 rounded-xl bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#1E40AF] text-white font-black uppercase tracking-wider text-sm shadow-[0_8px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_24px_rgba(37,99,235,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 border border-blue-400/30"
                                 >
                                     {loginForm.formState.isSubmitting ? (
                                         <><Loader2 size={18} className="animate-spin" /> Entrando...</>
                                     ) : (
-                                        <><LogIn size={16} /> Entrar</>
+                                        <><span className="text-lg">🚀</span> Entrar</>
                                     )}
                                 </button>
                             </form>
@@ -206,13 +206,13 @@ const AuthPage: React.FC = () => {
                                         Nome Completo
                                     </label>
                                     <div className="relative">
-                                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">👤</span>
                                         <input
                                             {...signupForm.register('nome')}
                                             type="text"
                                             placeholder="Seu nome completo"
                                             autoComplete="name"
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-4 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                     </div>
                                     {signupForm.formState.errors.nome && (
@@ -225,13 +225,13 @@ const AuthPage: React.FC = () => {
                                         Email
                                     </label>
                                     <div className="relative">
-                                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">📧</span>
                                         <input
                                             {...signupForm.register('email')}
                                             type="email"
                                             placeholder="seu@email.com"
                                             autoComplete="email"
-                                            className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-4 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                     </div>
                                     {signupForm.formState.errors.email && (
@@ -244,18 +244,18 @@ const AuthPage: React.FC = () => {
                                         Senha
                                     </label>
                                     <div className="relative">
-                                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">🔐</span>
                                         <input
                                             {...signupForm.register('password')}
                                             type={showPassword ? 'text' : 'password'}
-                                            placeholder="Mínimo 6 caracteres"
+                                            placeholder="••••••••"
                                             autoComplete="new-password"
-                                            className="w-full h-12 pl-10 pr-12 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-12 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                                         >
                                             {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                                         </button>
@@ -270,18 +270,18 @@ const AuthPage: React.FC = () => {
                                         Confirmar Senha
                                     </label>
                                     <div className="relative">
-                                        <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 w-4 h-4" />
+                                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lg">🔐</span>
                                         <input
                                             {...signupForm.register('confirmPassword')}
                                             type={showConfirmPassword ? 'text' : 'password'}
-                                            placeholder="Repita a senha"
+                                            placeholder="••••••••"
                                             autoComplete="new-password"
-                                            className="w-full h-12 pl-10 pr-12 rounded-xl bg-white/[0.07] border border-white/10 text-white placeholder-white/25 focus:outline-none focus:border-blue-400/60 focus:bg-white/[0.1] transition-all text-sm font-medium"
+                                            className="w-full h-12 pl-11 pr-12 rounded-xl bg-[#F8FAFC] border border-white/10 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all text-sm font-medium"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                                            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                                         >
                                             {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                                         </button>
