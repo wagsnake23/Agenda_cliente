@@ -100,6 +100,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
                         const emoji = agendamento.tipo.split(' ')[0];
                         const tipoNome = agendamento.tipo.replace(emoji, '').trim();
+                        const userName = agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário';
                         const dateText = renderDate(agendamento);
 
                         return (
@@ -120,7 +121,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                     </span>
                                     <span className="opacity-50 mx-0.5 text-[10px] text-[#b45309]">•</span>
                                     <span className="text-[#334155]">
-                                        {tipoNome}
+                                        {tipoNome} - {userName}
                                     </span>
                                 </span>
                                 {emoji && (

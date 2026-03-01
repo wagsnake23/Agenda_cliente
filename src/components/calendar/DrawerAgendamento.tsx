@@ -26,12 +26,31 @@ export interface Agendamento {
     dataFim: string;
     tipo: string;
     totalDias: number;
-    status: 'Pendente';
+    status: string;
     observacao?: string;
     userName?: string;
     userPhoto?: string;
     createdAt?: string;
 }
+
+const STATUS_STYLES: Record<string, { label: string; className: string }> = {
+    pendente: {
+        label: 'Pendente',
+        className: 'bg-yellow-50 text-yellow-700 border-yellow-200',
+    },
+    aprovado: {
+        label: 'Aprovado',
+        className: 'bg-green-50 text-green-700 border-green-200',
+    },
+    recusado: {
+        label: 'Recusado',
+        className: 'bg-red-50 text-red-700 border-red-200',
+    },
+    cancelado: {
+        label: 'Cancelado',
+        className: 'bg-gray-50 text-gray-700 border-gray-200',
+    }
+};
 
 interface DrawerAgendamentoProps {
     isOpen: boolean;
@@ -402,13 +421,31 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 </div>
                             </div>
 
-                            {/* Data de Criação Informativa */}
-                            {agendamentoEditando?.createdAt && (
-                                <div className="mt-5 flex items-center gap-1.5 text-slate-400 ml-1">
-                                    <Clock className="size-3.5" />
-                                    <span className="text-[11px] md:text-xs font-normal">
-                                        Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM 'de' yyyy 'às' HH:mm", { locale: ptBR })}
-                                    </span>
+                            {/* Data de Criação Informativa e Status */}
+                            {agendamentoEditando && (
+                                <div className="mt-5 flex flex-col gap-2.5">
+                                    {/* Exibir Status Atual do Agendamento */}
+                                    <div className="flex items-center gap-2 ml-1">
+                                        <span className="text-[11px] font-bold text-slate-500 uppercase">Status:</span>
+                                        {(() => {
+                                            const statusKey = (agendamentoEditando.status || 'pendente').toLowerCase();
+                                            const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
+                                            return (
+                                                <span className={cn("px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-tight shadow-sm border leading-none block text-center min-w-[70px]", style.className)}>
+                                                    {style.label}
+                                                </span>
+                                            );
+                                        })()}
+                                    </div>
+
+                                    {agendamentoEditando.createdAt && (
+                                        <div className="flex items-center gap-1.5 text-slate-400 ml-1">
+                                            <Clock className="size-3.5" />
+                                            <span className="text-[11px] md:text-xs font-normal">
+                                                Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM 'de' yyyy 'às' HH:mm", { locale: ptBR })}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
@@ -538,9 +575,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
                                                 <div className="col-start-3 row-start-1 justify-self-end py-0.5">
-                                                    <span className="px-1 md:px-2 py-0.5 rounded-full bg-red-50 text-red-700/90 text-[8.5px] md:text-[9.5px] font-bold uppercase tracking-tight shadow-sm border border-red-100/60 leading-none block text-center">
-                                                        {agenda.status}
-                                                    </span>
+                                                    {(() => {
+                                                        const statusKey = (agenda.status || 'pendente').toLowerCase();
+                                                        const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
+                                                        return (
+                                                            <span className={cn("px-1 md:px-2 py-0.5 rounded-full text-[8.5px] md:text-[9.5px] font-bold uppercase tracking-tight shadow-sm border leading-none block text-center min-w-[60px]", style.className)}>
+                                                                {style.label}
+                                                            </span>
+                                                        );
+                                                    })()}
                                                 </div>
                                                 <div className="col-start-3 row-start-2 justify-self-end flex items-center">
                                                     <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">

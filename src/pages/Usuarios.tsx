@@ -13,6 +13,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { Profile } from '@/modules/auth/types';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const userFormSchema = z.object({
     nome: z.string().min(3, 'Nome mínimo 3 caracteres'),
@@ -282,7 +283,7 @@ const UsuariosPage: React.FC = () => {
         }
     };
     return (
-        <div className="min-h-screen bg-[#EFF3F6]">
+        <div className="min-h-screen bg-[#EFF3F6] flex flex-col">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
@@ -464,8 +465,10 @@ const UsuariosPage: React.FC = () => {
                         </>
                     )}
                 </div>
-            </div >
-        </div >
+            </div>
+            {/* Footer exibido apenas em desktop */}
+            <Footer className="hidden md:block" />
+        </div>
     );
 };
 

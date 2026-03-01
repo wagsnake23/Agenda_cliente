@@ -19,6 +19,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { supabase } from '@/lib/supabase';
 import ImageCropperModal from '@/components/ImageCropperModal';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import type { Area } from 'react-easy-crop';
 
 // ────────────────────────────────────────────────────────────
@@ -176,7 +177,7 @@ const MeuPerfil: React.FC = () => {
 
     // ── Salvar dados do perfil ────────────────────────────────
     const handleSave = async (data: ProfileForm) => {
-        const { error } = await saveProfile(data);
+        const { error } = await saveProfile(data as any);
         if (error) {
             toast.error(error);
         } else {
@@ -198,7 +199,7 @@ const MeuPerfil: React.FC = () => {
         : 'U';
 
     return (
-        <div className="min-h-screen bg-[#EFF3F6]">
+        <div className="min-h-screen bg-[#EFF3F6] flex flex-col">
             <Toaster richColors position="top-center" />
 
             {/* Cropper Modal */}
@@ -456,6 +457,8 @@ const MeuPerfil: React.FC = () => {
                     )}
                 </div>
             </div>
+            {/* Footer exibido apenas em desktop */}
+            <Footer className="hidden md:block" />
         </div>
     );
 };

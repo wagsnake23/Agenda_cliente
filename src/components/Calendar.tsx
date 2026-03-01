@@ -45,7 +45,7 @@ const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][n
   dataFim: ag.data_final,
   tipo: ag.tipo_agendamento,
   totalDias: ag.dias,
-  status: 'Pendente', // O Drawer usa esse campo apenas para exibição local
+  status: ag.status || 'pendente',
   observacao: ag.observacao || undefined,
   userName: ag.profiles?.nome || undefined,
   userPhoto: ag.profiles?.foto_url || undefined,

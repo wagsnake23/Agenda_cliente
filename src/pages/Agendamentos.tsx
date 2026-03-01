@@ -10,6 +10,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { Agendamento } from '@/modules/auth/types';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const STATUS_STYLES: Record<string, { label: string; className: string }> = {
     pendente: {
@@ -125,7 +126,7 @@ const AgendamentosPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#EFF3F6]">
+        <div className="min-h-screen bg-[#EFF3F6] flex flex-col">
             <Header />
             <ConfirmDialog
                 open={!!confirmDelete}
@@ -398,6 +399,8 @@ const AgendamentosPage: React.FC = () => {
                     )}
                 </div>
             </div>
+            {/* Footer exibido apenas em desktop */}
+            <Footer className="hidden md:block" />
         </div>
     );
 };
