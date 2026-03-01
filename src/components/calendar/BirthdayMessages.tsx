@@ -58,7 +58,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
 
       <div className="px-3 md:px-6 pt-1 md:pt-3 pb-5 flex flex-col justify-start flex-1">
         {isEmpty ? (
-          <div className="flex-1 flex items-center justify-start py-4 pl-0 md:pl-[28px]">
+          <div className="flex-1 flex items-center justify-start py-4">
             <span className="text-[13px] md:text-[13px] lg:text-[14px] text-gray-400 font-normal italic leading-[1.6]">
               Nenhum aniversariante neste mês.
             </span>
@@ -71,7 +71,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
               <div
                 key={i}
                 className={cn(
-                  "transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5 pl-0 md:pl-[28px]",
+                  "transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5",
                   "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                   isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md py-0.5 px-1 z-20 animate-bounce-twice font-semibold"
                 )}

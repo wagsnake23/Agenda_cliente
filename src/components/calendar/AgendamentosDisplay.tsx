@@ -84,7 +84,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
             <div className="px-3 md:px-6 pt-1 md:pt-3 pb-5 flex flex-col justify-start flex-1">
                 {isEmpty ? (
-                    <div className="flex-1 flex items-center justify-start py-4 pl-0 md:pl-[28px]">
+                    <div className="flex-1 flex items-center justify-start py-4">
                         <span className="text-[12px] md:text-[14px] lg:text-[15px] text-gray-400 font-normal italic leading-[1.6]">
                             Nenhum agendamento neste mês.
                         </span>
@@ -108,27 +108,27 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                 key={agendamento.id}
                                 onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
                                 className={cn(
-                                    "cursor-pointer transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5 pl-0 md:pl-[28px] hover:opacity-80 active:scale-95 origin-left",
+                                    "cursor-pointer transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5 hover:opacity-80 active:scale-95 origin-left",
                                     "text-[13px] md:text-[14px] lg:text-[15px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                                     isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md py-0.5 px-1 z-20 animate-bounce-twice font-semibold"
                                 )}
                             >
-                                <span className="font-medium">
+                                <span className="font-medium flex items-center gap-1">
                                     <span className={cn(
                                         "font-semibold text-[#b45309]"
                                     )}>
                                         {dateText}
                                     </span>
-                                    <span className="opacity-50 mx-0.5 text-[10px] text-[#b45309]">•</span>
+                                    <span className="opacity-50 text-[10px] text-[#b45309]">•</span>
+                                    {emoji && (
+                                        <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1]">
+                                            {emoji}
+                                        </span>
+                                    )}
                                     <span className="text-[#334155]">
                                         {tipoNome} - {userName}
                                     </span>
                                 </span>
-                                {emoji && (
-                                    <span className="text-base md:text-xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] transition-transform hover:scale-110 transform -translate-y-[1px]">
-                                        {emoji}
-                                    </span>
-                                )}
                             </div>
                         );
                     })

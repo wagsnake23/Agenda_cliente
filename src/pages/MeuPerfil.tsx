@@ -46,23 +46,27 @@ const PERFIL_LABELS: Record<string, string> = {
 // Skeleton de Carregamento
 // ────────────────────────────────────────────────────────────
 const ProfileSkeleton: React.FC = () => (
-    <div className="space-y-6 animate-pulse">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div className="flex flex-col items-center gap-4">
-                <div className="w-24 h-24 rounded-2xl bg-gray-200" />
-                <div className="h-5 w-32 bg-gray-200 rounded-lg" />
-                <div className="h-4 w-20 bg-gray-100 rounded-full" />
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 animate-pulse w-full max-w-5xl mx-auto">
+        <div className="md:col-span-5 bg-white rounded-3xl shadow-sm border border-slate-100 p-8 flex flex-col items-center">
+            <div className="w-[140px] h-[140px] rounded-2xl bg-slate-200 mb-6" />
+            <div className="h-6 w-40 bg-slate-200 rounded-lg mb-3" />
+            <div className="h-4 w-32 bg-slate-100 rounded-full mb-6" />
+            <div className="flex gap-2 mb-8">
+                <div className="h-6 w-24 bg-slate-100 rounded-full" />
+                <div className="h-6 w-16 bg-slate-100 rounded-full" />
             </div>
+            <div className="h-10 w-full bg-slate-100 rounded-xl" />
         </div>
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
+        <div className="md:col-span-7 bg-[#FAFAFA] rounded-3xl shadow-sm border border-slate-100 p-8 space-y-6">
+            <div className="h-5 w-48 bg-slate-200 rounded-lg mb-8" />
             {[1, 2, 3, 4, 5].map(i => (
-                <div key={i} className="space-y-1.5">
-                    <div className="h-3 w-24 bg-gray-100 rounded" />
-                    <div className="h-11 bg-gray-100 rounded-xl" />
+                <div key={i} className="space-y-2">
+                    <div className="h-4 w-32 bg-slate-100 rounded" />
+                    <div className="h-12 w-full bg-slate-100 rounded-xl" />
                 </div>
             ))}
+            <div className="h-14 w-full bg-slate-200 rounded-xl mt-8" />
         </div>
-        <div className="h-12 bg-gray-200 rounded-xl" />
     </div>
 );
 
@@ -214,10 +218,10 @@ const MeuPerfil: React.FC = () => {
             {/* Header Global */}
             <Header />
 
-            <div className="w-full lg:pt-[74px]">
-                <div className="max-w-2xl mx-auto px-4 py-8">
+            <div className="w-full h-full lg:pt-[74px]">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
                     {/* Cabeçalho do Módulo Interno */}
-                    <div className="flex items-center gap-3 mb-6">
+                    <div className="flex items-center gap-3 mb-8">
                         <button
                             onClick={() => navigate(-1)}
                             className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
@@ -232,227 +236,224 @@ const MeuPerfil: React.FC = () => {
                     {authLoading ? (
                         <ProfileSkeleton />
                     ) : (
-                        <form onSubmit={form.handleSubmit(handleSave)} className="space-y-6">
-
-                            {/* ── Card: Avatar + Info ──────────────────────── */}
-                            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                                <div className="flex flex-col items-center gap-4">
-
-                                    {/* Avatar */}
-                                    <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                                        <div
-                                            className="w-28 h-28 rounded-2xl overflow-hidden border-4 border-white shadow-[0_8px_32px_rgba(0,0,0,0.12)] bg-blue-50 transition-transform duration-300 group-hover:scale-[1.03]"
-                                            title="Clique para alterar foto"
-                                        >
-                                            {avatarUrl ? (
-                                                <img
-                                                    src={avatarUrl}
-                                                    alt="Foto de perfil"
-                                                    className="w-full h-full object-cover"
-                                                    onError={() => setLocalAvatarUrl(null)}
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-                                                    <span className="text-3xl font-black text-blue-600 select-none">
-                                                        {initials}
-                                                    </span>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Overlay hover */}
-                                        <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center gap-1">
-                                                {uploadingPhoto ? (
-                                                    <Loader2 size={20} className="text-white animate-spin" />
-                                                ) : (
-                                                    <>
-                                                        <Camera size={20} className="text-white drop-shadow" />
-                                                        <span className="text-white text-[9px] font-bold uppercase tracking-wider drop-shadow">
-                                                            Alterar
-                                                        </span>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-
-                                        {/* Botão câmera */}
-                                        <div className="absolute bottom-0.5 right-0.5 w-8 h-8 rounded-full bg-blue-600 border-2 border-white text-white flex items-center justify-center shadow-md pointer-events-none">
-                                            {uploadingPhoto ? (
-                                                <Loader2 size={13} className="animate-spin" />
-                                            ) : (
-                                                <Camera size={13} />
-                                            )}
-                                        </div>
-
-                                        <input
-                                            ref={fileInputRef}
-                                            type="file"
-                                            accept="image/jpeg,image/png,image/webp"
-                                            className="hidden"
-                                            onChange={handleFileSelect}
-                                        />
-                                    </div>
-
-                                    {/* Info de perfil */}
-                                    <div className="text-center">
-                                        <h2 className="font-black text-slate-800 text-lg leading-tight">
-                                            {profile?.nome}
-                                        </h2>
-                                        <p className="text-slate-400 text-xs mt-0.5">{profile?.email}</p>
-                                        <div className="flex items-center justify-center gap-2 mt-2">
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide border ${profile?.perfil === 'administrador'
-                                                ? 'bg-red-50 text-red-700 border-red-200'
-                                                : 'bg-blue-50 text-blue-700 border-blue-200'
-                                                }`}>
-                                                <Shield size={9} className="inline mr-1" />
-                                                {PERFIL_LABELS[profile?.perfil || 'conferente']}
-                                            </span>
-                                            {profile?.ativo && (
-                                                <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-200">
-                                                    <CheckCircle size={9} className="inline mr-1" />
-                                                    Ativo
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Instrução de upload */}
-                                    <button
-                                        type="button"
-                                        onClick={() => fileInputRef.current?.click()}
-                                        disabled={uploadingPhoto}
-                                        className="text-blue-600 text-xs font-semibold hover:text-blue-700 flex items-center gap-1 transition-colors disabled:opacity-50"
+                        <form onSubmit={form.handleSubmit(handleSave)} className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                            {/* 🟦 CARD 1 – PERFIL (COLUNA ESQUERDA 40% -> col-span-5) */}
+                            <div className="md:col-span-5 bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-8 flex flex-col items-center text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+                                {/* Avatar */}
+                                <div className="relative group cursor-pointer mb-5" onClick={() => fileInputRef.current?.click()}>
+                                    <div
+                                        className="w-[130px] h-[130px] sm:w-[140px] sm:h-[140px] rounded-2xl overflow-hidden border-4 border-white shadow-[0_8px_24px_rgba(0,0,0,0.12)] bg-blue-50 transition-transform duration-300 group-hover:scale-[1.03] mx-auto flex items-center justify-center shrink-0"
+                                        title="Clique para alterar foto"
                                     >
-                                        <Camera size={12} />
-                                        {uploadingPhoto ? 'Enviando foto...' : 'Alterar foto de perfil'}
-                                    </button>
-                                    <p className="text-slate-400 text-[10px] -mt-2">JPG, PNG ou WebP · máx. 5MB</p>
+                                        {avatarUrl ? (
+                                            <img
+                                                src={avatarUrl}
+                                                alt="Foto de perfil"
+                                                className="w-full h-full object-cover"
+                                                onError={() => setLocalAvatarUrl(null)}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
+                                                <span className="text-4xl font-black text-blue-600 select-none">
+                                                    {initials}
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Overlay hover */}
+                                    <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center gap-1">
+                                            {uploadingPhoto ? (
+                                                <Loader2 size={24} className="text-white animate-spin" />
+                                            ) : (
+                                                <Camera size={24} className="text-white drop-shadow-md" />
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Botão câmera flutuante fixo */}
+                                    <div className="absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 w-10 h-10 rounded-full bg-blue-600 border-2 border-white text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 pointer-events-none">
+                                        {uploadingPhoto ? (
+                                            <Loader2 size={16} className="animate-spin" />
+                                        ) : (
+                                            <Camera size={16} />
+                                        )}
+                                    </div>
+
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/jpeg,image/png,image/webp"
+                                        className="hidden"
+                                        onChange={handleFileSelect}
+                                    />
                                 </div>
+
+                                {/* Info de perfil */}
+                                <h2 className="font-bold text-slate-800 text-[20px] leading-tight tracking-tight mb-1">
+                                    {profile?.nome}
+                                </h2>
+                                <p className="text-slate-500 text-[13px] mb-4">{profile?.email}</p>
+
+                                <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+                                    <span className={`px-3 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 ${profile?.perfil === 'administrador'
+                                        ? 'bg-red-50 text-red-700 border border-red-100'
+                                        : 'bg-blue-50 text-blue-700 border border-blue-100'
+                                        }`}>
+                                        <Shield size={12} />
+                                        {PERFIL_LABELS[profile?.perfil || 'conferente']}
+                                    </span>
+                                    {profile?.ativo && (
+                                        <span className="px-3 py-1.5 rounded-xl text-[11px] font-bold uppercase tracking-wider bg-green-50 text-green-700 border border-green-100 flex items-center gap-1.5">
+                                            <CheckCircle size={12} />
+                                            Ativo
+                                        </span>
+                                    )}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={uploadingPhoto}
+                                    className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white text-sm font-semibold flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed border border-blue-500/60"
+                                >
+                                    <Camera size={16} className="text-white/90" />
+                                    {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
+                                </button>
+                                <p className="text-slate-400 text-[11px] mt-3">JPG, PNG ou WebP · máx. 5MB</p>
                             </div>
 
-                            {/* ── Card: Dados Pessoais ─────────────────────── */}
-                            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
-                                <h3 className="font-bold text-slate-600 uppercase text-xs tracking-widest border-b border-gray-100 pb-3">
-                                    Informações Pessoais
-                                </h3>
+                            {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
+                            <div className="md:col-span-7 bg-[#FAFAFA] rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-200/50 p-6 sm:p-8 flex flex-col h-full">
+                                <div className="mb-6 flex items-center gap-3 border-b border-slate-200/60 pb-4">
+                                    <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+                                        <User size={16} className="stroke-[2.5]" />
+                                    </div>
+                                    <h3 className="font-bold text-slate-700 text-sm tracking-widest uppercase">
+                                        Informações Pessoais
+                                    </h3>
+                                </div>
 
-                                {/* Nome */}
-                                <div>
-                                    <label className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1.5 ml-1">
-                                        Nome Completo <span className="text-red-400">*</span>
-                                    </label>
-                                    <div className="relative">
-                                        <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                                <div className="space-y-5 flex-1">
+                                    {/* Nome */}
+                                    <div>
+                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                            <div className="w-5 h-5 rounded-md bg-blue-100 flex items-center justify-center text-blue-600">
+                                                <User size={12} />
+                                            </div>
+                                            Nome Completo <span className="text-red-400">*</span>
+                                        </label>
                                         <input
                                             {...form.register('nome')}
                                             type="text"
                                             placeholder="Seu nome completo"
-                                            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all placeholder-slate-300"
+                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
+                                        {form.formState.errors.nome && (
+                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
+                                                {form.formState.errors.nome.message}
+                                            </p>
+                                        )}
                                     </div>
-                                    {form.formState.errors.nome && (
-                                        <p className="text-red-500 text-xs mt-1 ml-1">
-                                            {form.formState.errors.nome.message}
-                                        </p>
-                                    )}
-                                </div>
 
-                                {/* Email (não editável) */}
-                                <div>
-                                    <label className="block text-slate-400 text-xs font-bold uppercase tracking-wider mb-1.5 ml-1">
-                                        Email
-                                    </label>
-                                    <div className="relative">
-                                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 w-4 h-4 pointer-events-none" />
+                                    {/* Email (não editável) */}
+                                    <div>
+                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                            <div className="w-5 h-5 rounded-md bg-orange-100 flex items-center justify-center text-orange-600">
+                                                <Mail size={12} />
+                                            </div>
+                                            Email
+                                        </label>
                                         <input
                                             type="email"
                                             value={profile?.email || ''}
                                             readOnly
-                                            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 text-sm font-medium cursor-not-allowed"
+                                            className="w-full h-12 px-4 rounded-xl border border-slate-200/60 bg-slate-100 text-slate-500 text-sm font-medium cursor-not-allowed shadow-sm"
                                         />
+                                        <p className="text-slate-400 text-[11px] mt-1.5 ml-1">
+                                            O email não pode ser alterado
+                                        </p>
                                     </div>
-                                    <p className="text-slate-400 text-[10px] mt-1 ml-1">
-                                        O email não pode ser alterado
-                                    </p>
-                                </div>
 
-                                {/* Data de Nascimento */}
-                                <div>
-                                    <label className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1.5 ml-1">
-                                        Data de Nascimento
-                                    </label>
-                                    <div className="relative">
-                                        <CalendarIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                                    {/* Data de Nascimento */}
+                                    <div>
+                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                            <div className="w-5 h-5 rounded-md bg-red-100 flex items-center justify-center text-red-600">
+                                                <CalendarIcon size={12} />
+                                            </div>
+                                            Data de Nascimento
+                                        </label>
                                         <input
                                             {...form.register('data_nascimento')}
                                             type="date"
-                                            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all"
+                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                         />
+                                        {form.formState.errors.data_nascimento && (
+                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
+                                                {form.formState.errors.data_nascimento.message}
+                                            </p>
+                                        )}
                                     </div>
-                                    {form.formState.errors.data_nascimento && (
-                                        <p className="text-red-500 text-xs mt-1 ml-1">
-                                            {form.formState.errors.data_nascimento.message}
-                                        </p>
-                                    )}
-                                </div>
 
-                                {/* Cargo */}
-                                <div>
-                                    <label className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1.5 ml-1">
-                                        Cargo <span className="text-red-400">*</span>
-                                    </label>
-                                    <div className="relative">
-                                        <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                                    {/* Cargo */}
+                                    <div>
+                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                            <div className="w-5 h-5 rounded-md bg-purple-100 flex items-center justify-center text-purple-600">
+                                                <Briefcase size={12} />
+                                            </div>
+                                            Cargo <span className="text-red-400">*</span>
+                                        </label>
                                         <input
                                             {...form.register('cargo')}
                                             type="text"
                                             placeholder="Ex: Soldado BM, Cabo BM, Sargento BM..."
-                                            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all placeholder-slate-300"
+                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
+                                        {form.formState.errors.cargo && (
+                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
+                                                {form.formState.errors.cargo.message}
+                                            </p>
+                                        )}
                                     </div>
-                                    {form.formState.errors.cargo && (
-                                        <p className="text-red-500 text-xs mt-1 ml-1">
-                                            {form.formState.errors.cargo.message}
-                                        </p>
-                                    )}
-                                </div>
 
-                                {/* Matrícula */}
-                                <div>
-                                    <label className="block text-slate-500 text-xs font-bold uppercase tracking-wider mb-1.5 ml-1">
-                                        Matrícula <span className="text-red-400">*</span>
-                                    </label>
-                                    <div className="relative">
-                                        <Hash className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4 pointer-events-none" />
+                                    {/* Matrícula */}
+                                    <div>
+                                        <label className="flex items-center gap-2 text-slate-600 text-xs font-bold uppercase tracking-wider mb-2 ml-1">
+                                            <div className="w-5 h-5 rounded-md bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                                <Hash size={12} />
+                                            </div>
+                                            Matrícula <span className="text-red-400">*</span>
+                                        </label>
                                         <input
                                             {...form.register('matricula')}
                                             type="text"
                                             placeholder="Número de matrícula"
-                                            className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all placeholder-slate-300"
+                                            className="w-full h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                         />
+                                        {form.formState.errors.matricula && (
+                                            <p className="text-red-500 text-xs mt-1.5 ml-1">
+                                                {form.formState.errors.matricula.message}
+                                            </p>
+                                        )}
                                     </div>
-                                    {form.formState.errors.matricula && (
-                                        <p className="text-red-500 text-xs mt-1 ml-1">
-                                            {form.formState.errors.matricula.message}
-                                        </p>
-                                    )}
+                                </div>
+
+                                {/* ── Botão Salvar ─────────────────────────────── */}
+                                <div className="mt-8 pt-6 border-t border-slate-200/60">
+                                    <button
+                                        type="submit"
+                                        disabled={saving || uploadingPhoto}
+                                        className="w-full h-14 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#1e40af] text-white font-bold uppercase tracking-widest text-[13px] shadow-[0_8px_20px_rgba(37,99,235,0.25)] hover:shadow-[0_12px_28px_rgba(37,99,235,0.35)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2.5"
+                                    >
+                                        {saving ? (
+                                            <><Loader2 size={20} className="animate-spin" /> Salvando Alterações...</>
+                                        ) : (
+                                            <>💾 Salvar Alterações</>
+                                        )}
+                                    </button>
                                 </div>
                             </div>
-
-                            {/* ── Botão Salvar ─────────────────────────────── */}
-                            <button
-                                type="submit"
-                                disabled={saving || uploadingPhoto}
-                                className="w-full h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-black uppercase tracking-wider text-sm shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_12px_24px_rgba(37,99,235,0.4)] hover:scale-[1.01] active:scale-[0.99] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
-                            >
-                                {saving ? (
-                                    <><Loader2 size={18} className="animate-spin" /> Salvando...</>
-                                ) : (
-                                    <><Save size={16} /> Salvar Alterações</>
-                                )}
-                            </button>
-
                         </form>
                     )}
                 </div>
