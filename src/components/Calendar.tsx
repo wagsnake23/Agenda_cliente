@@ -14,7 +14,7 @@ import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useHolidayMessages } from '@/hooks/use-holiday-messages';
 import { useMoonPhases } from '@/hooks/use-moon-phases';
 import CalendarCard from './calendar/CalendarCard';
-import DrawerAgendamento, { Agendamento } from './calendar/DrawerAgendamento';
+import DrawerAgendamento, { Agendamento as DrawerAgendamentoType } from './calendar/DrawerAgendamento';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
 import {
@@ -25,6 +25,9 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { useAgendamentos } from '@/hooks/useAgendamentos';
+import { useAuth } from '@/context/AuthContext';
+import { toast } from 'sonner';
 
 interface CalendarProps {
   month: number;
@@ -35,6 +38,20 @@ interface CalendarProps {
   formatToday: () => string;
 }
 
+// Converter do formato Supabase para o formato do DrawerAgendamento
+const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][number]): DrawerAgendamentoType => ({
+  id: ag.id,
+  dataInicio: ag.data_inicial,
+  dataFim: ag.data_final,
+  tipo: ag.tipo_agendamento,
+  totalDias: ag.dias,
+  status: 'Pendente', // O Drawer usa esse campo apenas para exibição local
+  observacao: ag.observacao || undefined,
+  userName: ag.profiles?.nome || undefined,
+  userPhoto: ag.profiles?.foto_url || undefined,
+  createdAt: ag.created_at,
+});
+
 const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatToday }: CalendarProps) => {
   const today = new Date();
   const [isYearPopoverOpen, setIsYearPopoverOpen] = useState(false);
@@ -42,9 +59,15 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [api, setApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
   const { mode, setMode } = useCalendarMode();
+  const { isAuthenticated } = useAuth();
 
-  // Estados de Agendamento
-  const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
+  // Hook de agendamentos do Supabase
+  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos } = useAgendamentos();
+
+  // Converter para o formato que o Drawer e CalendarCard esperam
+  const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
+
+  // Estados do Drawer
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'view'>('create');
   const [selectedDrawerDate, setSelectedDrawerDate] = useState<string | undefined>();
@@ -56,57 +79,73 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       setSelectedPeriod(null);
       return;
     }
-
     if (selectedPeriod?.start === period.start && selectedPeriod?.end === period.end) {
       setSelectedPeriod(null);
     } else {
       setSelectedPeriod(period);
-
-      // Navegar para o mês inicial do período
       const startDate = new Date(period.start + 'T12:00:00');
-      const startMonth = startDate.getMonth();
-      const startYear = startDate.getFullYear();
-
-      onMonthChange(startMonth);
-      onYearChange(startYear);
+      onMonthChange(startDate.getMonth());
+      onYearChange(startDate.getFullYear());
     }
   };
 
-  // Carregar do localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('agendamentos');
-    if (saved) {
-      try {
-        setAgendamentos(JSON.parse(saved));
-      } catch (e) {
-        console.error("Erro ao carregar agendamentos:", e);
-      }
+  const salvarAgendamento = async (novo: Omit<DrawerAgendamentoType, 'id'>) => {
+    if (!isAuthenticated) {
+      toast.error('Você precisa estar logado para agendar');
+      return;
     }
-  }, []);
 
-  const salvarAgendamento = (novo: Omit<Agendamento, 'id'>) => {
-    const agendamento: Agendamento = {
-      ...novo,
-      id: Date.now().toString(),
-    };
-    const atualizados = [...agendamentos, agendamento];
-    setAgendamentos(atualizados);
-    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+    const { error } = await criar({
+      data_inicial: novo.dataInicio,
+      data_final: novo.dataFim,
+      tipo_agendamento: novo.tipo,
+      observacao: novo.observacao || null,
+    });
+
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success('Agendamento criado com sucesso!');
+    }
   };
 
-  const excluirAgendamento = (id: string) => {
-    const atualizados = agendamentos.filter(a => a.id !== id);
-    setAgendamentos(atualizados);
-    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+  const excluirAgendamento = async (id: string) => {
+    const { error } = await excluir(id);
+    if (error) {
+      toast.error('Erro ao excluir agendamento');
+    } else {
+      toast.success('Agendamento excluído!');
+    }
   };
 
-  const editarAgendamento = (editado: Agendamento) => {
-    const atualizados = agendamentos.map(a => a.id === editado.id ? editado : a);
-    setAgendamentos(atualizados);
-    localStorage.setItem('agendamentos', JSON.stringify(atualizados));
+  const editarAgendamento = async (editado: DrawerAgendamentoType) => {
+    // Calcular dias
+    const start = new Date(editado.dataInicio);
+    const end = new Date(editado.dataFim);
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+    const dias = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+    const { error } = await atualizar(editado.id, {
+      data_inicial: editado.dataInicio,
+      data_final: editado.dataFim,
+      tipo_agendamento: editado.tipo,
+      dias,
+      observacao: editado.observacao || null,
+    });
+
+    if (error) {
+      toast.error('Erro ao editar agendamento');
+    } else {
+      toast.success('Agendamento atualizado!');
+    }
   };
 
   const handleOpenCreateDrawer = () => {
+    if (!isAuthenticated) {
+      toast.error('Você precisa estar logado para agendar');
+      return;
+    }
     setDrawerMode('create');
     setSelectedDrawerDate(new Date().toISOString().split('T')[0]);
     setIsDrawerOpen(true);
@@ -125,7 +164,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     setSelectedAgendamentoId(null);
   };
 
-  // Sincroniza o destaque do calendário com o agendamento selecionado
   useEffect(() => {
     if (selectedAgendamentoId) {
       const ag = agendamentos.find(a => a.id === selectedAgendamentoId);
@@ -135,7 +173,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     }
   }, [selectedAgendamentoId, agendamentos]);
 
-  // Array otimizado para cobrir a faixa de anos do seletor (6 anos = 72 meses)
   const baseDate = useMemo(() => {
     const now = new Date();
     return new Date(now.getFullYear() - 2, 0, 1);
@@ -174,15 +211,12 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     setHighlightedDay(null);
   }, [month, year]);
 
-  // Sincronizar carrossel quando o estado mudar (via Header)
-  // Sincronizar carrossel quando o estado mudar (via Header)
   useEffect(() => {
     if (!api) return;
 
     if (isMobile) {
-      // No mobile, o mês atual é sempre o índice 1 (central) do monthsToRender
       if (api.selectedScrollSnap() !== 1) {
-        api.scrollTo(1, true); // true para pular animação se necessário
+        api.scrollTo(1, true);
       }
       return;
     }
@@ -194,7 +228,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     if (targetIndex !== -1) {
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
       const desiredIndex = isDesktop ? Math.max(0, targetIndex - 1) : targetIndex;
-
       const currentIndex = api.selectedScrollSnap();
       if (desiredIndex !== currentIndex) {
         api.scrollTo(desiredIndex);
@@ -202,18 +235,16 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     }
   }, [api, month, year, monthsArray, isMobile]);
 
-  // Atualizar estado quando o carrossel mudar (via drag/setas)
   useEffect(() => {
     if (!api) return;
 
     const onSelect = () => {
       const index = api.selectedScrollSnap();
-      setCurrentSlide(index); // Rastrear slide atual
+      setCurrentSlide(index);
 
       const scrollArray = isMobile ? monthsToRender : monthsArray;
       const isDesktop = !isMobile;
       const effectiveIndex = isDesktop ? Math.min(scrollArray.length - 1, index + 1) : index;
-
       const selectedDate = scrollArray[effectiveIndex];
 
       if (!selectedDate) return;
@@ -228,9 +259,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     };
 
     api.on("select", onSelect);
-    return () => {
-      api.off("select", onSelect);
-    };
+    return () => { api.off("select", onSelect); };
   }, [api, monthsArray, monthsToRender, month, year, isMobile]);
 
   const yearOptions = useMemo(() => {
@@ -278,7 +307,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     const handleOpenDrawer = () => handleOpenCreateDrawer();
     window.addEventListener('open-agendamento-drawer', handleOpenDrawer);
     return () => window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
@@ -318,7 +347,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 const y = date.getFullYear();
                 const isCurrent = m === month && y === year;
 
-                // Detectar posição do card em relação ao centro visível
                 const centerIndex = isMobile ? 1 : currentSlide + 1;
                 const position = idx === centerIndex ? 'center' : idx === centerIndex - 1 ? 'left' : idx === centerIndex + 1 ? 'right' : 'far';
 
@@ -327,7 +355,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                     key={`${y}-${m}`}
                     className={cn(
                       "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8 relative",
-                      // Transições de opacidade mantidas, mas sem transforms que causem blur
                       "transition-opacity duration-450 ease-out",
                       position === 'center' ? "opacity-100 z-20" : "opacity-100 z-[5]"
                     )}
@@ -357,13 +384,13 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               })}
             </CarouselContent>
 
-            {/* Drawer Independente - Fixo sobre a posição do primeiro card (Desktop) */}
+            {/* Drawer Desktop */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-[60] py-0 lg:py-0 px-0">
               <div className="relative w-full h-full max-w-[1600px] mx-auto">
                 <div className={cn(
                   "hidden md:block absolute pointer-events-auto transition-all duration-500 ease-in-out",
                   "w-full h-full md:h-full lg:h-full",
-                  "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0", // Max height and top alignment
+                  "lg:w-[calc(100%/3-32px)] lg:left-[32px] lg:top-0",
                   isDrawerOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
                 )}>
                   <DrawerAgendamento
@@ -431,7 +458,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 onViewAgendamento={handleOpenViewDrawer}
               />
 
-              {/* Lista Mobile Inline (abaixo do card amarelo) */}
+              {/* Lista Mobile Inline */}
               <div className="md:hidden w-full">
                 <DrawerAgendamento
                   isOpen={isDrawerOpen}
@@ -452,7 +479,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               </div>
             </div>
 
-            {/* 2º e 3º - Feriados e Eventos + Fases da Lua */}
+            {/* 2º e 3º - Feriados e Fases da Lua */}
             <div className="w-full lg:flex-1 lg:min-w-[370px] order-2 lg:order-2 flex flex-col gap-2 md:gap-4 lg:gap-8">
               <div className={`w-full flex-1 ${holidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
                 <HolidayMessages messages={holidayMessages} highlightedDay={highlightedDay} month={month} />
@@ -462,7 +489,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               </div>
             </div>
 
-            {/* 4º - Aniversariantes (SEM QUALQUER ALTERAÇÃO NA ESTRUTURA) */}
+            {/* 4º - Aniversariantes */}
             <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
               <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} />
             </div>
