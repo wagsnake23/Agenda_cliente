@@ -89,14 +89,14 @@ const AuthPage: React.FC = () => {
                 >
                     <img src="/logo-bombeiros.png" alt="Brasão" className="w-10 h-10 object-contain drop-shadow-md" />
                     <div className="flex items-center gap-2 text-blue-900 md:text-white">
-                        <span className="font-black text-sm md:text-base uppercase tracking-tight leading-none whitespace-nowrap">Bombeiros Agudos</span>
+                        <span className="font-black text-lg md:text-xl uppercase tracking-tight leading-none whitespace-nowrap">Bombeiros Agudos</span>
                     </div>
                 </button>
             </div>
 
             <div className="w-full max-w-[390px] relative z-10">
                 {/* Card de Login - No Mobile fundo branco direto, no Desktop com Card */}
-                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[40px] md:shadow-2xl overflow-hidden px-4 md:px-8 pt-8 md:pt-6 pb-6 md:pb-5 flex flex-col items-center md:border md:border-white/10">
+                <div className="bg-white md:bg-[#F8FAFC] md:rounded-[40px] md:shadow-2xl overflow-hidden px-4 md:px-8 pt-3 md:pt-6 pb-6 md:pb-5 flex flex-col items-center md:border md:border-white/10">
 
                     {/* Logo Original */}
                     <img
@@ -185,7 +185,7 @@ const AuthPage: React.FC = () => {
                     {/* Esqueci a Senha */}
                     <button
                         type="button"
-                        className="mt-8 mb-4 md:mb-0 text-slate-400 md:text-slate-500 font-bold text-xs uppercase tracking-widest hover:text-[#E53935] transition-all"
+                        className="mt-8 mb-4 md:mb-0 text-blue-900 font-bold text-xs uppercase tracking-widest hover:text-blue-700 transition-all"
                         onClick={() => setShowResetModal(true)}
                     >
                         Esqueceu sua senha?
@@ -199,7 +199,7 @@ const AuthPage: React.FC = () => {
             </div>
 
             {/* Footer Mobile específico pinado embaixo fora do card */}
-            <div className="md:hidden absolute bottom-4 left-0 w-full text-center text-slate-400 text-[10px] font-black uppercase tracking-wider z-10">
+            <div className="md:hidden absolute bottom-8 left-0 w-full text-center text-slate-400 text-[10px] font-black uppercase tracking-wider z-10">
                 © {new Date().getFullYear()} - Calendário Prontidão - by Vagner
             </div>
 
