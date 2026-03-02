@@ -199,7 +199,7 @@ const AuthPage: React.FC = () => {
             </div>
 
             {/* Footer Mobile específico pinado embaixo fora do card */}
-            <div className="md:hidden absolute bottom-8 left-0 w-full text-center text-slate-400 text-[10px] font-black uppercase tracking-wider z-10">
+            <div className="md:hidden fixed bottom-0 left-0 w-full text-center text-slate-400 text-[10px] font-black uppercase tracking-wider z-50 bg-gradient-to-t from-white via-white/90 to-transparent pt-6 pb-4">
                 © {new Date().getFullYear()} - Calendário Prontidão - by Vagner
             </div>
 
