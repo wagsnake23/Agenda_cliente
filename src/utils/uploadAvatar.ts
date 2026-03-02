@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
+const MAX_SIZE_BYTES = 15 * 1024 * 1024; // 15MB
 
 /**
  * Valida o arquivo de imagem antes do upload.

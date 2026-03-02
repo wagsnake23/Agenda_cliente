@@ -153,7 +153,7 @@ const ImageCropperModal: React.FC<ImageCropperModalProps> = ({
                             {uploading ? (
                                 <><Loader2 size={16} className="animate-spin" /> Enviando...</>
                             ) : (
-                                <><Check size={16} /> Confirmar Corte</>
+                                <><Check size={16} /> Confirmar</>
                             )}
                         </button>
                     </div>

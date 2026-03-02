@@ -8,12 +8,12 @@ VALUES (
   'avatars',
   'avatars',
   true,
-  5242880, -- 5MB
+  15728640, -- 15MB
   ARRAY['image/jpeg', 'image/png', 'image/webp']
 )
 ON CONFLICT (id) DO UPDATE SET
   public = true,
-  file_size_limit = 5242880,
+  file_size_limit = 15728640,
   allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp'];
 
 -- 2. Política: Leitura pública (qualquer um pode ver avatares)

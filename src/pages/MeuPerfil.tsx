@@ -174,7 +174,7 @@ const MeuPerfil: React.FC = () => {
 
         } catch (err: any) {
             console.error('[handleCropConfirm] Erro completo:', err);
-            toast.error(err?.message || 'Erro inesperado ao alterar a foto.');
+            toast.error(err?.message || 'Erro inesperado ao salvar a foto.');
         } finally {
             // Em qualquer cenário, cancela o "Enviando"
             setUploadingPhoto(false);
@@ -252,7 +252,7 @@ const MeuPerfil: React.FC = () => {
         : 'U';
 
     return (
-        <div className="min-h-screen bg-[#EFF3F6] flex flex-col items-center justify-start p-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
+        <div className="min-h-screen bg-[#EFF3F6] flex flex-col items-center justify-start p-2 lg:p-0 md:gap-y-2 overflow-x-hidden md:overflow-visible text-slate-800">
 
             {/* Cropper Modal */}
             {showCropper && rawImageSrc && (
@@ -267,7 +267,7 @@ const MeuPerfil: React.FC = () => {
             <Header />
 
             <div className="w-full h-full lg:pt-[74px]">
-                <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-4 pb-8 md:py-8">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-1 pb-8 md:py-8">
                     {/* Cabeçalho do Módulo Interno */}
                     <div className="flex items-center gap-3 mb-8">
                         <button
@@ -370,7 +370,7 @@ const MeuPerfil: React.FC = () => {
                                     {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
                                 </button>
 
-                                <p className="text-slate-400 text-[11px] mt-2 mb-1">JPG, PNG ou WebP · máx. 5MB</p>
+                                <p className="text-slate-400 text-[11px] mt-2 mb-1">JPG, PNG ou WebP · máx. 15MB</p>
 
                                 <button
                                     type="button"

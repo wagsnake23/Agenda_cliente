@@ -61,7 +61,7 @@ export function useUpdateProfile({ userId, onSuccess }: UseUpdateProfileProps) {
                 console.log('[Rollback] Nova imagem removida devido à falha no update do profile.');
             }
 
-            toast.error(error.message || 'Erro inesperado ao alterar a foto.');
+            toast.error(error.message || 'Erro inesperado ao salvar a foto.');
             throw error;
         } finally {
             setUploadingPhoto(false);
