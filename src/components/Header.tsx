@@ -103,7 +103,7 @@ const Header = () => {
                             className="w-11 h-11 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
                         />
                         <h1
-                            className="font-black tracking-normal text-white uppercase leading-none inline-flex items-center pointer-events-auto"
+                            className="font-bold tracking-normal text-white uppercase leading-none inline-flex items-center pointer-events-auto"
                             style={{
                                 fontFamily: 'Inter, sans-serif',
                                 filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.3)) drop-shadow(0px 4px 12px rgba(0,0,0,0.5))',
@@ -191,7 +191,7 @@ const Header = () => {
                             className="w-10 h-10 md:w-12 md:h-12 object-contain ml-1 transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
+                            className="text-[1.1rem] md:text-[1.6rem] font-bold tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
                             style={{
                                 background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
                                 WebkitBackgroundClip: 'text',
