@@ -412,7 +412,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
 
                                         {/* Avatar no Mobile (3ª Coluna) */}
-                                        <div className="flex md:hidden flex-col items-center justify-start shrink-0 justify-self-end">
+                                        <div className="flex md:hidden flex-col items-center justify-start shrink-0 justify-self-end transform translate-y-[-10px]">
                                             <div className={cn(
                                                 "rounded-xl overflow-hidden shadow-sm border border-black/[0.08] transition-all bg-white",
                                                 mode === 'create' ? "w-[78px] h-[78px]" : "w-[64px] h-[64px]"
