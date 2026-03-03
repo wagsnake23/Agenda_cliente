@@ -470,38 +470,59 @@ const UsuariosPage: React.FC = () => {
                                 {filtrados.map(u => (
                                     <div key={u.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
                                         <div className="flex items-start justify-between">
-                                            <div className="flex items-center gap-3">
-                                                {u.foto_url ? (
-                                                    <img src={u.foto_url} alt={u.nome} className="w-14 h-14 rounded-xl object-cover" />
-                                                ) : (
-                                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                                                        <span className="text-blue-600 text-sm font-black">
-                                                            {u.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                                <div>
-                                                    <p className="text-slate-700 font-bold text-sm">{u.nome}</p>
-                                                    <p className="text-slate-400 text-xs">{u.email}</p>
+                                            <div className="grid grid-cols-[56px_1fr] gap-x-3 flex-1">
+                                                {/* ÁREA DO AVATAR - LINHA 1 */}
+                                                <div className="col-start-1 row-start-1 shrink-0">
+                                                    {u.foto_url ? (
+                                                        <img src={u.foto_url} alt={u.nome} className="w-14 h-14 rounded-xl object-cover shadow-sm" />
+                                                    ) : (
+                                                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center shadow-sm">
+                                                            <span className="text-blue-600 text-sm font-black">
+                                                                {u.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* ÁREA DE TEXTO - LINHA 1 */}
+                                                <div className="col-start-2 row-start-1 min-w-0 pr-1">
+                                                    <p className="text-slate-700 font-bold text-sm truncate">{u.nome}</p>
+                                                    <p className="text-slate-400 text-[11px] truncate leading-tight mt-0.5">{u.email}</p>
+                                                </div>
+
+                                                {/* STATUS - LINHA 2 (ABAIXO DO AVATAR) */}
+                                                <div className="col-start-1 row-start-2 flex justify-center mt-2">
+                                                    <button onClick={() => handleToggleAtivo(u)} className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter border whitespace-nowrap ${u.ativo ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-500 border-gray-200'}`}>
+                                                        {u.ativo ? 'Ativo' : 'Inativo'}
+                                                    </button>
+                                                </div>
+
+                                                {/* BADGES - LINHA 2 (ABAIXO DO TEXTO) */}
+                                                <div className="col-start-2 row-start-2 flex flex-wrap gap-1.5 items-center mt-2">
+                                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${u.perfil === 'administrador' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
+                                                        {PERFIL_LABELS[u.perfil]}
+                                                    </span>
+                                                    {u.cargo && <span className="px-2 py-0.5 rounded-full text-[10px] bg-slate-50 text-slate-500 border border-slate-100">{u.cargo}</span>}
                                                 </div>
                                             </div>
-                                            <div className="flex gap-1">
-                                                <button onClick={() => { setEditingUser(u); setModalOpen(true); }} className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:bg-blue-50">
-                                                    <Edit2 size={14} />
+
+                                            {/* AÇÕES À DIREITA */}
+                                            <div className="flex flex-col gap-2 ml-3 shrink-0">
+                                                <button
+                                                    onClick={() => { setEditingUser(u); setModalOpen(true); }}
+                                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-600 active:scale-90 transition-all shadow-sm border border-blue-100"
+                                                    title="Editar"
+                                                >
+                                                    <Edit2 size={16} />
                                                 </button>
-                                                <button onClick={() => setConfirmDelete(u.id)} className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:bg-red-50">
-                                                    <Trash2 size={14} />
+                                                <button
+                                                    onClick={() => setConfirmDelete(u.id)}
+                                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-red-50 text-red-600 active:scale-90 transition-all shadow-sm border border-red-100"
+                                                    title="Excluir"
+                                                >
+                                                    <Trash2 size={16} />
                                                 </button>
                                             </div>
-                                        </div>
-                                        <div className="flex flex-wrap gap-2 mt-3">
-                                            <span className={`px-2 py-0.5 rounded-full text-xs font-bold border ${u.perfil === 'administrador' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
-                                                {PERFIL_LABELS[u.perfil]}
-                                            </span>
-                                            <button onClick={() => handleToggleAtivo(u)} className={`px-2 py-0.5 rounded-full text-xs font-bold border ${u.ativo ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-500 border-gray-200'}`}>
-                                                {u.ativo ? 'Ativo' : 'Inativo'}
-                                            </button>
-                                            {u.cargo && <span className="px-2 py-0.5 rounded-full text-xs bg-slate-50 text-slate-500 border border-slate-100">{u.cargo}</span>}
                                         </div>
                                     </div>
                                 ))}
