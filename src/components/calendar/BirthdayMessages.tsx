@@ -31,26 +31,21 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
 
   return (
     <div className={cn(
-      "bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-blue-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
+      "bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-yellow-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
       isEmpty ? "hidden lg:flex" : "flex"
     )}>
       <div className="relative w-full h-9 md:h-[52px] flex items-center">
         {/* Faixa de fundo com gradiente horizontal */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.25] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/[0.25] to-transparent pointer-events-none" />
 
         {/* Barra lateral robusta */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 z-10 rounded-r-md" />
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500 z-10 rounded-r-md" />
 
         {/* Conteúdo do Header */}
         <div className="relative flex items-center gap-2 px-3 md:px-6 z-20">
           <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">🎂</span>
           <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
-            <span style={{
-              background: 'linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}>
+            <span className="text-[#b45309]">
               Aniversariantes
             </span>
           </h4>
@@ -78,9 +73,9 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                 )}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-[#1d4ed8] shrink-0">{data.dateFormatted}</span>
+                  <span className="font-semibold text-[#b45309] shrink-0">{data.dateFormatted}</span>
                   <div className="flex items-center gap-1 font-medium text-[#334155] truncate">
-                    <span className="text-blue-500/50 mx-0.5 text-[10px]">•</span>
+                    <span className="opacity-50 mx-0.5 text-[10px] text-[#b45309]">•</span>
                     <span className="truncate">{data.name.replace(/Bombeiro\s+/i, '')}</span>
                     <span className="text-sm md:text-base transition-transform hover:scale-110 shrink-0 transform -translate-y-[1px]">
                       🎂

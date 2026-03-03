@@ -61,21 +61,26 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
     return (
         <div className={cn(
-            "bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-yellow-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
+            "bg-white/90 backdrop-blur-sm rounded-2xl md:rounded-[22px] border border-blue-500/20 md:border-gray-200/50 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
             isEmpty ? "hidden md:flex" : "flex"
         )}>
             <div className="relative w-full h-9 md:h-[52px] flex items-center">
                 {/* Faixa de fundo com gradiente horizontal */}
-                <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/[0.25] to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/[0.25] to-transparent pointer-events-none" />
 
                 {/* Barra lateral robusta (no padrão visual de border-l-4) */}
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500 z-10 rounded-r-md" />
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 z-10 rounded-r-md" />
 
                 {/* Conteúdo do Header */}
                 <div className="relative flex items-center gap-2 px-3 md:px-6 z-20">
                     <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">📋</span>
                     <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
-                        <span className="text-[#b45309]">
+                        <span style={{
+                            background: 'linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                        }}>
                             AGENDAMENTOS
                         </span>
                     </h4>
@@ -115,11 +120,11 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                             >
                                 <span className="font-medium flex items-center gap-1">
                                     <span className={cn(
-                                        "font-semibold text-[#b45309]"
+                                        "font-semibold text-[#1d4ed8]"
                                     )}>
                                         {dateText}
                                     </span>
-                                    <span className="opacity-50 text-[10px] text-[#b45309]">•</span>
+                                    <span className="text-blue-500/50 mx-0.5 text-[10px]">•</span>
                                     {emoji && (
                                         <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1]">
                                             {emoji}
