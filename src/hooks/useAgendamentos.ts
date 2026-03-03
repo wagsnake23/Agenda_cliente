@@ -120,6 +120,18 @@ export const useAgendamentos = () => {
                 }
             }
 
+            // Injetar data de alteração do status se ele mudou e for aprovado/cancelado/recusado
+            if (finalUpdates.status !== undefined && finalUpdates.status !== currentAg?.status) {
+                const now = new Date().toISOString();
+                if (finalUpdates.status === 'aprovado') {
+                    finalUpdates.approved_at = now;
+                } else if (finalUpdates.status === 'cancelado') {
+                    finalUpdates.cancelled_at = now;
+                } else if (finalUpdates.status === 'recusado') {
+                    finalUpdates.rejected_at = now;
+                }
+            }
+
             const { data, error: updateError } = await supabase
                 .from('agendamentos')
                 .update(finalUpdates)

@@ -32,6 +32,9 @@ export interface Agendamento {
     userName?: string;
     userPhoto?: string;
     createdAt?: string;
+    approvedAt?: string;
+    cancelledAt?: string;
+    rejectedAt?: string;
 }
 
 const STATUS_STYLES: Record<string, { label: string; className: string }> = {
@@ -276,31 +279,41 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             >
                 {/* Header do Drawer */}
                 <div className="flex items-center justify-between p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
-                    <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] flex items-center gap-1.5 md:gap-2 whitespace-nowrap">
+                    <div className="flex flex-row items-start md:items-center gap-1.5 md:gap-2 pt-0.5 md:pt-0">
                         {modoEdicao ? (
-                            <>
-                                <span className="text-[1.1em] md:text-[1.25em]">📝</span>
-                                <span>EDITAR AGENDAMENTO</span>
-                            </>
+                            <span className="text-[1.1em] md:text-[1.25em] leading-none mt-[2px] md:mt-0">📝</span>
                         ) : mode === 'create' ? (
-                            <>
-                                <span className="text-[1.1em] md:text-[1.25em]">✨</span>
-                                <span>NOVO AGENDAMENTO</span>
-                            </>
+                            <span className="text-[1.1em] md:text-[1.25em] leading-none">✨</span>
                         ) : (
-                            <>
-                                <span className="text-[1.1em] md:text-[1.25em]">📅</span>
-                                <span className="opacity-90">AGENDAMENTOS DO DIA</span>
-                                <span className="font-black">
-                                    {initialDate && (() => {
-                                        const d = new Date(initialDate + 'T12:00:00');
-                                        const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-                                        return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-                                    })()}
-                                </span>
-                            </>
+                            <span className="text-[1.1em] md:text-[1.25em] leading-none">📅</span>
                         )}
-                    </h2>
+
+                        <div className="flex flex-col justify-center">
+                            <h2 className="text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem] font-bold text-white uppercase tracking-[0.5px] md:tracking-[1px] whitespace-nowrap leading-tight">
+                                {modoEdicao ? (
+                                    <span>EDITAR AGENDAMENTO</span>
+                                ) : mode === 'create' ? (
+                                    <span>NOVO AGENDAMENTO</span>
+                                ) : (
+                                    <>
+                                        <span className="opacity-90 mr-1.5">AGENDAMENTOS DO DIA</span>
+                                        <span className="font-black">
+                                            {initialDate && (() => {
+                                                const d = new Date(initialDate + 'T12:00:00');
+                                                const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+                                                return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+                                            })()}
+                                        </span>
+                                    </>
+                                )}
+                            </h2>
+                            {modoEdicao && agendamentoEditando?.createdAt && (
+                                <div className="text-white/80 text-[11px] md:text-sm mt-0.5 font-medium text-left leading-tight">
+                                    Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                     <button
                         onClick={() => {
                             if (modoEdicao) {
@@ -466,32 +479,42 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                             {/* Data de Criação Informativa e Status */}
                             {agendamentoEditando && (
                                 <div className="mt-5 flex flex-col gap-2.5">
-                                    {/* Exibir Status Atual do Agendamento */}
-                                    <div className="flex items-center gap-2 ml-1">
-                                        <span className="text-[11px] font-bold text-slate-500 uppercase">Status:</span>
+                                    {/* Exibir Status Atual do Agendamento e Data da Ação */}
+                                    <div className="flex flex-col items-start gap-2 ml-1">
+                                        <div className="flex flex-row items-center gap-2">
+                                            <span className="text-[11px] font-bold text-slate-500 uppercase">Status:</span>
+                                            {(() => {
+                                                const statusKey = (agendamentoEditando.status || 'pendente').toLowerCase();
+                                                const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
+                                                return (
+                                                    <span className={cn("px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-tight shadow-sm border leading-none block text-center min-w-[70px]", style.className)}>
+                                                        {style.label}
+                                                    </span>
+                                                );
+                                            })()}
+                                        </div>
                                         {(() => {
-                                            const statusKey = (agendamentoEditando.status || 'pendente').toLowerCase();
-                                            const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
+                                            const s = agendamentoEditando.status?.toLowerCase();
+                                            let dateVal = null;
+                                            let label = '';
+                                            if (s === 'aprovado' && agendamentoEditando.approvedAt) { dateVal = agendamentoEditando.approvedAt; label = 'Aprovado em'; }
+                                            if (s === 'cancelado' && agendamentoEditando.cancelledAt) { dateVal = agendamentoEditando.cancelledAt; label = 'Cancelado em'; }
+                                            if (s === 'recusado' && agendamentoEditando.rejectedAt) { dateVal = agendamentoEditando.rejectedAt; label = 'Recusado em'; }
+
+                                            if (!dateVal) return null;
+
                                             return (
-                                                <span className={cn("px-2 py-0.5 rounded-full text-[10px] md:text-[11px] font-bold uppercase tracking-tight shadow-sm border leading-none block text-center min-w-[70px]", style.className)}>
-                                                    {style.label}
-                                                </span>
+                                                <div className="flex items-center gap-1 text-slate-600 mt-1">
+                                                    <Clock className="size-[14px] md:size-4" />
+                                                    <span className="text-sm font-medium">
+                                                        {label} {format(parseISO(dateVal), "dd MMM yyyy 'às' HH:mm", { locale: ptBR })}
+                                                    </span>
+                                                </div>
                                             );
                                         })()}
                                     </div>
-
-                                    {agendamentoEditando.createdAt && (
-                                        <div className="flex items-center gap-1.5 text-slate-400 ml-1">
-                                            <Clock className="size-3.5" />
-                                            <span className="text-[11px] md:text-xs font-normal">
-                                                Criado em {format(parseISO(agendamentoEditando.createdAt), "dd MMM 'de' yyyy 'às' HH:mm", { locale: ptBR })}
-                                            </span>
-                                        </div>
-                                    )}
                                 </div>
-                            )}
-
-                            <div className={cn(
+                            )}                                    <div className={cn(
                                 "mt-auto pt-3 flex gap-4",
                                 modoEdicao ? "flex-row" : "flex-col"
                             )}>

@@ -23,6 +23,9 @@ export interface Agendamento {
     observacao: string | null;
     status: 'pendente' | 'aprovado' | 'recusado' | 'cancelado';
     created_at: string;
+    approved_at?: string;
+    cancelled_at?: string;
+    rejected_at?: string;
     profiles?: Profile;
 }
 

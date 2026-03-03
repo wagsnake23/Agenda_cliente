@@ -52,6 +52,9 @@ const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][n
   userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
   userPhoto: ag.profiles?.foto_url || undefined,
   createdAt: ag.created_at,
+  approvedAt: ag.approved_at,
+  cancelledAt: ag.cancelled_at,
+  rejectedAt: ag.rejected_at,
 });
 
 const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatToday }: CalendarProps) => {
