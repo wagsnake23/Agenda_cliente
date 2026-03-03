@@ -411,8 +411,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
             {/* Drawer de Visualização (Desktop: Sobre o primeiro card | Mobile: Abaixo do Carrossel) */}
             <div className={cn(
               "z-[100] transition-all duration-300",
-              "lg:absolute lg:top-2 lg:left-8 lg:w-[calc(33.333%-32px)] lg:h-[calc(100%-92px)]",
-              "w-full h-auto mt-4 px-2",
+              "lg:absolute lg:top-2 lg:left-8 lg:ml-[1px] lg:w-[calc(33.333%-32px)] lg:h-[calc(100%-92px)]",
+              "w-full h-auto mt-4 px-0",
               (drawerMode === 'view' && isDrawerOpen) ? "opacity-100 pointer-events-auto block" : "opacity-0 pointer-events-none hidden"
             )}>
               <DrawerAgendamento
