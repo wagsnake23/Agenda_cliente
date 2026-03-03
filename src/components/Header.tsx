@@ -63,7 +63,7 @@ export const UserMenu = () => {
                         onClick={() => { navigate(`/agendamentos?usuario=${profile?.id}`); setOpen(false); }}
                         className="w-full flex items-center gap-2.5 px-3 py-2.5 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm font-medium"
                     >
-                        <span className="text-[17px] drop-shadow-sm leading-none flex items-center">🗓️</span> Minha Agenda
+                        <span className="text-[17px] drop-shadow-sm leading-none flex items-center">🗓️</span> Meus Agendamentos
                     </button>
 
                     <div className="border-t border-gray-100">
@@ -146,7 +146,7 @@ const Header = () => {
                                                         : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
                                                         }`}
                                                 >
-                                                    Calendário
+                                                    Feriados e Eventos
                                                 </button>
                                             </>
                                         )}

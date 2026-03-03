@@ -101,7 +101,7 @@ const MobileMenu = () => {
                 </div>
 
                 {/* Lista de Itens */}
-                <div className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-1.5">
+                <div className="flex-1 overflow-y-auto py-4 px-3 flex flex-col gap-2">
 
                     {/* Item 1: Escala */}
                     <div className="px-1 py-1 flex items-center justify-between">
@@ -131,7 +131,7 @@ const MobileMenu = () => {
                             {/* Item 2: Agendar */}
                             <button
                                 onClick={handleAgendar}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
                                 <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📝</span>
                                 <span className="font-bold text-sm">Agendar</span>
@@ -140,56 +140,59 @@ const MobileMenu = () => {
                             {/* Item 3: Agendamentos */}
                             <button
                                 onClick={() => handleNav('/agendamentos')}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
                                 <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📋</span>
                                 <span className="font-bold text-sm">Agendamentos</span>
                             </button>
 
-                            {/* Item 5: Admin (Admin) */}
+                            {/* Item 4: Meus Agendamentos */}
+                            <button
+                                onClick={() => handleNav(`/agendamentos?usuario=${profile?.id}`)}
+                                className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                            >
+                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🗓️</span>
+                                <span className="font-bold text-sm">Meus Agendamentos</span>
+                            </button>
+
+                            {/* Itens Admin */}
                             {isAdmin && (
                                 <>
+                                    {/* Item 5: Feriados e Eventos */}
+                                    <button
+                                        onClick={() => handleNav('/admin/calendario')}
+                                        className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                                    >
+                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
+                                        <span className="font-bold text-sm">Feriados e Eventos</span>
+                                    </button>
+
+                                    {/* Item 6: Usuários */}
                                     <button
                                         onClick={() => handleNav('/usuarios')}
-                                        className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
+                                        className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
                                     >
                                         <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👥</span>
                                         <span className="font-bold text-sm">Usuários</span>
                                     </button>
-                                    <button
-                                        onClick={() => handleNav('/admin/calendario')}
-                                        className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
-                                    >
-                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
-                                        <span className="font-bold text-sm">Admin Calendário</span>
-                                    </button>
                                 </>
                             )}
 
-                            {/* Minha Agenda */}
-                            <button
-                                onClick={() => handleNav(`/agendamentos?usuario=${profile?.id}`)}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
-                            >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
-                                <span className="font-bold text-sm">Minha Agenda</span>
-                            </button>
-
-                            {/* Item 4: Meu Perfil */}
+                            {/* Item 7: Meu Perfil */}
                             <button
                                 onClick={() => handleNav('/meu-perfil')}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                             >
                                 <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👤</span>
                                 <span className="font-bold text-sm">Meu Perfil</span>
                             </button>
 
-                            <div className="h-px w-full bg-slate-200 my-2" />
+                            <div className="h-px w-full bg-slate-200 my-1" />
 
-                            {/* Botão Sair */}
+                            {/* Item 8: Sair */}
                             <button
                                 onClick={() => { signOut(); setIsOpen(false); }}
-                                className="flex items-center gap-3 px-3 py-3 w-full text-left text-red-600 hover:bg-red-50 rounded-xl transition-colors group"
+                                className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-red-600 hover:bg-red-50 rounded-xl transition-colors group"
                             >
                                 <LogOut size={20} className="group-hover:scale-110 transition-transform" />
                                 <span className="font-bold text-sm">Sair</span>
@@ -198,7 +201,7 @@ const MobileMenu = () => {
                     ) : (
                         <button
                             onClick={() => handleNav('/auth')}
-                            className="flex items-center gap-3 px-3 py-3 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
+                            className="flex items-center gap-3 px-4 py-[10px] w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors group"
                         >
                             <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🔑</span>
                             <span className="font-bold text-sm">Entrar</span>
