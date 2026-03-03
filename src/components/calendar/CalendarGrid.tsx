@@ -11,7 +11,7 @@ interface CalendarGridProps {
   calendarData: ({
     day: number;
     isToday: boolean;
-    colors: { bg: string; text: string };
+    colors: { bg: string; text: string; border?: string };
     isHoliday: boolean;
     holidayName?: string;
     isBirthday?: boolean;
@@ -66,7 +66,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "flex items-center justify-center text-center",
                 "text-[12px] md:text-[13px] lg:text-[15px]",
                 "font-bold tracking-[0.4px]",
-                "rounded-[13px]",
+                "rounded-[11px]",
                 "aspect-square md:aspect-auto",
                 "w-full md:h-[38px] lg:h-[48px]",
                 "py-1 relative overflow-hidden border-none",
@@ -76,7 +76,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "transition-[background-color,color,box-shadow] duration-200 ease-out",
 
                 // Pseudo brilho fixo
-                "after:absolute after:inset-0 after:rounded-[13px] after:bg-gradient-to-b after:from-white/20 after:to-transparent after:pointer-events-none",
+                "after:absolute after:inset-0 after:rounded-[11px] after:bg-gradient-to-b after:from-white/20 after:to-transparent after:pointer-events-none",
 
                 // =====================
                 // MODO ADM
@@ -139,7 +139,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
               key={index}
               className="aspect-square md:aspect-auto flex items-center justify-center w-full md:h-[38px] lg:h-[48px]"
             >
-              <Skeleton className="w-full h-full rounded-[13px]" />
+              <Skeleton className="w-full h-full rounded-[11px]" />
             </div>
           ))
           : calendarData.map((dayData, index) => (

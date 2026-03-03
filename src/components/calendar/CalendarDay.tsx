@@ -10,7 +10,7 @@ interface CalendarDayProps {
   dayData: {
     day: number;
     isToday: boolean;
-    colors: { bg: string; text: string };
+    colors: { bg: string; text: string; border?: string };
     isHoliday: boolean;
     holidayName?: string;
     holidayEmoji?: string;
@@ -44,7 +44,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const { mode } = useCalendarMode();
 
   if (!dayData || month === undefined || year === undefined) {
-    return <div className="w-full h-full rounded-[13px]" />;
+    return <div className="w-full h-full rounded-[11px]" />;
   }
 
   const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(dayData.day).padStart(2, '0')}`;
@@ -93,18 +93,23 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
       onClick={handleClick}
       className={cn(
         "relative w-full h-full flex items-center justify-center",
-        "rounded-[13px]",
+        "rounded-[11px]",
         "text-sm md:text-base font-semibold",
         "bg-clip-padding saturate-[1.05]",
-        "transition-[background-color,color,box-shadow,transform,filter,opacity] duration-200 ease-out",
+        "transition-colors duration-200 ease-out",
         "will-change-[background-color,box-shadow,transform]",
         "shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)]",
         isSelected && "bg-[#FFFDDF] border border-orange-400/60 shadow-[0_0_12px_rgba(251,146,60,0.4)] z-10",
+
         mode === "adm"
-          ? dayData.isWeekend || dayData.isHoliday
-            ? "border border-red-300/45"
-            : "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)]"
+          ? !isSelected && dayData.colors.bg === 'bg-white'
+            ? "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)] border-none"
+            : cn(
+              "border",
+              !isSelected && dayData.colors.border ? dayData.colors.border : "border-transparent"
+            )
           : !isSelected && "border-none",
+
         !isSelected && (
           dayData.colors.bg === "bg-calendar-blue"
             ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8]"

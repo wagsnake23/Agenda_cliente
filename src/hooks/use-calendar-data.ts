@@ -8,7 +8,7 @@ import type { CalendarMode } from '@/hooks/use-calendar-mode';
 interface CalendarDayData {
   day: number;
   isToday: boolean;
-  colors: { bg: string; text: string };
+  colors: { bg: string; text: string; border?: string };
   isHoliday: boolean;
   holidayName?: string;
   holidayEmoji?: string;

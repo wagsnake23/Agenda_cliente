@@ -33,7 +33,7 @@ export const getSeasonDataForDate = (month: number, day: number) => {
 
 // ─── Cores de fundo do calendário (lógica de escala, não remove) ───
 
-export const getColorForDate = (date: Date): { bg: string; text: string } => {
+export const getColorForDate = (date: Date): { bg: string; text: string; border?: string } => {
   const daysDiff = getDaysBetween(REFERENCE_DATE, date);
   const colorIndex = daysDiff % 3;
   const colors = [
@@ -49,24 +49,27 @@ export const getBackgroundByType = (type: string) => {
     case 'holiday':
       return {
         bg: 'bg-red-100',
-        text: 'text-red-900'
+        border: 'border-red-200',
+        text: 'text-red-800'
       };
     case 'event':
       return {
         bg: 'bg-blue-100',
-        text: 'text-blue-900'
+        border: 'border-blue-200',
+        text: 'text-blue-800'
       };
     case 'birthday':
       return {
         bg: 'bg-orange-100',
-        text: 'text-orange-900'
+        border: 'border-orange-200',
+        text: 'text-orange-800'
       };
     default:
       return null;
   }
 };
 
-export const getColorForDateClean = (date: Date, eventColor: { bg: string; text: string } | null = null): { bg: string; text: string } => {
+export const getColorForDateClean = (date: Date, eventColor: { bg: string; text: string; border?: string } | null = null): { bg: string; text: string; border?: string } => {
   const dayOfWeek = date.getDay();
   const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
 
@@ -77,11 +80,11 @@ export const getColorForDateClean = (date: Date, eventColor: { bg: string; text:
 
   // Prioridade 2: Fim de semana
   if (isWeekend) {
-    return { bg: 'bg-[#FEE2E2]', text: 'text-[#991B1B]' };
+    return { bg: 'bg-[#FEE2E2]', border: 'border-red-300/45', text: 'text-[#991B1B]' };
   }
 
   // Padrão: Dia útil
-  return { bg: 'bg-white', text: 'text-black' };
+  return { bg: 'bg-white', border: 'border-transparent', text: 'text-black' };
 };
 
 export const getColorForDateTwoTone = (date: Date): { bg: string; text: string } => {
@@ -97,8 +100,8 @@ export const getColorForDateTwoTone = (date: Date): { bg: string; text: string }
 export const getColorForMode = (
   date: Date,
   mode: '24x48' | '12x36' | 'adm' = '24x48',
-  eventColor: { bg: string; text: string } | null = null
-): { bg: string; text: string } => {
+  eventColor: { bg: string; text: string; border?: string } | null = null
+): { bg: string; text: string; border?: string } => {
   switch (mode) {
     case 'adm':
       return getColorForDateClean(date, eventColor);
