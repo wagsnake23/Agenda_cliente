@@ -339,10 +339,10 @@ const UsuariosPage: React.FC = () => {
             />
 
             <div className="w-full lg:pt-[74px]">
-                <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-6">
+                <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-2 sm:pt-6 pb-6">
 
                     {/* Header interno do Módulo */}
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                         <div className="flex items-center gap-3">
                             <button
                                 onClick={() => navigate(-1)}
@@ -354,13 +354,17 @@ const UsuariosPage: React.FC = () => {
                                 👥 Usuários
                             </h2>
                         </div>
-                        <div className="flex items-center gap-2">
-                            <button onClick={fetchUsuarios} className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition-all shadow-sm hidden md:flex">
+                        <div className="flex items-center gap-2 w-full sm:w-auto">
+                            <button
+                                onClick={fetchUsuarios}
+                                className="w-11 h-11 flex items-center justify-center shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold transition-all shadow-sm hidden md:flex"
+                                title="Atualizar"
+                            >
                                 <RefreshCw size={16} />
                             </button>
                             <button
                                 onClick={() => { setEditingUser(null); setModalOpen(true); }}
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg transition-all"
+                                className="w-full sm:w-auto h-11 px-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all"
                             >
                                 <Plus size={16} /> Novo Usuário
                             </button>
@@ -407,10 +411,10 @@ const UsuariosPage: React.FC = () => {
                                                 <td className="px-4 py-3">
                                                     <div className="flex items-center gap-2.5">
                                                         {u.foto_url ? (
-                                                            <img src={u.foto_url} alt={u.nome} className="w-8 h-8 rounded-lg object-cover" />
+                                                            <img src={u.foto_url} alt={u.nome} className="w-10 h-10 rounded-lg object-cover" />
                                                         ) : (
-                                                            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                                                                <span className="text-blue-600 text-[10px] font-black">
+                                                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                                                <span className="text-blue-600 text-[11px] font-black">
                                                                     {u.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
                                                                 </span>
                                                             </div>
@@ -468,10 +472,10 @@ const UsuariosPage: React.FC = () => {
                                         <div className="flex items-start justify-between">
                                             <div className="flex items-center gap-3">
                                                 {u.foto_url ? (
-                                                    <img src={u.foto_url} alt={u.nome} className="w-10 h-10 rounded-xl object-cover" />
+                                                    <img src={u.foto_url} alt={u.nome} className="w-14 h-14 rounded-xl object-cover" />
                                                 ) : (
-                                                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                                                        <span className="text-blue-600 text-xs font-black">
+                                                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                                                        <span className="text-blue-600 text-sm font-black">
                                                             {u.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}
                                                         </span>
                                                     </div>
