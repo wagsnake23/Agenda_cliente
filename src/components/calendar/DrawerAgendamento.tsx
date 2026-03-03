@@ -294,7 +294,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
             <div
                 className={cn(
                     "bg-white rounded-2xl md:rounded-[29px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-[#0F172A]/[0.05]",
-                    variant === 'modal' ? "w-full max-w-lg relative z-10 animate-in zoom-in-95 duration-200" : "w-full h-full md:pointer-events-auto",
+                    variant === 'modal' ? "w-full md:max-w-[525px] relative z-10 animate-in zoom-in-95 duration-200" : "w-full h-full md:pointer-events-auto",
                     "flex flex-col overflow-hidden"
                 )}
                 style={variant === 'modal' ? { maxHeight: '95vh' } : {}}
@@ -386,7 +386,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     {/* Grid Superior: Datas e Avatar (Mobile) | Datas e Dias (Desktop) */}
                                     <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 gap-y-2.5 md:gap-3.5 w-full mt-2 md:mt-3 items-start">
                                         {/* Data Inicial */}
-                                        <div className="space-y-1.5 min-w-0">
+                                        <div className="space-y-1.5 min-w-0 md:w-[108px]">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase block truncate leading-none transition-all">Data Inicial</label>
                                             <Input
                                                 type="text"
@@ -399,7 +399,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         </div>
 
                                         {/* Data Final */}
-                                        <div className="space-y-1.5 min-w-0">
+                                        <div className="space-y-1.5 min-w-0 md:w-[108px]">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block truncate leading-none transition-all">Data Final</label>
                                             <Input
                                                 type="text"
@@ -447,7 +447,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     </div>
 
                                     {/* Linha 2 Grid Mobile / Flex Desktop */}
-                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 md:gap-0 w-full md:w-[95%] mt-[-6px] md:mt-1.5 items-end">
+                                    <div className="grid grid-cols-[1fr_1fr_88px] md:flex md:flex-row gap-x-2 md:gap-0 w-full md:w-[95%] mt-[-6px] md:mt-4 items-end">
                                         {/* Tipo de Agendamento (Ocupa 2 colunas no mobile) */}
                                         <div className="col-span-2 md:flex-1 space-y-1">
                                             <label className="text-[10px] md:text-[11px] font-bold text-slate-500 uppercase ml-1 block transition-all">Tipo de Agendamento</label>
@@ -484,7 +484,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 <div className="hidden md:flex flex-col items-center justify-center shrink-0 md:ml-auto md:pl-2 mt-2 md:mt-4">
                                     <div className={cn(
                                         "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
-                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[96px] md:h-[96px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[88px] md:h-[88px] ring-4 ring-blue-50/15 bg-white"
+                                        mode === 'create' ? "w-[84px] h-[84px] md:w-[110px] md:h-[110px] ring-4 ring-[#facc15]/20 bg-white" : "w-16 h-16 md:w-[96px] md:h-[96px] ring-4 ring-blue-50/15 bg-white"
                                     )}>
                                         {agendamentoEditando?.userPhoto ? (
                                             <img src={agendamentoEditando.userPhoto} alt={agendamentoEditando.userName} className="w-full h-full object-cover" />
@@ -497,7 +497,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         )}
                                     </div>
                                     <div className="text-center mt-1.5 min-w-0">
-                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[85px]">
+                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[100px]">
                                             {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                         </span>
                                     </div>
