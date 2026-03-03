@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from 'react';
-import { getDaysBetween, getColorForMode } from '@/utils/calendar-utils';
-import { getEventsForDate, isHolidayEvent, CalendarEvent } from '@/hooks/use-calendar-events';
+import { getDaysBetween, getColorForMode, getBackgroundByType } from '@/utils/calendar-utils';
+import { getEventsForDate, CalendarEvent } from '@/hooks/use-calendar-events';
 import type { CalendarMode } from '@/hooks/use-calendar-mode';
 
 interface CalendarDayData {
@@ -48,21 +48,34 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       // Busca eventos do banco
       const dayEvents = getEventsForDate(calendarEvents, date);
 
-      // Verifica feriado
-      const holidayEvent = dayEvents.find(e => e.type === 'holiday' && e.color_mode === 'holiday');
+      // Prioridade visual para as cores (apenas no modo ADM através da getColorForMode)
+      let eventColor = null;
+      if (dayEvents.length > 0) {
+        const priorityOrder = ['holiday', 'event', 'birthday'];
+        for (const type of priorityOrder) {
+          const match = dayEvents.find(e => e.type === type);
+          if (match) {
+            eventColor = getBackgroundByType(type);
+            break;
+          }
+        }
+      }
+
+      const colors = getColorForMode(date, mode, eventColor);
+
+      // Verifica feriado (para lógica de borda e emoji especial)
+      const holidayEvent = dayEvents.find(e => e.type === 'holiday');
       const isHolidayDay = !!holidayEvent;
       const holidayName = holidayEvent?.title;
       const holidayEmoji = holidayEvent?.emoji || undefined;
-
-      const colors = getColorForMode(date, mode, isHolidayDay);
 
       // Verifica aniversário
       const birthdayEvent = dayEvents.find(e => e.type === 'birthday');
       const isBirthdayDay = !!birthdayEvent;
       const birthdayName = birthdayEvent?.title;
 
-      // Verifica evento especial (event_only - não pinta mas mostra emoji)
-      const specialEvent = dayEvents.find(e => e.color_mode === 'event_only' && e.type !== 'birthday');
+      // Verifica evento (para exibir emoji se tiver)
+      const specialEvent = dayEvents.find(e => e.type === 'event');
       const specialEmojiName = specialEvent?.title;
       const specialEmojiIcon = specialEvent?.emoji || undefined;
 

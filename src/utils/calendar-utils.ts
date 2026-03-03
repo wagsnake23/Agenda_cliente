@@ -44,12 +44,43 @@ export const getColorForDate = (date: Date): { bg: string; text: string } => {
   return colors[colorIndex < 0 ? (3 + colorIndex) : colorIndex];
 };
 
-export const getColorForDateClean = (date: Date, isHolidayDay: boolean = false): { bg: string; text: string } => {
+export const getBackgroundByType = (type: string) => {
+  switch (type) {
+    case 'holiday':
+      return {
+        bg: 'bg-red-100',
+        text: 'text-red-900'
+      };
+    case 'event':
+      return {
+        bg: 'bg-blue-100',
+        text: 'text-blue-900'
+      };
+    case 'birthday':
+      return {
+        bg: 'bg-orange-100',
+        text: 'text-orange-900'
+      };
+    default:
+      return null;
+  }
+};
+
+export const getColorForDateClean = (date: Date, eventColor: { bg: string; text: string } | null = null): { bg: string; text: string } => {
   const dayOfWeek = date.getDay();
   const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-  if (isWeekend || isHolidayDay) {
+
+  // Prioridade 1: Cor do evento
+  if (eventColor) {
+    return eventColor;
+  }
+
+  // Prioridade 2: Fim de semana
+  if (isWeekend) {
     return { bg: 'bg-[#FEE2E2]', text: 'text-[#991B1B]' };
   }
+
+  // Padrão: Dia útil
   return { bg: 'bg-white', text: 'text-black' };
 };
 
@@ -66,11 +97,11 @@ export const getColorForDateTwoTone = (date: Date): { bg: string; text: string }
 export const getColorForMode = (
   date: Date,
   mode: '24x48' | '12x36' | 'adm' = '24x48',
-  isHolidayDay: boolean = false
+  eventColor: { bg: string; text: string } | null = null
 ): { bg: string; text: string } => {
   switch (mode) {
     case 'adm':
-      return getColorForDateClean(date, isHolidayDay);
+      return getColorForDateClean(date, eventColor);
     case '12x36':
       return getColorForDateTwoTone(date);
     case '24x48':

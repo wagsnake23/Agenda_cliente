@@ -521,8 +521,8 @@ const AdminCalendario: React.FC = () => {
                             </div>
 
                             {/* Checkboxes */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <label className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.is_fixed ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}>
+                            <div className="flex gap-3">
+                                <label className={`flex-1 flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.is_fixed ? 'border-amber-400 bg-amber-50' : 'border-slate-200 bg-slate-50'}`}>
                                     <input
                                         type="checkbox"
                                         checked={form.is_fixed}
@@ -532,28 +532,14 @@ const AdminCalendario: React.FC = () => {
                                     />
                                     <div>
                                         <p className="text-xs font-black text-slate-700 uppercase tracking-wide">Evento Anual</p>
-                                        <p className="text-[10px] text-slate-500">Repete todo ano</p>
-                                    </div>
-                                </label>
-
-                                <label className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${form.color_mode === 'holiday' ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-slate-50'}`}>
-                                    <input
-                                        type="checkbox"
-                                        checked={form.color_mode === 'holiday'}
-                                        onChange={e => setForm(p => ({ ...p, color_mode: e.target.checked ? 'holiday' : 'event_only' }))}
-                                        disabled={form.type === 'birthday'}
-                                        className="w-4 h-4 accent-red-500"
-                                    />
-                                    <div>
-                                        <p className="text-xs font-black text-slate-700 uppercase tracking-wide">Pintar Cal.</p>
-                                        <p className="text-[10px] text-slate-500">Colorir o dia</p>
+                                        <p className="text-[10px] text-slate-500">Repete todo ano automaticamente</p>
                                     </div>
                                 </label>
                             </div>
 
                             {form.type === 'birthday' && (
-                                <p className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 border border-amber-200">
-                                    ℹ️ Aniversários são sempre anuais e não pintam o calendário.
+                                <p className="text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2 border border-blue-200">
+                                    ℹ️ Aniversários são sempre anuais. A cor do dia (laranja) será aplicada automaticamente.
                                 </p>
                             )}
 
