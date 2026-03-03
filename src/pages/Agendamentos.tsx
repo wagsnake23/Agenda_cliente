@@ -4,13 +4,14 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User } from 'lucide-react';
+import { ArrowLeft, Loader2, Filter, Trash2, ChevronDown, ChevronLeft, ChevronRight, RefreshCw, User, Edit2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { Agendamento } from '@/modules/auth/types';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import DrawerAgendamento, { Agendamento as DrawerAgendamentoType } from '@/components/calendar/DrawerAgendamento';
 
 const STATUS_STYLES: Record<string, { label: string; className: string }> = {
     pendente: {
@@ -74,8 +75,11 @@ const ConfirmDialog: React.FC<{
 
 const AgendamentosPage: React.FC = () => {
     const navigate = useNavigate();
-    const { isAdmin } = useAuth();
-    const { agendamentos, loading, excluir, alterarStatus, refetch } = useAgendamentos();
+    const { isAdmin, profile } = useAuth();
+    const { agendamentos, loading, excluir, alterarStatus, refetch, atualizar } = useAgendamentos();
+
+    const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+    const [agendamentoParaEditar, setAgendamentoParaEditar] = useState<DrawerAgendamentoType | null>(null);
 
     const [searchParams] = useSearchParams();
     const [filterStatus, setFilterStatus] = useState('');
@@ -150,6 +154,20 @@ const AgendamentosPage: React.FC = () => {
         setAlterandoStatusId(null);
     };
 
+    const handleUpdateAgendamento = async (ag: Omit<DrawerAgendamentoType, 'id'> | DrawerAgendamentoType) => {
+        if (!agendamentoParaEditar) return;
+        await atualizar(agendamentoParaEditar.id, {
+            data_inicial: ag.dataInicio,
+            data_final: ag.dataFim,
+            tipo_agendamento: ag.tipo,
+            dias: ag.totalDias,
+            observacao: ag.observacao,
+        });
+        refetch();
+        setIsEditDrawerOpen(false);
+        setAgendamentoParaEditar(null);
+    };
+
     const handlePreviousMonth = () => {
         const currentDate = filterPeriodo ? new Date(filterPeriodo + '-02') : new Date();
         currentDate.setMonth(currentDate.getMonth() - 1);
@@ -179,6 +197,36 @@ const AgendamentosPage: React.FC = () => {
                 onCancel={() => setConfirmDelete(null)}
                 message="Tem certeza que deseja excluir este agendamento?"
             />
+
+            <div className="md:hidden">
+                <DrawerAgendamento
+                    isOpen={isEditDrawerOpen}
+                    onClose={() => {
+                        setIsEditDrawerOpen(false);
+                        setAgendamentoParaEditar(null);
+                    }}
+                    mode="edit"
+                    agendamentoExternoParaEdicao={agendamentoParaEditar}
+                    onSave={() => { }}
+                    onUpdate={handleUpdateAgendamento}
+                    anchorRef={null as any}
+                />
+            </div>
+            {/* Modal Desktop Mockado para Edição - no desktop o drawer vai se comportar como modal caso precise, mas o DrawerAgendamento já cuida */}
+            <div className="hidden md:block">
+                <DrawerAgendamento
+                    isOpen={isEditDrawerOpen}
+                    onClose={() => {
+                        setIsEditDrawerOpen(false);
+                        setAgendamentoParaEditar(null);
+                    }}
+                    mode="edit"
+                    agendamentoExternoParaEdicao={agendamentoParaEditar}
+                    onSave={() => { }}
+                    onUpdate={handleUpdateAgendamento}
+                    anchorRef={null as any}
+                />
+            </div>
 
             <div className="w-full lg:pt-[74px]">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-3 pb-6 md:py-6">
@@ -319,7 +367,7 @@ const AgendamentosPage: React.FC = () => {
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Tipo</th>
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Status</th>
                                                 <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Observação</th>
-                                                {isAdmin && <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Ações</th>}
+                                                <th className="px-4 py-3 text-right text-xs font-bold text-slate-500 uppercase tracking-wide">Ações</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -387,17 +435,43 @@ const AgendamentosPage: React.FC = () => {
                                                                 {ag.observacao || '—'}
                                                             </span>
                                                         </td>
-                                                        {isAdmin && (
-                                                            <td className="px-4 py-3">
-                                                                <button
-                                                                    onClick={() => setConfirmDelete(ag.id)}
-                                                                    disabled={deletingId === ag.id}
-                                                                    className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all"
-                                                                >
-                                                                    {deletingId === ag.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                                                                </button>
-                                                            </td>
-                                                        )}
+                                                        <td className="px-4 py-3 text-right">
+                                                            <div className="flex items-center justify-end gap-2">
+                                                                {(isAdmin || ag.user_id === profile?.id) && (
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            setAgendamentoParaEditar({
+                                                                                id: ag.id,
+                                                                                userId: ag.user_id,
+                                                                                dataInicio: ag.data_inicial,
+                                                                                dataFim: ag.data_final,
+                                                                                tipo: ag.tipo_agendamento,
+                                                                                totalDias: ag.dias,
+                                                                                status: ag.status,
+                                                                                observacao: ag.observacao,
+                                                                                userName: ag.profiles?.nome,
+                                                                                userPhoto: ag.profiles?.foto_url,
+                                                                            });
+                                                                            setIsEditDrawerOpen(true);
+                                                                        }}
+                                                                        className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                                                                        title="Editar Agendamento"
+                                                                    >
+                                                                        <Edit2 size={14} />
+                                                                    </button>
+                                                                )}
+                                                                {isAdmin && (
+                                                                    <button
+                                                                        onClick={() => setConfirmDelete(ag.id)}
+                                                                        disabled={deletingId === ag.id}
+                                                                        className="w-8 h-8 flex items-center justify-center rounded-lg text-red-400 hover:text-red-600 hover:bg-red-50 transition-all"
+                                                                        title="Excluir"
+                                                                    >
+                                                                        {deletingId === ag.id ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                 );
                                             })}
@@ -437,24 +511,50 @@ const AgendamentosPage: React.FC = () => {
                                             {ag.observacao && (
                                                 <p className="text-slate-400 text-xs italic mt-2">"{ag.observacao}"</p>
                                             )}
-                                            {isAdmin && (
+                                            {(isAdmin || ag.user_id === profile?.id) && (
                                                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
-                                                    <select
-                                                        value={ag.status}
-                                                        onChange={e => handleAlterarStatus(ag.id, e.target.value as Agendamento['status'])}
-                                                        className={`text-xs font-bold border rounded-full px-2 py-0.5 ${st.className}`}
-                                                    >
-                                                        <option value="pendente">Pendente</option>
-                                                        <option value="aprovado">Aprovado</option>
-                                                        <option value="recusado">Recusado</option>
-                                                        <option value="cancelado">Cancelado</option>
-                                                    </select>
-                                                    <button
-                                                        onClick={() => setConfirmDelete(ag.id)}
-                                                        className="text-red-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all"
-                                                    >
-                                                        <Trash2 size={14} />
-                                                    </button>
+                                                    {isAdmin ? (
+                                                        <select
+                                                            value={ag.status}
+                                                            onChange={e => handleAlterarStatus(ag.id, e.target.value as Agendamento['status'])}
+                                                            className={`text-xs font-bold border rounded-full px-2 py-0.5 ${st.className}`}
+                                                        >
+                                                            <option value="pendente">Pendente</option>
+                                                            <option value="aprovado">Aprovado</option>
+                                                            <option value="recusado">Recusado</option>
+                                                            <option value="cancelado">Cancelado</option>
+                                                        </select>
+                                                    ) : <div />}
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() => {
+                                                                setAgendamentoParaEditar({
+                                                                    id: ag.id,
+                                                                    userId: ag.user_id,
+                                                                    dataInicio: ag.data_inicial,
+                                                                    dataFim: ag.data_final,
+                                                                    tipo: ag.tipo_agendamento,
+                                                                    totalDias: ag.dias,
+                                                                    status: ag.status,
+                                                                    observacao: ag.observacao,
+                                                                    userName: ag.profiles?.nome,
+                                                                    userPhoto: ag.profiles?.foto_url,
+                                                                });
+                                                                setIsEditDrawerOpen(true);
+                                                            }}
+                                                            className="text-blue-400 hover:text-blue-600 p-1.5 rounded-lg hover:bg-blue-50 transition-all"
+                                                        >
+                                                            <Edit2 size={14} />
+                                                        </button>
+                                                        {isAdmin && (
+                                                            <button
+                                                                onClick={() => setConfirmDelete(ag.id)}
+                                                                className="text-red-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all"
+                                                            >
+                                                                <Trash2 size={14} />
+                                                            </button>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>

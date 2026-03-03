@@ -99,8 +99,9 @@ const ConfirmDialog: React.FC<{
 interface DrawerAgendamentoProps {
     isOpen: boolean;
     onClose: () => void;
-    mode: 'create' | 'view';
+    mode: 'create' | 'view' | 'edit';
     initialDate?: string;
+    agendamentoExternoParaEdicao?: Agendamento | null;
     agendamentosNoDia?: Agendamento[];
     todosAgendamentos?: Agendamento[];
     onSave: (agendamento: Omit<Agendamento, 'id'>) => void;
@@ -118,6 +119,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     onClose,
     mode,
     initialDate,
+    agendamentoExternoParaEdicao,
     agendamentosNoDia = [],
     todosAgendamentos = [],
     onSave,
@@ -160,8 +162,19 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 from: initialDate ? parseISO(initialDate) : undefined,
                 to: initialDate ? parseISO(initialDate) : undefined,
             });
+        } else if (mode === 'edit' && agendamentoExternoParaEdicao) {
+            setModoEdicao(true);
+            setAgendamentoEditando(agendamentoExternoParaEdicao);
+            setDataInicio(agendamentoExternoParaEdicao.dataInicio);
+            setDataFim(agendamentoExternoParaEdicao.dataFim);
+            setTipo(agendamentoExternoParaEdicao.tipo);
+            setObservacao(agendamentoExternoParaEdicao.observacao || '');
+            setDateRange({
+                from: parseISO(agendamentoExternoParaEdicao.dataInicio),
+                to: parseISO(agendamentoExternoParaEdicao.dataFim),
+            });
         }
-    }, [isOpen, mode, initialDate]);
+    }, [isOpen, mode, initialDate, agendamentoExternoParaEdicao]);
 
     useEffect(() => {
         if (modoEdicao && agendamentoEditando) {
@@ -216,9 +229,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                     totalDias,
                     observacao: observacao.trim(),
                 });
-                setModoEdicao(false);
-                setAgendamentoEditando(null);
-                // Não chama onClose aqui para voltar para a lista (view mode)
+
+                if (mode === 'edit') {
+                    onClose();
+                } else {
+                    setModoEdicao(false);
+                    setAgendamentoEditando(null);
+                }
             } else {
                 onSave({
                     dataInicio,
@@ -521,8 +538,12 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 {modoEdicao && (
                                     <Button
                                         onClick={() => {
-                                            setModoEdicao(false);
-                                            setAgendamentoEditando(null);
+                                            if (mode === 'edit') {
+                                                onClose();
+                                            } else {
+                                                setModoEdicao(false);
+                                                setAgendamentoEditando(null);
+                                            }
                                         }}
                                         variant="outline"
                                         className="flex-1 h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider border-red-200 text-red-600 hover:text-red-900 hover:bg-red-50 hover:border-red-300 transition-all duration-300 shadow-sm"
