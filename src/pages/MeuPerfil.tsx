@@ -269,10 +269,10 @@ const MeuPerfil: React.FC = () => {
             <div className="w-full h-full lg:pt-[74px]">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-1 pb-8 md:py-8">
                     {/* Cabeçalho do Módulo Interno */}
-                    <div className="flex items-center gap-3 mb-8">
+                    <div className="flex items-center justify-center md:justify-start gap-3 mb-8">
                         <button
                             onClick={() => navigate(-1)}
-                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
+                            className="hidden md:flex w-10 h-10 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all shadow-sm"
                         >
                             <ArrowLeft size={20} />
                         </button>

@@ -65,7 +65,14 @@ const MobileMenu = () => {
                 )}
             >
                 {/* Topo / Header do Menu */}
-                <div className="px-5 py-6 bg-[#0B1221] flex flex-col">
+                <div className="px-5 py-6 bg-[#0B1221] flex flex-col relative">
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center bg-red-600 text-white hover:bg-red-700 rounded-full transition-colors shadow-lg z-10"
+                    >
+                        <X size={16} strokeWidth={3} />
+                    </button>
+
                     <div className="flex justify-between items-start mb-4">
                         <div className="w-12 h-12 rounded-2xl border-2 border-white/20 overflow-hidden bg-gradient-to-br from-blue-600 to-blue-700 shrink-0 flex items-center justify-center shadow-lg">
                             {profile?.foto_url ? (
@@ -74,12 +81,6 @@ const MobileMenu = () => {
                                 <span className="text-white font-black text-xl">{isAuthenticated ? initials : 'U'}</span>
                             )}
                         </div>
-                        <button
-                            onClick={() => setIsOpen(false)}
-                            className="w-8 h-8 flex items-center justify-center bg-red-600 text-white hover:bg-red-700 rounded-lg transition-colors shadow-sm"
-                        >
-                            <X size={20} strokeWidth={3} />
-                        </button>
                     </div>
 
                     {loading ? (

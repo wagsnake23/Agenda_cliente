@@ -270,14 +270,14 @@ const AdminCalendario: React.FC = () => {
             <Header />
 
             <div className="w-full lg:pt-[74px]">
-                <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-2 sm:pt-6 pb-6">
+                <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6 pb-6">
 
                     {/* Cabeçalho interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                        <div className="flex flex-col">
-                            <h1 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight flex items-start sm:items-center gap-2">
-                                <span className="shrink-0 mt-[2px] sm:mt-0 text-[1.1em]">📅</span>
-                                <span>Gerenciamento de Calendário</span>
+                        <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                            <h1 className="text-xl sm:text-2xl font-black text-slate-800 tracking-tight flex items-center justify-center md:justify-start gap-2">
+                                <span className="text-[1.1em]">📅</span>
+                                <span>Feriados e Eventos</span>
                             </h1>
                             <p className="text-slate-500 text-sm mt-0.5 hidden md:block">Gerencie feriados, eventos e aniversariantes exibidos no calendário.</p>
                         </div>
