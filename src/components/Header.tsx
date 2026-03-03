@@ -126,18 +126,18 @@ const Header = () => {
                                             <>
                                                 <button
                                                     onClick={() => navigate('/usuarios')}
-                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
-                                                        ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                        : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
+                                                        ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
+                                                        : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
                                                         }`}
                                                 >
                                                     Usuários
                                                 </button>
                                                 <button
                                                     onClick={() => navigate('/admin/calendario')}
-                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
-                                                        ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                        : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                                    className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
+                                                        ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
+                                                        : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
                                                         }`}
                                                 >
                                                     Feriados e Eventos
@@ -148,9 +148,9 @@ const Header = () => {
                                         {/* Agendamentos */}
                                         <button
                                             onClick={() => navigate('/agendamentos')}
-                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-medium transition-all duration-200 ease-in-out ${location.pathname === '/agendamentos'
-                                                ? 'text-white border-b-2 border-[#38bdf8] rounded-b-none'
-                                                : 'text-white/75 hover:bg-white/[0.08] hover:text-white border-b-2 border-transparent'
+                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname === '/agendamentos'
+                                                ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
+                                                : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
                                                 }`}
                                         >
                                             Agendamentos
