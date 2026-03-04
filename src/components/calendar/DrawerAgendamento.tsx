@@ -652,7 +652,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
-                                                "p-1.5 md:p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
+                                                "p-1 md:p-3 rounded-2xl border bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
                                                     ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
@@ -714,7 +714,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
                                                 {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
-                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-1.5 md:-my-3 -mr-1.5 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
+                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-black/[0.06] bg-slate-50/40 -my-1 md:-my-3 -mr-1 md:-mr-3 flex flex-col items-center justify-center gap-0 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
