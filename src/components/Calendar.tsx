@@ -592,7 +592,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
             </div>
           </div>
 
-          <div className="max-w-[1600px] mx-auto w-full mt-0 lg:mt-[-20px] flex flex-col gap-3 lg:gap-0 lg:pb-16 lg:pl-8">
+          <div className="max-w-[1600px] mx-auto w-full mt-0 lg:mt-[-20px] flex flex-col gap-3 lg:gap-0 lg:pb-16">
             <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch">
               {/* 1º - Agendamentos */}
               <div className={cn(
