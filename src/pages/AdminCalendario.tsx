@@ -636,11 +636,7 @@ const AdminCalendario: React.FC = () => {
                                 </label>
                             </div>
 
-                            {form.type === 'birthday' && (
-                                <p className="text-xs text-blue-600 bg-blue-50 rounded-lg px-3 py-2 border border-blue-200">
-                                    ℹ️ Aniversários são sempre anuais. A cor do dia (laranja) será aplicada automaticamente.
-                                </p>
-                            )}
+
 
                             {/* Botões */}
                             <div className="flex gap-3 pt-2">
