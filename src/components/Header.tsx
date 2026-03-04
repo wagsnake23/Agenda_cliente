@@ -182,7 +182,7 @@ const Header = () => {
 
             {/* Header Mobile/Tablet */}
             <header className="sticky top-0 z-50 w-full h-[60px] bg-[#EFF3F6] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
-                <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+                <div className="flex items-center gap-3 cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
                     <div className="flex items-center gap-1.5 w-full max-w-[280px]">
                         <img
                             src="/logo.png"

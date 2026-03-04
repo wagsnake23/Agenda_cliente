@@ -42,10 +42,14 @@ const MobileMenu = () => {
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 md:hidden text-slate-800 hover:bg-slate-200/50 rounded-lg transition-colors ml-1"
+                className="w-10 h-10 flex flex-col items-center justify-center gap-1.5 md:hidden text-[#E53935] hover:bg-red-50 rounded-lg transition-colors ml-1 relative -top-[1px]"
                 aria-label="Abrir menu"
             >
-                <Menu size={24} />
+                <div className="flex flex-col gap-[4.5px]">
+                    <span className="w-6 h-[3px] bg-current rounded-full" />
+                    <span className="w-6 h-[3px] bg-current rounded-full" />
+                    <span className="w-6 h-[3px] bg-current rounded-full" />
+                </div>
             </button>
 
             {/* Overlay Escuro */}
