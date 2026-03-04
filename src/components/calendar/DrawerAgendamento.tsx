@@ -756,7 +756,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                 isCalendarModalOpen && createPortal(
                     <div className="fixed inset-0 z-[300] flex items-center justify-center animate-in fade-in duration-200 pointer-events-auto">
                         <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCalendarModalOpen(false)} />
-                        <div className="relative bg-white rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-100 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
+                        <div className="relative bg-[#F8FAFC] rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200/60 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
                             <div className="w-full flex justify-between items-center p-4 md:px-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
                                 <h3 className="font-bold text-white uppercase tracking-[1px] text-sm">Selecione o Período</h3>
                                 <button
@@ -764,7 +764,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90"
                                     title="Fechar"
                                 >
-                                    <X size={18} strokeWidth={3} />
+                                    <X size={18} strokeWidth={4} />
                                 </button>
                             </div>
                             <div className="px-2 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
@@ -784,22 +784,22 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     modifiersClassNames={{
                                         agendado: "after:content-[''] after:absolute after:bottom-1.5 after:left-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:bg-blue-500 after:rounded-full font-bold relative text-blue-800 bg-blue-50"
                                     }}
-                                    className="bg-white"
+                                    className="bg-transparent"
                                     classNames={{
                                         months: "flex flex-col sm:flex-row w-full justify-center max-w-full",
                                         month: "w-full flex flex-col",
-                                        caption: "order-1 flex justify-center pt-0 relative items-center pb-2",
-                                        caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-slate-800",
-                                        nav: "space-x-1 flex items-center bg-slate-50 rounded-lg p-0.5 shadow-sm border border-slate-100",
-                                        nav_button: "h-7 w-7 bg-transparent p-0 text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center rounded-md hover:bg-slate-200/50",
-                                        nav_button_previous: "absolute left-0",
-                                        nav_button_next: "absolute right-0",
-                                        table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1.5 border-spacing-x-1 max-w-full",
+                                        caption: "order-1 flex justify-center pt-0 relative items-center pb-3 w-full px-1",
+                                        caption_label: "font-black text-[0.95rem] uppercase tracking-wider text-blue-800",
+                                        nav: "static",
+                                        nav_button: "h-8 w-8 flex items-center justify-center rounded-lg bg-blue-50/80 border border-blue-100/60 text-blue-600 shadow-[0_1px_2px_rgba(30,64,175,0.1),inset_0_1px_0_rgba(255,255,255,1)] hover:bg-blue-100 hover:text-blue-700 transition-all active:scale-95",
+                                        nav_button_previous: "absolute left-0 -top-1.5 ml-2",
+                                        nav_button_next: "absolute right-0 -top-1.5 mr-2",
+                                        table: "order-3 w-[min-content] mx-auto border-separate border-spacing-y-1 border-spacing-x-1 max-w-full",
                                         head_row: "flex w-full justify-center gap-1",
-                                        head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[13px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
+                                        head_cell: "text-[12px] md:text-[13px] font-bold tracking-[0.4px] uppercase flex items-center justify-center rounded-[14px] h-10 w-10 md:h-12 md:w-12 bg-gradient-to-b from-[#F4F6F8] to-[#E6E9ED] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.08)] text-slate-700 first:text-slate-700 last:text-slate-700 m-0",
                                         row: "flex w-full justify-center gap-1 group relative",
                                         cell: "h-10 w-10 md:h-12 md:w-12 text-center p-0 m-0 relative focus-within:z-20 bg-transparent text-slate-700 first:text-slate-700 last:text-slate-700",
-                                        day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[13px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-200 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.1)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400",
+                                        day: "h-10 w-10 md:h-12 md:w-12 p-0 flex items-center justify-center relative rounded-[14px] text-sm md:text-base font-semibold bg-white bg-clip-padding saturate-[1.05] transition-all duration-200 ease-out border border-slate-300 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_2px_rgba(0,0,0,0.15)] hover:scale-[1.02] hover:brightness-[1.05] cursor-pointer text-inherit outline-none focus-visible:ring-1 focus-visible:ring-blue-400",
                                         day_range_start: "day-range-start !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
                                         day_range_end: "day-range-end !bg-[#93C5FD] !text-[#1e3a8a] !font-bold ring-2 ring-white !shadow-[0_2px_8px_rgba(59,130,246,0.3)] z-20 !scale-[1.02]",
                                         day_range_middle: "aria-selected:!bg-[#DBEAFE] aria-selected:!text-[#1E3A8A] !shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.4),inset_0_-1px_1px_rgba(0,0,0,0.05)] font-bold",
@@ -818,20 +818,20 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 <tfoot>
                                                     <tr>
                                                         <td colSpan={7}>
-                                                            <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-1.5 px-1.5 flex flex-nowrap items-center justify-center gap-1 sm:gap-3 shadow-sm mx-auto sm:max-w-full">
-                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
-                                                                    <span>Início:</span>
-                                                                    <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
+                                                            <div className="w-full mt-3 mb-0 bg-gradient-to-b from-blue-50/90 to-blue-100/80 border border-blue-200/60 rounded-[12px] py-1.5 px-1.5 flex flex-nowrap items-center justify-center gap-1 sm:gap-4 shadow-[0_2px_4px_rgba(30,64,175,0.08),inset_0_1.5px_1px_rgba(255,255,255,1)] mx-auto sm:max-w-full">
+                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                                    <span className="font-medium">Início:</span>
+                                                                    <strong className="text-blue-800 font-bold">{rInicio}</strong>
                                                                 </div>
-                                                                <span className="text-slate-300">|</span>
-                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
-                                                                    <span>Fim:</span>
-                                                                    <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
+                                                                <span className="text-blue-200/80 font-light">|</span>
+                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                                    <span className="font-medium">Fim:</span>
+                                                                    <strong className="text-blue-800 font-bold">{rFim}</strong>
                                                                 </div>
-                                                                <span className="text-slate-300">|</span>
-                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
-                                                                    <span>Total:</span>
-                                                                    <strong className="text-[#1E40AF] font-semibold">{totalDias}d</strong>
+                                                                <span className="text-blue-200/80 font-light">|</span>
+                                                                <div className="flex items-center gap-1 text-[13px] sm:text-[14px] text-blue-700/80 whitespace-nowrap">
+                                                                    <span className="font-medium">Total:</span>
+                                                                    <strong className="text-blue-800 font-bold">{totalDias}d</strong>
                                                                 </div>
                                                             </div>
                                                         </td>
