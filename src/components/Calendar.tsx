@@ -458,7 +458,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               }}
               className="w-full relative px-0"
             >
-              <CarouselContent className="w-full flex items-stretch cursor-grab active:cursor-grabbing lg:-ml-8">
+              <CarouselContent className="w-full flex items-stretch gap-8 cursor-grab active:cursor-grabbing">
                 {monthsToRender.map((date, idx) => {
                   const m = date.getMonth();
                   const y = date.getFullYear();
@@ -471,7 +471,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                     <CarouselItem
                       key={`${y}-${m}`}
                       className={cn(
-                        "w-full basis-full shrink-0 grow-0 lg:basis-1/3 lg:pl-8 relative",
+                        "w-full basis-full shrink-0 grow-0 lg:basis-[calc((100%-4rem)/3)] relative",
                         "transition-opacity duration-450 ease-out",
                         position === 'center' ? "opacity-100 z-20" : "opacity-100 z-[5]"
                       )}
