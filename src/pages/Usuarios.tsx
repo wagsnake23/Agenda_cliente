@@ -7,10 +7,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import {
-    ArrowLeft, Loader2, Plus, Trash2, Edit2, Shield, CheckCircle,
-    XCircle, User, Search, RefreshCw, X
+    ArrowLeft, Loader2, Plus, Trash2, Edit2, Shield,
+    CheckCircle, XCircle, User, Search, RefreshCw, X, Key
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/context/AuthContext';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Profile } from '@/modules/auth/types';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -82,6 +93,9 @@ const UserModal: React.FC<{
     editingUser?: Profile | null;
 }> = ({ open, onClose, onSaved, editingUser }) => {
     const isEditing = !!editingUser;
+    const { session } = useAuth();
+    const [actionLoading, setActionLoading] = useState<string | null>(null);
+    const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
 
     const form = useForm<UserFormInput>({
         resolver: zodResolver(userFormSchema),
@@ -169,6 +183,34 @@ const UserModal: React.FC<{
         }
     };
 
+    const handleResetPassword = async () => {
+        if (!editingUser || !session) return;
+
+        setActionLoading("reset-password");
+        try {
+            const { error } = await supabase.functions.invoke("reset-password", {
+                body: { userId: editingUser.id },
+                headers: {
+                    Authorization: `Bearer ${session.access_token}`
+                }
+            });
+
+            if (error) throw error;
+
+            toast.success('Senha redefinida', {
+                description: 'Senha redefinida para Agenda1'
+            });
+        } catch (error: any) {
+            console.error("Erro ao resetar senha:", error);
+            toast.error('Erro ao resetar senha', {
+                description: error.message
+            });
+        } finally {
+            setActionLoading(null);
+            setIsConfirmResetOpen(false);
+        }
+    };
+
     if (!open) return null;
     return (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-2 md:p-4">
@@ -238,13 +280,56 @@ const UserModal: React.FC<{
                         </div>
                     </div>
 
-                    <div className="flex gap-3 pt-4">
-                        <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
-                        <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[15px] shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
-                            {form.formState.isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : 'Salvar'}
-                        </button>
+                    <div className="flex flex-col gap-3 pt-4">
+                        {isEditing && (
+                            <button
+                                type="button"
+                                onClick={() => setIsConfirmResetOpen(true)}
+                                disabled={actionLoading === "reset-password"}
+                                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100 shadow-sm transition-all disabled:opacity-60"
+                            >
+                                {actionLoading === "reset-password" ? (
+                                    <Loader2 size={16} className="animate-spin" />
+                                ) : (
+                                    <Key size={16} />
+                                )}
+                                Resetar Senha
+                            </button>
+                        )}
+
+                        <div className="flex gap-3">
+                            <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
+                            <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[15px] shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                                {form.formState.isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : 'Salvar'}
+                            </button>
+                        </div>
                     </div>
                 </form>
+
+                <AlertDialog open={isConfirmResetOpen} onOpenChange={setIsConfirmResetOpen}>
+                    <AlertDialogContent className="rounded-[24px] border-none shadow-2xl">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-xl font-black text-slate-800 uppercase tracking-tight">Redefinir Senha</AlertDialogTitle>
+                            <AlertDialogDescription className="text-slate-600 font-bold text-sm leading-relaxed">
+                                Deseja redefinir a senha do usuário para <strong className="text-orange-600">Agenda1</strong>?
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter className="gap-3 mt-4">
+                            <AlertDialogCancel className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm border-none shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all">
+                                Cancelar
+                            </AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleResetPassword();
+                                }}
+                                className="flex-1 h-12 rounded-xl bg-orange-600 text-white font-bold text-sm border-none shadow-[0_4px_0_#C2410C] hover:bg-orange-700 active:translate-y-[2px] active:shadow-none transition-all"
+                            >
+                                Confirmar
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </div>
     );
