@@ -295,51 +295,50 @@ const AdminCalendario: React.FC = () => {
                     </div>
 
                     {/* Filtros */}
-                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6 space-y-4 lg:space-y-0 lg:flex lg:flex-row lg:items-center lg:gap-4 justify-between">
-                        {/* Busca */}
-                        <div className="relative w-full lg:max-w-xs xl:max-w-sm">
-                            <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                            <input
-                                type="text"
-                                placeholder="Buscar por nome..."
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white"
-                            />
-                        </div>
+                    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 sm:p-6">
+                        <div className="flex flex-col md:flex-row md:items-center gap-4">
+                            {/* Busca */}
+                            <div className="flex-1 md:flex-[0.6]">
+                                <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Buscar por nome</label>
+                                <div className="relative">
+                                    <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                                    <input
+                                        type="text"
+                                        placeholder="Buscar por nome..."
+                                        value={search}
+                                        onChange={e => setSearch(e.target.value)}
+                                        className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white"
+                                    />
+                                </div>
+                            </div>
 
-                        {/* Controles de filtro */}
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 w-full lg:w-auto">
                             {/* Tipo */}
-                            <div className="flex flex-wrap gap-2">
-                                {([['all', 'Todos'], ['holiday', 'Feriado'], ['event', 'Evento'], ['birthday', 'Aniversário']] as [FilterType, string][]).map(([val, label]) => (
-                                    <button
-                                        key={val}
-                                        onClick={() => setFilterType(val)}
-                                        className={`px-4 h-9 rounded-full text-xs font-bold uppercase tracking-wide transition-all ${filterType === val
-                                            ? 'bg-blue-600 text-white shadow-sm'
-                                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                                            }`}
-                                    >
-                                        {label}
-                                    </button>
-                                ))}
+                            <div className="w-full md:flex-[0.25]">
+                                <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Tipo de evento</label>
+                                <select
+                                    value={filterType}
+                                    onChange={e => setFilterType(e.target.value as FilterType)}
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white text-slate-700 font-medium cursor-pointer"
+                                >
+                                    <option value="all">Todos os tipos</option>
+                                    <option value="holiday">Feriado</option>
+                                    <option value="event">Evento</option>
+                                    <option value="birthday">Aniversário</option>
+                                </select>
                             </div>
 
                             {/* Status */}
-                            <div className="flex flex-wrap gap-2">
-                                {([['active', 'Ativos'], ['inactive', 'Inativos'], ['all', 'Todos']] as [FilterStatus, string][]).map(([val, label]) => (
-                                    <button
-                                        key={val}
-                                        onClick={() => setFilterStatus(val)}
-                                        className={`px-4 h-9 rounded-full text-xs font-bold uppercase tracking-wide transition-all ${filterStatus === val
-                                            ? 'bg-slate-700 text-white shadow-sm'
-                                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                                            }`}
-                                    >
-                                        {label}
-                                    </button>
-                                ))}
+                            <div className="w-full md:flex-[0.15]">
+                                <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Status</label>
+                                <select
+                                    value={filterStatus}
+                                    onChange={e => setFilterStatus(e.target.value as FilterStatus)}
+                                    className="w-full h-11 px-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white text-slate-700 font-medium cursor-pointer"
+                                >
+                                    <option value="all">Todos os status</option>
+                                    <option value="active">Ativos</option>
+                                    <option value="inactive">Inativos</option>
+                                </select>
                             </div>
                         </div>
                     </div>
