@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { Agendamento } from '@/modules/auth/types';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { dedupeById } from '@/utils/dedupeById';
 
 export const useAgendamentos = () => {
     const { user, isAdmin } = useAuth();
@@ -30,7 +31,8 @@ export const useAgendamentos = () => {
 
             if (fetchError) throw fetchError;
 
-            setAgendamentos((data as Agendamento[]) || []);
+            // Deduplicação centralizada: garante estado limpo na carga inicial
+            setAgendamentos(dedupeById((data as Agendamento[]) || []));
         } catch (err: any) {
             console.error('Error fetching agendamentos:', err);
             setError(err.message || 'Erro ao carregar agendamentos');
@@ -85,9 +87,12 @@ export const useAgendamentos = () => {
 
             if (insertError) throw insertError;
 
-            setAgendamentos(prev => [...prev, data as Agendamento].sort(
-                (a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()
-            ));
+            // Deduplicação centralizada: evita duplicatas pelo Realtime vs insert otimista
+            setAgendamentos(prev =>
+                dedupeById([...prev, data as Agendamento]).sort(
+                    (a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()
+                )
+            );
 
             return { error: null, data };
         } catch (err: any) {
@@ -146,8 +151,9 @@ export const useAgendamentos = () => {
 
             if (updateError) throw updateError;
 
+            // Garante que um UPDATE nunca introduza duplicatas
             setAgendamentos(prev =>
-                prev.map(a => a.id === id ? (data as Agendamento) : a)
+                dedupeById(prev.map(a => a.id === id ? (data as Agendamento) : a))
             );
 
             return { error: null, data };

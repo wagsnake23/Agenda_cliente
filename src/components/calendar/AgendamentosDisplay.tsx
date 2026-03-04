@@ -20,19 +20,20 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
     highlightedDay,
     onViewAgendamento
 }) => {
-    const currentMonthAgendamentos = agendamentos.filter(agendamento => {
-        const inicio = new Date(agendamento.dataInicio + 'T12:00:00');
-        const fim = new Date(agendamento.dataFim + 'T12:00:00');
-
-        // Check if the current month/year overlaps with the start and end dates
-        const dateStart = new Date(inicio.getFullYear(), inicio.getMonth(), 1);
-        const dateEnd = new Date(fim.getFullYear(), fim.getMonth(), 1);
-        const current = new Date(year, month, 1);
-
-        return current >= dateStart && current <= dateEnd;
-    }).sort((a, b) => {
-        return new Date(a.dataInicio + 'T12:00:00').getTime() - new Date(b.dataInicio + 'T12:00:00').getTime();
-    });
+    // Sem lógica de deduplicação: useAgendamentos garante estado limpo.
+    // Este componente apenas filtra, ordena e renderiza.
+    const currentMonthAgendamentos = agendamentos
+        .filter(agendamento => {
+            const inicio = new Date(agendamento.dataInicio + 'T12:00:00');
+            const fim = new Date(agendamento.dataFim + 'T12:00:00');
+            const dateStart = new Date(inicio.getFullYear(), inicio.getMonth(), 1);
+            const dateEnd = new Date(fim.getFullYear(), fim.getMonth(), 1);
+            const current = new Date(year, month, 1);
+            return current >= dateStart && current <= dateEnd;
+        })
+        .sort((a, b) => {
+            return new Date(a.dataInicio + 'T12:00:00').getTime() - new Date(b.dataInicio + 'T12:00:00').getTime();
+        });
 
     const isEmpty = currentMonthAgendamentos.length === 0;
 

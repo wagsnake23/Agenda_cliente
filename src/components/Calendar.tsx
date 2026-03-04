@@ -30,6 +30,7 @@ import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 import { supabase } from '@/lib/supabase';
+import { dedupeById } from '@/utils/dedupeById';
 
 interface CalendarProps {
   month: number;
@@ -71,7 +72,9 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   // Hook de agendamentos do Supabase
   const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
 
-  // Converter para o formato que o Drawer e CalendarCard esperam
+  // Converter para o formato que o Drawer e CalendarCard esperam.
+  // A deduplicação é responsabilidade exclusiva do hook useAgendamentos.
+  // Este useMemo é uma transformção pura de formato, sem lógica de integridade.
   const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
 
   // Estados do Drawer
@@ -392,13 +395,18 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         }
 
         if (payload.eventType === "INSERT") {
-          setAgendamentos((prev: any) => {
-            if (prev.some((a: any) => a.id === data.id)) return prev;
-            return [...prev, data].sort((a, b) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime());
-          });
+          // dedupeById garante que o Realtime não crie duplicatas em relação ao insert otimista
+          setAgendamentos((prev: any) =>
+            dedupeById([...prev, data]).sort(
+              (a: any, b: any) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()
+            )
+          );
         }
         if (payload.eventType === "UPDATE") {
-          setAgendamentos((prev: any) => prev.map((a: any) => (a.id === data.id ? data : a)));
+          // dedupeById garante que o mapa de updates não introduza duplicatas
+          setAgendamentos((prev: any) =>
+            dedupeById(prev.map((a: any) => (a.id === data.id ? data : a)))
+          );
         }
       }
     }
@@ -408,7 +416,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         "postgres_changes",
         { event: "*", schema: "public", table: "agendamentos" },
         (payload) => {
-          console.log("Realtime agendamentos:", payload);
+          if (process.env.NODE_ENV === 'development') console.log("Realtime agendamentos:", payload);
           atualizarCardAgendamentos(payload);
         }
       )
@@ -416,7 +424,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         "postgres_changes",
         { event: "*", schema: "public", table: "calendar_events" },
         (payload) => {
-          console.log("Realtime eventos:", payload);
+          if (process.env.NODE_ENV === 'development') console.log("Realtime eventos:", payload);
           atualizarEventosDoDia(payload);
         }
       )

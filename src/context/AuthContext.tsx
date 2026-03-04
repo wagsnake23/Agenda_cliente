@@ -64,9 +64,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
      * Garante que user NUNCA seja undefined — sempre null ou User.
      */
     const syncAuthState = useCallback(async (currentSession: Session | null) => {
-        // === LOGS DE DIAGNÓSTICO ===
-        console.log('[Auth] SESSION:', currentSession);
-        console.log('[Auth] USER:', currentSession?.user ?? null);
+        if (process.env.NODE_ENV === 'development') {
+            console.log('[Auth] SESSION:', currentSession);
+            console.log('[Auth] USER:', currentSession?.user ?? null);
+        }
 
         setSession(currentSession);
         const currentUser = currentSession?.user ?? null; // nunca undefined
@@ -100,11 +101,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         initialized.current = true;
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, newSession) => {
-            console.log(`[Auth] Evento detectado: ${event}`);
+            if (process.env.NODE_ENV === 'development') {
+                console.log(`[Auth] Evento detectado: ${event}`);
+            }
 
-            // Ignorar eventos durante a inicialização para evitar race conditions
             if (!initDone.current) {
-                console.log('[Auth] Evento ignorado durante inicialização inicial.');
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('[Auth] Evento ignorado durante inicialização inicial.');
+                }
                 return;
             }
 
@@ -134,7 +138,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
                 if (!currentSession) {
                     // Sem sessão — garantir user = null
-                    console.log('[Auth] Nenhuma sessão ativa. user = null.');
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log('[Auth] Nenhuma sessão ativa. user = null.');
+                    }
                     clearAuthState();
                     return;
                 }
@@ -172,7 +178,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const signIn = async (email: string, password: string): Promise<{ error: string | null }> => {
         try {
-            console.log('[Auth] Tentando login para:', email);
+            if (process.env.NODE_ENV === 'development') {
+                console.log('[Auth] Tentando login para:', email);
+            }
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) {
                 console.error('[Auth] Erro no signInWithPassword:', error.message);
@@ -180,7 +188,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
 
             if (data.user) {
-                console.log('[Auth] Login bem-sucedido:', data.user.id);
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('[Auth] Login bem-sucedido:', data.user.id);
+                }
                 await syncAuthState(data.session);
 
                 const p = await fetchProfile(data.user.id);

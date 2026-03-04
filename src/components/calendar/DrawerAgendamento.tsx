@@ -815,22 +815,28 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             const rInicio = dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : 'XX/XX/XXXX';
                                             const rFim = dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : '—';
                                             return (
-                                                <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-2 px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 shadow-sm mx-auto max-w-[320px] sm:max-w-full">
-                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                        <span>Inicial:</span>
-                                                        <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
-                                                    </div>
-                                                    <span className="text-slate-300 hidden sm:block">|</span>
-                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                        <span>Final:</span>
-                                                        <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
-                                                    </div>
-                                                    <span className="text-slate-300 hidden sm:block">|</span>
-                                                    <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                        <span>Total:</span>
-                                                        <strong className="text-[#1E40AF] font-semibold">{totalDias} {totalDias === 1 ? 'dia' : 'dias'}</strong>
-                                                    </div>
-                                                </div>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colSpan={7}>
+                                                            <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-2 px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 shadow-sm mx-auto max-w-[320px] sm:max-w-full">
+                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                                    <span>Inicial:</span>
+                                                                    <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
+                                                                </div>
+                                                                <span className="text-slate-300 hidden sm:block">|</span>
+                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                                    <span>Final:</span>
+                                                                    <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
+                                                                </div>
+                                                                <span className="text-slate-300 hidden sm:block">|</span>
+                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                                    <span>Total:</span>
+                                                                    <strong className="text-[#1E40AF] font-semibold">{totalDias} {totalDias === 1 ? 'dia' : 'dias'}</strong>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
                                             );
                                         },
                                         DayContent: (props: { date: Date }) => {

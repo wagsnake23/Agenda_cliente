@@ -1,6 +1,6 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { AuthProvider } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -19,63 +19,58 @@ import GlobalAgendamentoModal from "@/components/GlobalAgendamentoModal";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+// Root layout wrapper com todos os Providers
+const AppProviders = () => (
   <QueryClientProvider client={queryClient}>
     <Toaster richColors position="bottom-center" />
     <TooltipProvider>
-      <BrowserRouter>
-        <AuthProvider>
-          <CalendarModeProvider>
-            <CalendarEventsProvider>
-              <GlobalAgendamentoModal />
-              <Routes>
-                {/* Rota pública */}
-                <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<AuthPage />} />
-
-                {/* Rotas protegidas */}
-                <Route
-                  path="/meu-perfil"
-                  element={
-                    <ProtectedRoute>
-                      <MeuPerfil />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/agendamentos"
-                  element={
-                    <ProtectedRoute>
-                      <AgendamentosPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/usuarios"
-                  element={
-                    <ProtectedRoute adminOnly>
-                      <UsuariosPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/admin/calendario"
-                  element={
-                    <ProtectedRoute>
-                      <AdminCalendario />
-                    </ProtectedRoute>
-                  }
-                />
-
-                {/* 404 */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </CalendarEventsProvider>
-          </CalendarModeProvider>
-        </AuthProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <CalendarModeProvider>
+          <CalendarEventsProvider>
+            <GlobalAgendamentoModal />
+            <Outlet />
+          </CalendarEventsProvider>
+        </CalendarModeProvider>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
+
+const router = createBrowserRouter(
+  [
+    {
+      element: <AppProviders />,
+      children: [
+        { path: "/", element: <Index /> },
+        { path: "/auth", element: <AuthPage /> },
+        {
+          path: "/meu-perfil",
+          element: <ProtectedRoute><MeuPerfil /></ProtectedRoute>,
+        },
+        {
+          path: "/agendamentos",
+          element: <ProtectedRoute><AgendamentosPage /></ProtectedRoute>,
+        },
+        {
+          path: "/usuarios",
+          element: <ProtectedRoute adminOnly><UsuariosPage /></ProtectedRoute>,
+        },
+        {
+          path: "/admin/calendario",
+          element: <ProtectedRoute><AdminCalendario /></ProtectedRoute>,
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  } as any
+);
+
+const App = () => <RouterProvider router={router} />;
 
 export default App;
