@@ -33,7 +33,7 @@ const InstallPWAButton: React.FC = () => {
     const handleAppInstalled = () => {
       setIsAppInstalled(true);
       setDeferredPrompt(null); // Limpa o prompt após a instalação
-      toast.success('Calendário Prontidão instalado com sucesso!');
+      toast.success('Calendário Agenda instalado com sucesso!');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);

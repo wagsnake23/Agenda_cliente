@@ -100,7 +100,7 @@ const Header = () => {
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-11 h-11 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
+                            className="w-14 h-14 drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
                         />
                         <h1
                             className="font-bold tracking-normal text-white uppercase leading-none inline-flex items-center pointer-events-auto"
@@ -109,7 +109,7 @@ const Header = () => {
                                 filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.3)) drop-shadow(0px 4px 12px rgba(0,0,0,0.5))',
                             }}
                         >
-                            <span className="text-[1.3rem]">CALENDÁRIO PRONTIDÃO</span>
+                            <span className="text-[1.3rem]">CALENDÁRIO AGENDA</span>
                         </h1>
                     </div>
 
@@ -159,7 +159,7 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full font-semibold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2"
+                                        className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2"
                                     >
                                         <span>📝</span> Agendar
                                     </button>
@@ -170,7 +170,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase text-sm rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-150"
+                                    className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.25)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2"
                                 >
                                     <LogIn size={16} /> Entrar
                                 </button>
@@ -187,7 +187,7 @@ const Header = () => {
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-10 h-10 md:w-12 md:h-12 object-contain ml-1 transition-transform duration-300 hover:scale-105 shrink-0"
+                            className="w-12 h-12 md:w-14 md:h-14 object-contain ml-1 transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
                             className="text-[1.1rem] md:text-[1.6rem] font-bold tracking-tight uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0"
@@ -200,7 +200,7 @@ const Header = () => {
                             }}
                         >
                             <span>CALENDÁRIO</span>
-                            <span>PRONTIDÃO</span>
+                            <span>AGENDA</span>
                         </h1>
                     </div>
                 </div>

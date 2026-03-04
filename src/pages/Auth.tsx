@@ -115,7 +115,7 @@ const AuthPage: React.FC = () => {
                                 WebkitTextFillColor: 'transparent',
                             }}
                         >
-                            Calendário de Prontidão
+                            Calendário Agenda
                         </h1>
                     </div>
 
@@ -193,14 +193,14 @@ const AuthPage: React.FC = () => {
 
                     {/* Footer Desktop - Dentro do card */}
                     <div className="hidden md:block mt-5 text-slate-500 text-[10px] font-black uppercase tracking-wider">
-                        © {new Date().getFullYear()} - Calendário Prontidão - by Vagner
+                        © {new Date().getFullYear()} - Calendário Agenda - by Vagner
                     </div>
                 </div>
             </div>
 
             {/* Footer Mobile específico pinado embaixo fora do card */}
             <div className="md:hidden fixed bottom-0 left-0 w-full text-center text-slate-400 text-[10px] font-black uppercase tracking-wider z-50 bg-gradient-to-t from-white via-white/90 to-transparent pt-6 pb-4">
-                © {new Date().getFullYear()} - Calendário Prontidão - by Vagner
+                © {new Date().getFullYear()} - Calendário Agenda - by Vagner
             </div>
 
             {/* Modal Recuperar Senha */}

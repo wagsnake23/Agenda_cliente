@@ -12,9 +12,9 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 {/* Lado Esquerdo */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
                     <div className="flex items-center gap-3">
-                        <img src="/logo.png" alt="Logo" className="w-10 h-10 opacity-90 drop-shadow-md" />
+                        <img src="/logo.png" alt="Logo" className="w-14 h-14 opacity-90 drop-shadow-md" />
                         <h3
-                            className="font-black text-base md:text-lg tracking-wider uppercase whitespace-nowrap"
+                            className="font-black text-lg md:text-xl tracking-wider uppercase whitespace-nowrap"
                             style={{
                                 background: 'linear-gradient(to bottom, #ffffff 40%, #94a3b8 100%)',
                                 WebkitBackgroundClip: 'text',
@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                             }}
                         >
-                            CALENDÁRIO PRONTIDÃO
+                            CALENDÁRIO AGENDA
                         </h3>
                     </div>
                     <p className="text-gray-400 text-xs md:text-sm font-medium opacity-80 max-w-[300px]">
@@ -33,7 +33,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                 {/* Lado Direito */}
                 <div className="flex flex-col items-center md:items-end gap-1.5">
                     <span className="text-gray-400 text-xs font-semibold tracking-wide uppercase">
-                        © 2026 — CALENDÁRIO PRONTIDÃO
+                        © 2026 — CALENDÁRIO AGENDA
                     </span>
 
                     <div className="flex items-center gap-1.5 text-xs font-bold text-gray-300">

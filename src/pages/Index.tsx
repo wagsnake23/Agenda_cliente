@@ -92,7 +92,7 @@ const Index = () => {
                     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
                   }}
                 >
-                  CALENDÁRIO PRONTIDÃO
+                  CALENDÁRIO AGENDA
                 </h3>
               </div>
               <p className="text-gray-400 text-xs md:text-sm font-medium opacity-80 max-w-[300px]">
@@ -103,7 +103,7 @@ const Index = () => {
             {/* Lado Direito */}
             <div className="flex flex-col items-center md:items-end gap-1.5">
               <span className="text-gray-400 text-xs font-semibold tracking-wide uppercase">
-                © 2026 — CALENDÁRIO PRONTIDÃO
+                © 2026 — CALENDÁRIO AGENDA
               </span>
 
               <div className="flex items-center gap-1.5 text-xs font-bold text-gray-300">
