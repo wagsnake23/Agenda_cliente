@@ -106,7 +106,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         <div
             className={cn(
                 "w-full transition-all duration-500 ease-out flex flex-col",
-                "px-3 py-2 md:px-8 md:pt-4 md:pb-8",
+                "px-1.5 py-2 md:px-8 md:pt-4 md:pb-8",
                 "bg-white/95 backdrop-blur-sm opacity-100",
                 "antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [contain:paint]",
                 "border border-[#0F172A]/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_4px_12px_rgba(0,0,0,0.04),0_12px_24px_rgba(0,0,0,0.04),0_32px_64px_-12px_rgba(0,0,0,0.08)]",
