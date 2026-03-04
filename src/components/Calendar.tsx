@@ -213,6 +213,17 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const holidayMessages = useHolidayMessages(month, year, calendarEvents);
   const moonPhases = useMoonPhases(month, year);
 
+  const hasAgendamentos = useMemo(() => {
+    return agendamentos.some(ag => {
+      const inicio = new Date(ag.dataInicio + 'T12:00:00');
+      const fim = new Date(ag.dataFim + 'T12:00:00');
+      const dateStart = new Date(inicio.getFullYear(), inicio.getMonth(), 1);
+      const dateEnd = new Date(fim.getFullYear(), fim.getMonth(), 1);
+      const current = new Date(year, month, 1);
+      return current >= dateStart && current <= dateEnd;
+    });
+  }, [agendamentos, month, year]);
+
   useEffect(() => {
     setHighlightedDay(null);
   }, [month, year]);
@@ -479,7 +490,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
           <div className="max-w-[1600px] mx-auto w-full mt-0 lg:mt-[-20px] flex flex-col gap-3 lg:gap-0 lg:pb-16 lg:pl-8">
             <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch">
               {/* 1º - Agendamentos */}
-              <div className="w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-3">
+              <div className={cn(
+                "w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-3",
+                !hasAgendamentos && "hidden md:flex"
+              )}>
                 <AgendamentosDisplay
                   agendamentos={agendamentos}
                   month={month}
