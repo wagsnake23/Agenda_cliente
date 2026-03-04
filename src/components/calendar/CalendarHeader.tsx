@@ -106,7 +106,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   }, [isYearPopoverOpen, year]);
 
   return (
-    <div className="sticky top-[60px] z-40 bg-transparent w-full flex flex-col gap-1 -mt-3 md:mt-8 lg:mt-6 mb-3 md:mb-6 lg:mb-7 md:relative md:top-auto md:z-10">
+    <div className="sticky top-[60px] z-40 bg-transparent w-full flex flex-col gap-1 -mt-3 md:mt-8 lg:mt-6 mb-1 md:mb-6 lg:mb-7 md:relative md:top-auto md:z-10">
       {/* Container Principal que se torna Card no Desktop */}
       <div className={cn(
         "flex flex-col lg:flex-row gap-2 lg:gap-6 justify-center lg:justify-between items-center w-full transition-all duration-300",
