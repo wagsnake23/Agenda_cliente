@@ -328,7 +328,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             className={cn(
               "h-11 px-6 text-xs md:text-[14px] lg:text-[15px] font-bold uppercase tracking-[0.5px]",
               "transition-all duration-300 cursor-pointer",
-              "rounded-lg outline-none border-none",
+              "rounded-lg lg:rounded-[18px] outline-none border-none",
               "bg-clip-padding saturate-[1.05] border border-black/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)]",
               todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
               todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",

@@ -287,7 +287,7 @@ const AdminCalendario: React.FC = () => {
                             </button>
                             <button
                                 onClick={openCreate}
-                                className="w-full sm:w-auto h-11 px-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all"
+                                className="w-full sm:w-auto shrink-0 whitespace-nowrap h-11 px-6 lg:px-8 flex items-center justify-center gap-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer border border-[#facc15]/30"
                             >
                                 <Plus size={16} /> Novo Evento
                             </button>
@@ -366,7 +366,6 @@ const AdminCalendario: React.FC = () => {
                                                 <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Data</th>
                                                 <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Tipo</th>
                                                 <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Recorrência</th>
-                                                <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Pintar Cal.</th>
                                                 <th className="text-center px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Ativo</th>
                                                 <th className="text-right px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Ações</th>
                                             </tr>
@@ -381,11 +380,6 @@ const AdminCalendario: React.FC = () => {
                                                     <td className="px-5 py-3.5">
                                                         <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide ${ev.is_fixed ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'}`}>
                                                             {ev.is_fixed ? 'Anual' : 'Específica'}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-5 py-3.5">
-                                                        <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide ${ev.color_mode === 'holiday' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'}`}>
-                                                            {ev.color_mode === 'holiday' ? 'Sim' : 'Não'}
                                                         </span>
                                                     </td>
                                                     <td className="px-5 py-3.5 text-center">

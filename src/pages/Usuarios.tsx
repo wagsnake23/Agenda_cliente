@@ -364,7 +364,7 @@ const UsuariosPage: React.FC = () => {
                             </button>
                             <button
                                 onClick={() => { setEditingUser(null); setModalOpen(true); }}
-                                className="w-full sm:w-auto h-11 px-6 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md transition-all"
+                                className="w-full sm:w-auto shrink-0 whitespace-nowrap h-11 px-6 lg:px-8 flex items-center justify-center gap-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer border border-[#facc15]/30"
                             >
                                 <Plus size={16} /> Novo Usuário
                             </button>

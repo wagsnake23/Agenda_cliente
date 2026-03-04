@@ -162,7 +162,7 @@ const Header = () => {
                                     {/* Botão Agendar */}
                                     <button
                                         onClick={handleAgendar}
-                                        className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
+                                        className="px-5 py-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
                                     >
                                         <span>📝</span> Agendar
                                     </button>
@@ -173,7 +173,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="px-5 py-2 rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
+                                    className="px-5 py-2 rounded-full lg:rounded-[18px] font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-[1px] transition-transform duration-200 cursor-pointer flex items-center gap-2 border border-[#facc15]/30"
                                 >
                                     <LogIn size={16} /> Entrar
                                 </button>
