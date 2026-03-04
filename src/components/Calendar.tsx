@@ -458,7 +458,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               }}
               className="w-full relative px-0"
             >
-              <CarouselContent className="w-full flex items-stretch cursor-grab active:cursor-grabbing">
+              <CarouselContent className="w-full flex items-stretch cursor-grab active:cursor-grabbing lg:-ml-8">
                 {monthsToRender.map((date, idx) => {
                   const m = date.getMonth();
                   const y = date.getFullYear();
