@@ -767,7 +767,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <X size={18} strokeWidth={3} />
                                 </button>
                             </div>
-                            <div className="px-4 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
+                            <div className="px-2 md:px-5 pt-3 pb-3 flex items-center justify-center w-full">
                                 <Calendar
                                     mode="range"
                                     defaultMonth={dateRange?.from || dateRange?.to || new Date()}
@@ -818,20 +818,20 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 <tfoot>
                                                     <tr>
                                                         <td colSpan={7}>
-                                                            <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-2 px-3 sm:px-4 flex flex-wrap sm:flex-nowrap items-center justify-center gap-x-2 sm:gap-x-3 gap-y-1 shadow-sm mx-auto max-w-[320px] sm:max-w-full">
-                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                                    <span>Inicial:</span>
+                                                            <div className="w-full mt-2 mb-1 md:mb-0 bg-slate-50/80 border border-slate-200/80 rounded-[12px] py-1.5 px-1.5 flex flex-nowrap items-center justify-center gap-1 sm:gap-3 shadow-sm mx-auto sm:max-w-full">
+                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
+                                                                    <span>Início:</span>
                                                                     <strong className="text-[#1E40AF] font-semibold">{rInicio}</strong>
                                                                 </div>
-                                                                <span className="text-slate-300 hidden sm:block">|</span>
-                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
-                                                                    <span>Final:</span>
+                                                                <span className="text-slate-300">|</span>
+                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
+                                                                    <span>Fim:</span>
                                                                     <strong className="text-[#1E40AF] font-semibold">{rFim}</strong>
                                                                 </div>
-                                                                <span className="text-slate-300 hidden sm:block">|</span>
-                                                                <div className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-500 whitespace-nowrap">
+                                                                <span className="text-slate-300">|</span>
+                                                                <div className="flex items-center gap-0.5 text-[13px] sm:text-[14px] text-slate-500 whitespace-nowrap">
                                                                     <span>Total:</span>
-                                                                    <strong className="text-[#1E40AF] font-semibold">{totalDias} {totalDias === 1 ? 'dia' : 'dias'}</strong>
+                                                                    <strong className="text-[#1E40AF] font-semibold">{totalDias}d</strong>
                                                                 </div>
                                                             </div>
                                                         </td>
