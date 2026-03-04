@@ -340,8 +340,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
           setScaleType={setMode}
         />
 
-        {/* Mobile Flex Container para garantir 4px exatos de gap vertical entre todos os blocos */}
-        <div className="flex flex-col gap-1 lg:block w-full">
+        {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
+        <div className="flex flex-col gap-3 lg:block w-full">
           <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-0 lg:mt-0 lg:py-7">
             <Carousel
               setApi={setApi}
