@@ -503,7 +503,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     variant === 'modal' ? "md:ml-auto md:pl-0" : "md:ml-0 md:pl-0"
                                 )}>
                                     <div className={cn(
-                                        "rounded-2xl overflow-hidden shadow-md border-2 border-white transition-transform hover:scale-105",
+                                        "rounded-2xl overflow-hidden shadow-md border-2 border-white",
                                         mode === 'create' ? "w-[84px] h-[84px] md:w-[120px] md:h-[120px] bg-white" : "w-16 h-16 md:w-[120px] md:h-[120px] ring-4 ring-blue-50/15 bg-white"
                                     )}>
                                         {agendamentoEditando?.userPhoto ? (
