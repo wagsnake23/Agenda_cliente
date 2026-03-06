@@ -2,11 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Agendamento } from '@/modules/auth/types';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 import { dedupeById } from '@/utils/dedupeById';
 
 export const useAgendamentos = () => {
     const { user, isAdmin } = useAuth();
+    const { showSuccessToast, showErrorToast } = useToast();
     const [agendamentos, setAgendamentos] = useState<Agendamento[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -183,9 +184,9 @@ export const useAgendamentos = () => {
     const alterarStatus = async (id: string, status: 'pendente' | 'aprovado' | 'recusado' | 'cancelado') => {
         const result = await atualizar(id, { status });
         if (result.error) {
-            toast.error('Erro ao alterar status');
+            showErrorToast('Erro ao alterar status');
         } else {
-            toast.success('Status alterado com sucesso!');
+            showSuccessToast('Status alterado com sucesso!');
         }
         return result;
     };

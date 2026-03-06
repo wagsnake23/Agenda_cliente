@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/carousel";
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 import { supabase } from '@/lib/supabase';
 import { dedupeById } from '@/utils/dedupeById';
@@ -68,6 +68,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const { mode, setMode } = useCalendarMode();
   const { isAuthenticated } = useAuth();
   const { events: calendarEvents, setEvents } = useCalendarEventsContext();
+  const { showSuccessToast, showErrorToast } = useToast();
 
   // Hook de agendamentos do Supabase
   const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
@@ -101,7 +102,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   const salvarAgendamento = async (novo: Omit<DrawerAgendamentoType, 'id'>) => {
     if (!isAuthenticated) {
-      toast.error('Você precisa estar logado para agendar');
+      showErrorToast('Você precisa estar logado para agendar');
       return;
     }
 
@@ -113,18 +114,18 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     });
 
     if (error) {
-      toast.error(error);
+      showErrorToast(error);
     } else {
-      toast.success('Agendamento criado com sucesso!');
+      showSuccessToast('Agendamento criado com sucesso!');
     }
   };
 
   const excluirAgendamento = async (id: string) => {
     const { error } = await excluir(id);
     if (error) {
-      toast.error('Erro ao excluir agendamento');
+      showErrorToast('Erro ao excluir agendamento');
     } else {
-      toast.success('Agendamento excluído!');
+      showSuccessToast('Agendamento excluído!');
     }
   };
 
@@ -145,9 +146,9 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     });
 
     if (error) {
-      toast.error('Erro ao editar agendamento');
+      showErrorToast('Erro ao editar agendamento');
     } else {
-      toast.success('Agendamento atualizado!');
+      showSuccessToast('Agendamento atualizado!');
     }
   };
 
@@ -161,7 +162,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   const handleOpenCreateDrawer = () => {
     if (!isAuthenticated) {
-      toast.error('Você precisa estar logado para agendar');
+      showErrorToast('Você precisa estar logado para agendar');
       return;
     }
     setDrawerMode('create');

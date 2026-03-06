@@ -9,7 +9,7 @@ import AuthPage from "./pages/Auth";
 import MeuPerfil from "./pages/MeuPerfil";
 import AgendamentosPage from "./pages/Agendamentos";
 import UsuariosPage from "./pages/Usuarios";
-import { Toaster } from 'sonner';
+import { ToastProvider } from '@/contexts/ToastProvider';
 
 import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
 import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
@@ -22,7 +22,6 @@ const queryClient = new QueryClient();
 // Root layout wrapper com todos os Providers
 const AppProviders = () => (
   <QueryClientProvider client={queryClient}>
-    <Toaster richColors position="bottom-center" />
     <TooltipProvider>
       <AuthProvider>
         <CalendarModeProvider>

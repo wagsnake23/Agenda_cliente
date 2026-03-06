@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { Eye, EyeOff, Loader2, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from 'sonner';
-import { Eye, EyeOff, Loader2, X } from 'lucide-react';
+import { useToast } from '@/contexts/ToastProvider';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { loginSchema, LoginInput } from '@/modules/auth/schemas';
-import { Toaster } from 'sonner';
 
 const AuthPage: React.FC = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +18,7 @@ const AuthPage: React.FC = () => {
     const { signIn, isAuthenticated, loading } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
+    const { showSuccessToast, showErrorToast } = useToast();
 
     const from = (location.state as any)?.from?.pathname || '/';
 
@@ -36,12 +36,12 @@ const AuthPage: React.FC = () => {
     const handleLogin = async (data: LoginInput) => {
         const { error } = await signIn(data.email, data.password);
         if (error) {
-            toast.error(error.includes('Invalid login credentials')
+            showErrorToast(error.includes('Invalid login credentials')
                 ? 'Email ou senha incorretos'
                 : error
             );
         } else {
-            toast.success('Login realizado com sucesso!');
+            showSuccessToast('Login realizado com sucesso!');
             navigate(from, { replace: true });
         }
     };
@@ -49,7 +49,7 @@ const AuthPage: React.FC = () => {
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!resetEmail) {
-            toast.error('Informe seu e-mail para continuar.');
+            showErrorToast('Informe seu e-mail para continuar.');
             return;
         }
 
@@ -60,11 +60,11 @@ const AuthPage: React.FC = () => {
             });
             if (error) throw error;
 
-            toast.success('Link de recuperação enviado para seu e-mail!');
+            showSuccessToast('Link de recuperação enviado para seu e-mail!');
             setShowResetModal(false);
             setResetEmail('');
         } catch (error: any) {
-            toast.error(error.message || 'Erro ao enviar link de recuperação.');
+            showErrorToast(error.message || 'Erro ao enviar link de recuperação.');
         } finally {
             setIsResetting(false);
         }

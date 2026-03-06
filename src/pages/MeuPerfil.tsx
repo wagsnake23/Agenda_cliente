@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { toast } from 'sonner';
-import { Toaster } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 import {
     ArrowLeft, Camera, Loader2, Save, User, Briefcase, Hash,
     Calendar as CalendarIcon, Mail, Shield, CheckCircle, Lock, X, Eye, EyeOff
@@ -80,6 +79,7 @@ const MeuPerfil: React.FC = () => {
     const navigate = useNavigate();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { saving, saveProfile } = useProfile();
+    const { showSuccessToast, showErrorToast } = useToast();
 
     // Estado do crop
     const [rawImageSrc, setRawImageSrc] = useState<string | null>(null);
@@ -119,7 +119,7 @@ const MeuPerfil: React.FC = () => {
 
         const validationError = validateImageFile(file);
         if (validationError) {
-            toast.error(validationError);
+            showErrorToast(validationError);
             return;
         }
 
@@ -162,7 +162,7 @@ const MeuPerfil: React.FC = () => {
             // 5. Sucesso - Atualizar UI local
             updateProfile({ foto_url: publicUrl });
             setLocalAvatarUrl(publicUrl);
-            toast.success('Foto atualizada com sucesso!');
+            showSuccessToast('Foto atualizada com sucesso!');
 
             // 6. Limpar antigo (Assíncrono sem travar UI)
             if (oldFotoUrl) {
@@ -174,7 +174,7 @@ const MeuPerfil: React.FC = () => {
 
         } catch (err: any) {
             console.error('[handleCropConfirm] Erro completo:', err);
-            toast.error(err?.message || 'Erro inesperado ao salvar a foto.');
+            showErrorToast(err?.message || 'Erro inesperado ao salvar a foto.');
         } finally {
             // Em qualquer cenário, cancela o "Enviando"
             setUploadingPhoto(false);
@@ -195,7 +195,7 @@ const MeuPerfil: React.FC = () => {
     const handleSave = async (data: ProfileForm) => {
         const { error } = await saveProfile(data as any);
         if (error) {
-            toast.error(error);
+            showErrorToast(error);
         } else {
             // Atualizar estado global otimisticamente
             updateProfile({
@@ -206,23 +206,23 @@ const MeuPerfil: React.FC = () => {
                 data_nascimento: data.data_nascimento || null,
                 escala: data.escala || null,
             });
-            toast.success('Perfil atualizado com sucesso!');
+            showSuccessToast('Perfil atualizado com sucesso!');
         }
     };
 
     const handleUpdatePassword = async () => {
         if (!newPassword || !confirmPassword) {
-            toast.error('Preencha todos os campos de senha');
+            showErrorToast('Preencha todos os campos de senha');
             return;
         }
 
         if (newPassword !== confirmPassword) {
-            toast.error('As senhas não coincidem');
+            showErrorToast('As senhas não coincidem');
             return;
         }
 
         if (newPassword.length < 6) {
-            toast.error('A senha deve ter pelo menos 6 caracteres');
+            showErrorToast('A senha deve ter pelo menos 6 caracteres');
             return;
         }
 
@@ -234,12 +234,12 @@ const MeuPerfil: React.FC = () => {
 
             if (error) throw error;
 
-            toast.success('Senha alterada com sucesso!');
+            showSuccessToast('Senha alterada com sucesso!');
             setShowPasswordModal(false);
             setNewPassword('');
             setConfirmPassword('');
         } catch (err: any) {
-            toast.error(err.message || 'Erro ao alterar senha');
+            showErrorToast(err.message || 'Erro ao alterar senha');
         } finally {
             setChangingPassword(false);
         }

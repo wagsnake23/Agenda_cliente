@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import DrawerAgendamento from './calendar/DrawerAgendamento';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAuth } from '@/context/AuthContext';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 
 const GlobalAgendamentoModal = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,12 +12,13 @@ const GlobalAgendamentoModal = () => {
     const [agendamentoEditando, setAgendamentoEditando] = useState<any>(null);
     const { criar, atualizar, refetch } = useAgendamentos();
     const { isAuthenticated } = useAuth();
+    const { showSuccessToast, showErrorToast } = useToast();
 
     useEffect(() => {
         const handleOpen = (event: Event) => {
             const customEvent = event as CustomEvent;
             if (!isAuthenticated) {
-                toast.error('Você precisa estar logado para agendar');
+                showErrorToast('Você precisa estar logado para agendar');
                 return;
             }
             if (customEvent.detail?.mode === 'edit' && customEvent.detail?.agendamento) {
@@ -43,9 +44,9 @@ const GlobalAgendamentoModal = () => {
         });
 
         if (error) {
-            toast.error(error);
+            showErrorToast(error);
         } else {
-            toast.success('Agendamento criado com sucesso!');
+            showSuccessToast('Agendamento criado com sucesso!');
             setIsOpen(false);
             window.dispatchEvent(new CustomEvent('agendamento-criado'));
         }
@@ -62,9 +63,9 @@ const GlobalAgendamentoModal = () => {
         });
 
         if (error) {
-            toast.error(error);
+            showErrorToast(error);
         } else {
-            toast.success('Agendamento atualizado com sucesso!');
+            showSuccessToast('Agendamento atualizado com sucesso!');
             setIsOpen(false);
             window.dispatchEvent(new CustomEvent('agendamento-criado'));
         }

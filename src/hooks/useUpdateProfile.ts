@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { uploadAvatar, updateProfilePhoto } from '@/utils/uploadAvatar';
 import { deleteOldAvatar } from '@/utils/deleteOldAvatar';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 
 interface UseUpdateProfileProps {
     userId: string;
@@ -11,6 +11,7 @@ interface UseUpdateProfileProps {
 
 export function useUpdateProfile({ userId, onSuccess }: UseUpdateProfileProps) {
     const [uploadingPhoto, setUploadingPhoto] = useState(false);
+    const { showSuccessToast, showErrorToast } = useToast();
 
     const handleAvatarUpload = useCallback(async (blob: Blob) => {
         if (!userId) return;
@@ -48,7 +49,7 @@ export function useUpdateProfile({ userId, onSuccess }: UseUpdateProfileProps) {
 
             // 4. Executar hook local de callback (ex: updateProfile no AuthContext)
             onSuccess(publicUrl);
-            toast.success('Foto de perfil atualizada com sucesso!');
+            showSuccessToast('Foto de perfil atualizada com sucesso!');
 
         } catch (error: any) {
             console.error('[handleAvatarUpload] Falha no fluxo:', error);
@@ -61,7 +62,7 @@ export function useUpdateProfile({ userId, onSuccess }: UseUpdateProfileProps) {
                 console.log('[Rollback] Nova imagem removida devido à falha no update do profile.');
             }
 
-            toast.error(error.message || 'Erro inesperado ao salvar a foto.');
+            showErrorToast(error.message || 'Erro inesperado ao salvar a foto.');
             throw error;
         } finally {
             setUploadingPhoto(false);

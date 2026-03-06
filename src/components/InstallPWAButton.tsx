@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: Array<string>;
@@ -17,6 +17,7 @@ interface BeforeInstallPromptEvent extends Event {
 const InstallPWAButton: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isAppInstalled, setIsAppInstalled] = useState(false);
+  const { showSuccessToast, showErrorToast } = useToast();
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -33,7 +34,7 @@ const InstallPWAButton: React.FC = () => {
     const handleAppInstalled = () => {
       setIsAppInstalled(true);
       setDeferredPrompt(null); // Limpa o prompt após a instalação
-      toast.success('Calendário Agenda instalado com sucesso!');
+      showSuccessToast('Calendário Agenda instalado com sucesso!');
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -55,9 +56,9 @@ const InstallPWAButton: React.FC = () => {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       if (outcome === 'accepted') {
-        toast.info('Instalação aceita. Adicionando à tela inicial...');
+        showSuccessToast('Instalação aceita. Adicionando à tela inicial...');
       } else {
-        toast.warning('Instalação recusada.');
+        showErrorToast('Instalação recusada.');
       }
       setDeferredPrompt(null); // O prompt só pode ser usado uma vez
     }

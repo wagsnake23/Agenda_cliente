@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import {
@@ -68,6 +68,7 @@ const AdminCalendario: React.FC = () => {
     const navigate = useNavigate();
     const { isAdmin, user, isAuthenticated, loading: authLoading } = useAuth();
     const { refetch } = useCalendarEventsContext();
+    const { showSuccessToast, showErrorToast } = useToast();
 
     const canEdit = (ev: CalendarEvent) => isAdmin || ev.created_by === user?.id;
 
@@ -99,7 +100,7 @@ const AdminCalendario: React.FC = () => {
             .select('*')
             .order('date', { ascending: true });
         if (error) {
-            toast.error('Erro ao carregar eventos');
+            showErrorToast('Erro ao carregar eventos');
         } else {
             const dbEvents = (data || []).map(e => ({ ...e, is_system: false }));
             setEvents(dbEvents as any);
@@ -164,11 +165,11 @@ const AdminCalendario: React.FC = () => {
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.title.trim()) { toast.error('Nome é obrigatório'); return; }
-        if (!form.date) { toast.error('Data é obrigatória'); return; }
+        if (!form.title.trim()) { showErrorToast('Nome é obrigatório'); return; }
+        if (!form.date) { showErrorToast('Data é obrigatória'); return; }
 
         if (!editingId && SYSTEM_HOLIDAYS.includes(form.title.trim())) {
-            toast.error('Este feriado é calculado automaticamente pelo sistema.');
+            showErrorToast('Este feriado é calculado automaticamente pelo sistema.');
             return;
         }
 
@@ -177,7 +178,7 @@ const AdminCalendario: React.FC = () => {
             if (form.is_system && editingId) {
                 // Atualização em memória apenas (não vai pro DB)
                 setEvents(prev => prev.map(ev => ev.id === editingId ? { ...ev, emoji: form.emoji.trim() || null } : ev) as any);
-                toast.success('Emoji atualizado localmente!');
+                showSuccessToast('Emoji atualizado localmente!');
                 setModalOpen(false);
                 setSaving(false);
                 return;
@@ -197,18 +198,18 @@ const AdminCalendario: React.FC = () => {
             if (editingId) {
                 const { error } = await supabase.from('calendar_events').update(payload).eq('id', editingId);
                 if (error) throw error;
-                toast.success('Evento atualizado!');
+                showSuccessToast('Evento atualizado!');
             } else {
                 const { error } = await supabase.from('calendar_events').insert(payload);
                 if (error) throw error;
-                toast.success('Evento criado!');
+                showSuccessToast('Evento criado!');
             }
 
             setModalOpen(false);
             await fetchAll();
             refetch();
         } catch (err: any) {
-            toast.error(err.message || 'Erro ao salvar evento');
+            showErrorToast(err.message || 'Erro ao salvar evento');
         } finally {
             setSaving(false);
         }
@@ -217,11 +218,11 @@ const AdminCalendario: React.FC = () => {
     // Toggle ativo/inativo
     const handleToggle = async (ev: CalendarEvent & { is_active: boolean, is_system?: boolean }) => {
         if (ev.is_system) {
-            toast.error('Eventos do sistema já são controlados e não podem ser desativados.');
+            showErrorToast('Eventos do sistema já são controlados e não podem ser desativados.');
             return;
         }
         if (!canEdit(ev)) {
-            toast.error('Você não tem permissão para alterar este evento.');
+            showErrorToast('Você não tem permissão para alterar este evento.');
             return;
         }
         setTogglingId(ev.id);
@@ -230,9 +231,9 @@ const AdminCalendario: React.FC = () => {
             .update({ is_active: !ev.is_active })
             .eq('id', ev.id);
         if (error) {
-            toast.error('Erro ao alterar status');
+            showErrorToast('Erro ao alterar status');
         } else {
-            toast.success(ev.is_active ? 'Evento desativado' : 'Evento ativado');
+            showSuccessToast(ev.is_active ? 'Evento desativado' : 'Evento ativado');
             await fetchAll();
             refetch();
         }
@@ -244,16 +245,16 @@ const AdminCalendario: React.FC = () => {
         if (!confirmDeleteId) return;
         const evDelete = events.find(e => e.id === confirmDeleteId) as any;
         if (evDelete?.is_system) {
-            toast.error('O sistema impede a exclusão de datas móveis vitais.');
+            showErrorToast('O sistema impôe a exclusão de datas móveis vitais.');
             setConfirmDeleteId(null);
             return;
         }
         setDeleting(true);
         const { error } = await supabase.from('calendar_events').delete().eq('id', confirmDeleteId);
         if (error) {
-            toast.error('Erro ao excluir evento');
+            showErrorToast('Erro ao excluir evento');
         } else {
-            toast.success('Evento excluído!');
+            showSuccessToast('Evento excluído!');
             setConfirmDeleteId(null);
             await fetchAll();
             refetch();

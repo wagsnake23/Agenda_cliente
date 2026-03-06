@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { toast } from 'sonner';
+import { useToast } from '@/contexts/ToastProvider';
 import {
     ArrowLeft, Loader2, Plus, Trash2, Edit2, Shield,
     CheckCircle, XCircle, User, Search, RefreshCw, X, Key
@@ -96,6 +96,7 @@ const UserModal: React.FC<{
     const { session } = useAuth();
     const [actionLoading, setActionLoading] = useState<string | null>(null);
     const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
+    const { showSuccessToast, showErrorToast } = useToast();
 
     const form = useForm<UserFormInput>({
         resolver: zodResolver(userFormSchema),
@@ -142,10 +143,10 @@ const UserModal: React.FC<{
                     .eq('id', editingUser.id);
 
                 if (error) throw error;
-                toast.success('Usuário atualizado!');
+                showSuccessToast('Usuário atualizado!');
             } else {
                 if (!data.password) {
-                    toast.error('Senha é obrigatória para novos usuários');
+                    showErrorToast('Senha é obrigatória para novos usuários');
                     return;
                 }
 
@@ -172,14 +173,14 @@ const UserModal: React.FC<{
                     throw new Error(functionData.error || 'Erro desconhecido no servidor');
                 }
 
-                toast.success('Usuário criado com sucesso!');
+                showSuccessToast('Usuário criado com sucesso!');
             }
 
             onSaved();
             onClose();
         } catch (err: any) {
             console.error("Erro ao salvar:", err);
-            toast.error(err.message || 'Erro ao salvar usuário');
+            showErrorToast(err.message || 'Erro ao salvar usuário');
         }
     };
 
@@ -197,14 +198,10 @@ const UserModal: React.FC<{
 
             if (error) throw error;
 
-            toast.success('Senha redefinida', {
-                description: 'Senha redefinida para Agenda1'
-            });
+            showSuccessToast('Senha redefinida', 'Senha redefinida para Agenda1');
         } catch (error: any) {
             console.error("Erro ao resetar senha:", error);
-            toast.error('Erro ao resetar senha', {
-                description: error.message
-            });
+            showErrorToast('Erro ao resetar senha', error.message);
         } finally {
             setActionLoading(null);
             setIsConfirmResetOpen(false);
@@ -228,7 +225,7 @@ const UserModal: React.FC<{
                 <form
                     onSubmit={form.handleSubmit(handleSubmit, (errors) => {
                         console.log("Erros de validação:", errors);
-                        toast.error('Verifique os campos obrigatórios');
+                        showErrorToast('Verifique os campos obrigatórios');
                     })}
                     className="p-5 space-y-4"
                 >
@@ -347,6 +344,7 @@ const UsuariosPage: React.FC = () => {
     const [editingUser, setEditingUser] = useState<Profile | null>(null);
     const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const { showSuccessToast, showErrorToast } = useToast();
 
     const fetchUsuarios = useCallback(async () => {
         setLoading(true);
@@ -356,7 +354,7 @@ const UsuariosPage: React.FC = () => {
             .order('nome');
 
         if (error) {
-            toast.error('Erro ao carregar usuários');
+            showErrorToast('Erro ao carregar usuários');
         } else {
             setUsuarios(data as Profile[]);
         }
@@ -386,11 +384,11 @@ const UsuariosPage: React.FC = () => {
                 throw new Error(data.error);
             }
 
-            toast.success('Usuário excluído permanentemente!');
+            showSuccessToast('Usuário excluído permanentemente!');
             fetchUsuarios();
         } catch (err: any) {
             console.error("Erro ao deletar:", err);
-            toast.error(err.message || 'Erro ao excluir usuário');
+            showErrorToast(err.message || 'Erro ao excluir usuário');
         } finally {
             setDeletingId(null);
             setConfirmDelete(null);
@@ -403,9 +401,9 @@ const UsuariosPage: React.FC = () => {
             .update({ ativo: !user.ativo })
             .eq('id', user.id);
         if (error) {
-            toast.error('Erro ao alterar status');
+            showErrorToast('Erro ao alterar status');
         } else {
-            toast.success(`Usuário ${!user.ativo ? 'ativado' : 'desativado'}!`);
+            showSuccessToast(`Usuário ${!user.ativo ? 'ativado' : 'desativado'}!`);
             fetchUsuarios();
         }
     };

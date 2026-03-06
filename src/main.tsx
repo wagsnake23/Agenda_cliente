@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
+import { ToastProvider } from "@/contexts/ToastProvider";
 
 // Import global styles (ajuste conforme seu projeto)
 import "./index.css";
@@ -23,6 +24,8 @@ const updateSW = registerSW({
 // Monta o React normalmente
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </React.StrictMode>
 );
