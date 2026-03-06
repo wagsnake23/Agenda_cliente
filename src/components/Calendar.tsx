@@ -151,6 +151,14 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     }
   };
 
+  const handleEditRequest = (ag: DrawerAgendamentoType) => {
+    window.dispatchEvent(
+      new CustomEvent('open-global-agendamento-modal', {
+        detail: { mode: 'edit', agendamento: ag }
+      })
+    );
+  };
+
   const handleOpenCreateDrawer = () => {
     if (!isAuthenticated) {
       toast.error('Você precisa estar logado para agendar');
@@ -547,6 +555,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 onSelectPeriod={toggleHighlightPeriod}
                 selectedAgendamentoId={selectedAgendamentoId}
                 setSelectedAgendamentoId={setSelectedAgendamentoId}
+                onEditRequest={handleEditRequest}
               />
             </div>
 

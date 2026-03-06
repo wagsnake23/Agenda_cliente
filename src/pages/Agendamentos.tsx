@@ -205,20 +205,6 @@ const AgendamentosPage: React.FC = () => {
                 message="Tem certeza que deseja excluir este agendamento?"
             />
 
-            <DrawerAgendamento
-                isOpen={isEditDrawerOpen}
-                onClose={() => {
-                    setIsEditDrawerOpen(false);
-                    setAgendamentoParaEditar(null);
-                }}
-                mode="edit"
-                variant="modal"
-                agendamentoExternoParaEdicao={agendamentoParaEditar}
-                onSave={() => { }}
-                onUpdate={handleUpdateAgendamento}
-                anchorRef={null as any}
-            />
-
             <div className="w-full lg:pt-[74px]">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6 pb-6 md:py-6">
                     {/* Cabeçalho do Módulo */}
@@ -431,23 +417,27 @@ const AgendamentosPage: React.FC = () => {
                                                                 {(isAdmin || ag.user_id === profile?.id) && (
                                                                     <button
                                                                         onClick={() => {
-                                                                            setAgendamentoParaEditar({
+                                                                            const formattedAgenda = {
                                                                                 id: ag.id,
                                                                                 userId: ag.user_id,
                                                                                 dataInicio: ag.data_inicial,
                                                                                 dataFim: ag.data_final,
                                                                                 tipo: ag.tipo_agendamento,
                                                                                 totalDias: ag.dias,
-                                                                                status: ag.status,
-                                                                                observacao: ag.observacao,
-                                                                                userName: ag.profiles?.nome,
-                                                                                userPhoto: ag.profiles?.foto_url,
+                                                                                status: ag.status || 'pendente',
+                                                                                observacao: ag.observacao || undefined,
+                                                                                userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
+                                                                                userPhoto: ag.profiles?.foto_url || undefined,
                                                                                 createdAt: ag.created_at,
                                                                                 approvedAt: ag.approved_at,
                                                                                 cancelledAt: ag.cancelled_at,
                                                                                 rejectedAt: ag.rejected_at,
-                                                                            });
-                                                                            setIsEditDrawerOpen(true);
+                                                                            };
+                                                                            window.dispatchEvent(
+                                                                                new CustomEvent('open-global-agendamento-modal', {
+                                                                                    detail: { mode: 'edit', agendamento: formattedAgenda }
+                                                                                })
+                                                                            );
                                                                         }}
                                                                         className="w-8 h-8 flex items-center justify-center rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
                                                                         title="Editar Agendamento"
@@ -523,23 +513,27 @@ const AgendamentosPage: React.FC = () => {
                                                     <div className="flex items-center gap-2">
                                                         <button
                                                             onClick={() => {
-                                                                setAgendamentoParaEditar({
+                                                                const formattedAgenda = {
                                                                     id: ag.id,
                                                                     userId: ag.user_id,
                                                                     dataInicio: ag.data_inicial,
                                                                     dataFim: ag.data_final,
                                                                     tipo: ag.tipo_agendamento,
                                                                     totalDias: ag.dias,
-                                                                    status: ag.status,
-                                                                    observacao: ag.observacao,
-                                                                    userName: ag.profiles?.nome,
-                                                                    userPhoto: ag.profiles?.foto_url,
+                                                                    status: ag.status || 'pendente',
+                                                                    observacao: ag.observacao || undefined,
+                                                                    userName: ag.profiles?.apelido || ag.profiles?.nome || undefined,
+                                                                    userPhoto: ag.profiles?.foto_url || undefined,
                                                                     createdAt: ag.created_at,
                                                                     approvedAt: ag.approved_at,
                                                                     cancelledAt: ag.cancelled_at,
                                                                     rejectedAt: ag.rejected_at,
-                                                                });
-                                                                setIsEditDrawerOpen(true);
+                                                                };
+                                                                window.dispatchEvent(
+                                                                    new CustomEvent('open-global-agendamento-modal', {
+                                                                        detail: { mode: 'edit', agendamento: formattedAgenda }
+                                                                    })
+                                                                );
                                                             }}
                                                             className="flex items-center justify-center p-1.5 px-2.5 rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all border border-blue-100"
                                                         >
@@ -555,7 +549,8 @@ const AgendamentosPage: React.FC = () => {
                                                         )}
                                                     </div>
                                                 </div>
-                                            )}
+                                            )
+                                            }
                                         </div>
                                     );
                                 })}

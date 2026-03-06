@@ -113,6 +113,7 @@ interface DrawerAgendamentoProps {
     selectedAgendamentoId?: string | null;
     setSelectedAgendamentoId?: (id: string | null) => void;
     variant?: 'drawer' | 'modal';
+    onEditRequest?: (ag: Agendamento) => void;
 }
 
 const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
@@ -132,6 +133,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
     selectedAgendamentoId,
     setSelectedAgendamentoId,
     variant = 'drawer',
+    onEditRequest,
 }) => {
     const { profile } = useAuth();
     const [dataInicio, setDataInicio] = useState(initialDate || '');
@@ -725,8 +727,12 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         <button
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
-                                                                setModoEdicao(true);
-                                                                setAgendamentoEditando(agenda);
+                                                                if (onEditRequest) {
+                                                                    onEditRequest(agenda);
+                                                                } else {
+                                                                    setModoEdicao(true);
+                                                                    setAgendamentoEditando(agenda);
+                                                                }
                                                             }}
                                                             className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
                                                             title="Editar"

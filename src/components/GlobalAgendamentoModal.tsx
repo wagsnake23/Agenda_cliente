@@ -8,14 +8,24 @@ import { toast } from 'sonner';
 
 const GlobalAgendamentoModal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const { criar, refetch } = useAgendamentos();
+    const [mode, setMode] = useState<'create' | 'edit'>('create');
+    const [agendamentoEditando, setAgendamentoEditando] = useState<any>(null);
+    const { criar, atualizar, refetch } = useAgendamentos();
     const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        const handleOpen = () => {
+        const handleOpen = (event: Event) => {
+            const customEvent = event as CustomEvent;
             if (!isAuthenticated) {
                 toast.error('Você precisa estar logado para agendar');
                 return;
+            }
+            if (customEvent.detail?.mode === 'edit' && customEvent.detail?.agendamento) {
+                setMode('edit');
+                setAgendamentoEditando(customEvent.detail.agendamento);
+            } else {
+                setMode('create');
+                setAgendamentoEditando(null);
             }
             setIsOpen(true);
         };
@@ -37,8 +47,25 @@ const GlobalAgendamentoModal = () => {
         } else {
             toast.success('Agendamento criado com sucesso!');
             setIsOpen(false);
-            // O refetch já é chamado dentro do hook criar (atualizando o estado local), 
-            // mas disparar um evento pode ajudar outros componentes
+            window.dispatchEvent(new CustomEvent('agendamento-criado'));
+        }
+    };
+
+    const handleUpdate = async (ag: any) => {
+        if (!agendamentoEditando) return;
+        const { error } = await atualizar(agendamentoEditando.id, {
+            data_inicial: ag.dataInicio,
+            data_final: ag.dataFim,
+            tipo_agendamento: ag.tipo,
+            dias: ag.totalDias,
+            observacao: ag.observacao,
+        });
+
+        if (error) {
+            toast.error(error);
+        } else {
+            toast.success('Agendamento atualizado com sucesso!');
+            setIsOpen(false);
             window.dispatchEvent(new CustomEvent('agendamento-criado'));
         }
     };
@@ -46,10 +73,15 @@ const GlobalAgendamentoModal = () => {
     return (
         <DrawerAgendamento
             isOpen={isOpen}
-            onClose={() => setIsOpen(false)}
-            mode="create"
+            onClose={() => {
+                setIsOpen(false);
+                setTimeout(() => setAgendamentoEditando(null), 300);
+            }}
+            mode={mode}
             variant="modal"
+            agendamentoExternoParaEdicao={agendamentoEditando}
             onSave={handleSave}
+            onUpdate={handleUpdate}
             anchorRef={null as any}
         />
     );
