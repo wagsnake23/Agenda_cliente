@@ -102,6 +102,23 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
     const season = getSeasonData(month, year);
 
+    const seasonImages: Record<string, string> = {
+        "VERÃO": "/season/verao.webp",
+        "OUTONO": "/season/outono.webp",
+        "INVERNO": "/season/inverno.webp",
+        "PRIMAVERA": "/season/primavera.webp"
+    };
+
+    const seasonGradients: Record<string, string> = {
+        "VERÃO": "linear-gradient(to right, rgba(255,250,220,0.95) 0%, rgba(255,240,180,0.85) 20%, rgba(255,225,130,0.55) 40%, rgba(255,210,80,0.25) 60%, rgba(255,210,80,0) 75%)",
+        "OUTONO": "linear-gradient(to right, rgba(255,245,235,0.95) 0%, rgba(255,230,200,0.85) 20%, rgba(255,200,150,0.55) 40%, rgba(255,170,110,0.25) 60%, rgba(255,170,110,0) 75%)",
+        "INVERNO": "linear-gradient(to right, rgba(235,245,255,0.95) 0%, rgba(210,230,255,0.85) 20%, rgba(180,210,255,0.55) 40%, rgba(150,190,255,0.25) 60%, rgba(150,190,255,0) 75%)",
+        "PRIMAVERA": "linear-gradient(to right, rgba(255,240,250,0.95) 0%, rgba(255,220,240,0.85) 20%, rgba(255,190,230,0.55) 40%, rgba(255,160,220,0.25) 60%, rgba(255,160,220,0) 75%)"
+    };
+
+    const bgImage = seasonImages[season.name.toUpperCase()] || seasonImages["PRIMAVERA"];
+    const bgGradient = seasonGradients[season.name.toUpperCase()] || seasonGradients["PRIMAVERA"];
+
     return (
         <div
             className={cn(
@@ -117,21 +134,42 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06),0_12px_24px_-8px_rgba(0,0,0,0.15)]",
                 "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent before:z-20",
                 "shadow-inner shadow-white/40",
-                isCenter ? "md:bg-white" : "md:bg-gray-50/90",
+                "md:bg-white",
                 "rounded-2xl md:rounded-[29px] bg-clip-padding",
                 "relative group/card overflow-hidden"
             )}
         >
             {/* Brilho superior sutil */}
-            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none opacity-50" />
-            <div className="hidden md:flex justify-between items-center mb-4 md:mb-6 pl-0 pr-0">
-                <div className="flex items-center gap-2 md:-ml-2">
+            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none opacity-50 z-20" />
+
+            <div
+                className={cn(
+                    "hidden md:flex justify-between items-start",
+                    "md:-mx-8 md:-mt-4 md:px-8 md:pt-5 mb-0 relative overflow-hidden md:rounded-t-[28px] md:h-[95px] border-none outline-none shadow-none bg-white"
+                )}
+            >
+                {/* Background da Estação */}
+                <div
+                    className="absolute inset-0 z-0 border-none outline-none"
+                    style={{
+                        backgroundImage: `url(${bgImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center"
+                    }}
+                >
+                    {/* Degradê horizontal que acompanha a cor da estação para área de leitura */}
+                    <div className="absolute inset-0 pointer-events-none" style={{ background: bgGradient }} />
+                    {/* Gradiente fundindo diretamente com a base branca do cartão */}
+                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
+                </div>
+
+                <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2">
                     <img
                         src="/logo.png"
                         alt="Logo"
                         className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]"
                     />
-                    <h3 className="text-base md:text-xl font-extrabold uppercase tracking-wide flex items-center gap-1">
+                    <h3 className="text-base md:text-xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
                         <span className="hidden md:inline text-[#C62828]" style={{ letterSpacing: '0.8px', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
                             {MONTHS[month]}
                         </span>
@@ -145,9 +183,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
 
                 {/* Badge da Estação (Desktop) */}
-                <div className="hidden md:flex items-center h-full flex-1 justify-end md:-mr-1">
+                <div className="hidden md:flex absolute top-[10px] right-[14px] z-10">
                     <div
-                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season md:shadow-[inset_0_2px_4px_rgba(0,0,0,0.15),inset_0_-1px_1px_rgba(0,0,0,0.05)]"
+                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
                         style={{
                             padding: '5px 14px',
                             borderRadius: '20px',
@@ -170,7 +208,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             </div>
 
             <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] filter-none backdrop-filter-none">
-                <div className="hidden md:block absolute top-[1px] left-[20px] right-[20px] h-[1px] bg-white/20 pointer-events-none" />
                 <CalendarGrid
                     calendarData={calendarData}
                     isTransitioning={false}
