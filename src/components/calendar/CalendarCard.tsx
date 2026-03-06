@@ -110,10 +110,10 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     };
 
     const seasonGradients: Record<string, string> = {
-        "VERÃO": "linear-gradient(to right, rgba(255,250,220,0.95) 0%, rgba(255,240,180,0.85) 20%, rgba(255,225,130,0.55) 40%, rgba(255,210,80,0.25) 60%, rgba(255,210,80,0) 75%)",
-        "OUTONO": "linear-gradient(to right, rgba(255,245,235,0.95) 0%, rgba(255,230,200,0.85) 20%, rgba(255,200,150,0.55) 40%, rgba(255,170,110,0.25) 60%, rgba(255,170,110,0) 75%)",
-        "INVERNO": "linear-gradient(to right, rgba(235,245,255,0.95) 0%, rgba(210,230,255,0.85) 20%, rgba(180,210,255,0.55) 40%, rgba(150,190,255,0.25) 60%, rgba(150,190,255,0) 75%)",
-        "PRIMAVERA": "linear-gradient(to right, rgba(255,240,250,0.95) 0%, rgba(255,220,240,0.85) 20%, rgba(255,190,230,0.55) 40%, rgba(255,160,220,0.25) 60%, rgba(255,160,220,0) 75%)"
+        "VERÃO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,250,230,0.92) 12%, rgba(255,240,190,0.72) 32%, rgba(255,225,150,0.42) 55%, rgba(255,210,90,0.18) 75%, rgba(255,210,90,0) 90%)",
+        "OUTONO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,248,240,0.92) 12%, rgba(255,235,210,0.72) 32%, rgba(255,210,170,0.42) 55%, rgba(255,170,110,0.18) 75%, rgba(255,170,110,0) 90%)",
+        "INVERNO": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(245,250,255,0.92) 12%, rgba(225,240,255,0.72) 32%, rgba(200,225,255,0.42) 55%, rgba(170,210,255,0.18) 75%, rgba(170,210,255,0) 90%)",
+        "PRIMAVERA": "linear-gradient(to bottom right, rgba(255,255,255,0.98) 0%, rgba(255,245,250,0.92) 12%, rgba(255,225,240,0.72) 32%, rgba(255,200,230,0.42) 55%, rgba(255,170,220,0.18) 75%, rgba(255,170,220,0) 90%)"
     };
 
     const bgImage = seasonImages[season.name.toUpperCase()] || seasonImages["PRIMAVERA"];
@@ -145,7 +145,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             <div
                 className={cn(
                     "hidden md:flex justify-between items-start",
-                    "md:-mx-8 md:-mt-4 md:px-8 md:pt-5 mb-0 relative overflow-hidden md:rounded-t-[28px] md:h-[95px] border-none outline-none shadow-none bg-white"
+                    "md:-mx-8 md:-mt-4 md:px-8 md:pt-4 mb-0 relative overflow-hidden md:rounded-t-[28px] md:h-[95px] border-none outline-none shadow-none bg-white"
                 )}
             >
                 {/* Background da Estação */}
@@ -157,8 +157,8 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                         backgroundPosition: "center"
                     }}
                 >
-                    {/* Degradê horizontal que acompanha a cor da estação para área de leitura */}
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: bgGradient }} />
+                    {/* Degradê concentrado apenas na parte superior esquerda */}
+                    <div className="absolute top-0 left-0 w-[52%] h-[58%] pointer-events-none" style={{ background: bgGradient }} />
                     {/* Gradiente superior para melhorar a leitura do título do mês */}
                     <div
                         className="absolute inset-0 pointer-events-none"
@@ -173,19 +173,19 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
                 </div>
 
-                <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2">
+                <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2 -mt-[2px] -translate-y-[2px]">
                     <img
                         src="/logo.png"
                         alt="Logo"
                         className="hidden md:block w-7 h-7 md:w-10 md:h-10 object-contain drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]"
                     />
-                    <h3 className="text-base md:text-xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
-                        <span className="hidden md:inline text-[#C62828]" style={{ letterSpacing: '0.8px', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
+                    <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
+                        <span className="hidden md:inline text-[#E51A1A] font-black" style={{ letterSpacing: '1.2px', textShadow: '-1.5px -1.5px 0 rgba(255,255,255,0.95), 1.5px -1.5px 0 rgba(255,255,255,0.95), -1.5px 1.5px 0 rgba(255,255,255,0.95), 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 3px 5px rgba(0,0,0,0.4)' }}>
                             {MONTHS[month]}
                         </span>
                         <div className="flex items-center gap-1">
-                            <span className="hidden md:inline text-[#C62828] text-sm md:text-base opacity-40 flex-shrink-0">•</span>
-                            <span className="text-[#C62828]" style={{ letterSpacing: '0.8px', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
+                            <span className="hidden md:inline text-[#E51A1A] text-base md:text-lg opacity-60 flex-shrink-0" style={{ WebkitTextStroke: '0.6px #E51A1A' }}>•</span>
+                            <span className="text-[#222222] font-black opacity-100" style={{ letterSpacing: '0.8px', textShadow: '-0.5px -0.5px 0 rgba(255,255,255,0.8), 0.5px -0.5px 0 rgba(255,255,255,0.8), -0.5px 0.5px 0 rgba(255,255,255,0.8), 0.5px 0.5px 0 rgba(255,255,255,0.8), 0 2px 3px rgba(0,0,0,0.3)' }}>
                                 {year}
                             </span>
                         </div>
@@ -193,7 +193,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
 
                 {/* Badge da Estação (Desktop) */}
-                <div className="hidden md:flex absolute top-[10px] right-[14px] z-10">
+                <div className="hidden md:flex absolute top-[12px] right-[14px] z-10">
                     <div
                         className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
                         style={{
