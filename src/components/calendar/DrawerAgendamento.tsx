@@ -216,6 +216,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
         }
     }, [isOpen, selectedAgendamentoId]);
 
+    // Efeito para fechar o drawer automaticamente se não houver agendamentos em modo de visualização
+    useEffect(() => {
+        if (isOpen && mode === 'view' && (!agendamentosNoDia || agendamentosNoDia.length === 0)) {
+            onClose();
+        }
+    }, [isOpen, mode, agendamentosNoDia, onClose]);
+
     if (!isOpen) return null;
 
     const isFormValid = dataInicio && dataFim && tipo && totalDias > 0;
@@ -319,8 +326,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                         <div className="flex flex-col justify-center">
                             <h2 className={cn(
-                                "font-black uppercase tracking-[0.5px] md:tracking-[1px] whitespace-nowrap leading-tight transition-all",
-                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem]" : "text-white text-[0.78rem] xs:text-[0.85rem] md:text-[1.1rem]"
+                                "font-black uppercase md:tracking-[1px] whitespace-nowrap leading-tight transition-all",
+                                mode === 'create' ? "text-slate-900 text-[1.05rem] md:text-[1.3rem] tracking-[0.5px]" : "text-white text-[0.82rem] xs:text-[0.88rem] md:text-[1.1rem] tracking-tight md:tracking-[1px] drop-shadow-sm"
                             )}>
                                 {modoEdicao ? (
                                     <span>EDITAR AGENDAMENTO</span>
@@ -328,7 +335,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <span>NOVO AGENDAMENTO</span>
                                 ) : (
                                     <>
-                                        <span className="opacity-90 mr-1.5">AGENDAMENTOS DO DIA</span>
+                                        <span className="font-black opacity-100 md:opacity-90 mr-1.5">AGENDAMENTOS DO DIA</span>
                                         <span className="font-black">
                                             {initialDate && (() => {
                                                 const d = new Date(initialDate + 'T12:00:00');
@@ -365,7 +372,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         title={variant === 'modal' ? "Fechar" : (modoEdicao ? "Voltar" : "Fechar")}
                     >
                         {variant === 'modal' || !modoEdicao ? (
-                            <X className="w-4 h-4 md:w-5 md:h-5" strokeWidth={4} />
+                            <X className="w-4 h-4 md:w-[22px] md:h-[22px]" strokeWidth={4} />
                         ) : (
                             <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" strokeWidth={4} />
                         )}
