@@ -660,8 +660,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         >
                                             <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
-                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:-ml-1.5">
-                                                    <div className="w-[54px] h-[54px] md:w-[70px] md:h-[70px] rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
+                                                <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:ml-0">
+                                                    <div className="w-[54px] h-[54px] md:w-[78px] md:h-[78px] md:-translate-y-1.5 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
                                                         {agenda.userPhoto ? (
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
                                                         ) : (
@@ -670,7 +670,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <span className="text-[9px] md:text-[10px] font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
+                                                    <span className="text-[9px] md:text-[10px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
                                                         {agenda.userName || "Usuário"}
                                                     </span>
                                                 </div>
