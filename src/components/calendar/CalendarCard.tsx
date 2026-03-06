@@ -159,6 +159,16 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 >
                     {/* Degradê horizontal que acompanha a cor da estação para área de leitura */}
                     <div className="absolute inset-0 pointer-events-none" style={{ background: bgGradient }} />
+                    {/* Gradiente superior para melhorar a leitura do título do mês */}
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0) 45%)' }}
+                    />
+                    {/* Vignette suave nas bordas para criar profundidade no banner */}
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.10) 100%)' }}
+                    />
                     {/* Gradiente fundindo diretamente com a base branca do cartão */}
                     <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
                 </div>
