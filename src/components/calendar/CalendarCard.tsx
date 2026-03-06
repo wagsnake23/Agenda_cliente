@@ -109,11 +109,13 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         "PRIMAVERA": "/season/primavera.webp"
     };
 
+    const baseWhiteLight = "radial-gradient(circle at top left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.75) 12%, rgba(255,255,255,0.45) 24%, rgba(255,255,255,0.18) 36%, rgba(255,255,255,0.08) 48%, rgba(255,255,255,0) 62%)";
+
     const seasonGradients: Record<string, string> = {
-        "VERÃO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,250,230,0.80) 12%, rgba(255,235,180,0.55) 26%, rgba(255,220,140,0.30) 40%, rgba(255,210,90,0.12) 52%, rgba(255,210,90,0) 65%)",
-        "OUTONO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,248,235,0.80) 12%, rgba(255,225,190,0.55) 26%, rgba(255,200,150,0.30) 40%, rgba(255,170,110,0.12) 52%, rgba(255,170,110,0) 65%)",
-        "INVERNO": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(245,250,255,0.80) 12%, rgba(225,240,255,0.55) 26%, rgba(200,225,255,0.30) 40%, rgba(170,210,255,0.12) 52%, rgba(170,210,255,0) 65%)",
-        "PRIMAVERA": "radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,245,250,0.80) 12%, rgba(255,225,240,0.55) 26%, rgba(255,200,230,0.30) 40%, rgba(255,170,220,0.12) 52%, rgba(255,170,220,0) 65%)"
+        "VERÃO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,250,230,0.80) 12%, rgba(255,235,180,0.55) 26%, rgba(255,220,140,0.30) 40%, rgba(255,210,90,0.12) 52%, rgba(255,210,90,0) 65%)`,
+        "OUTONO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,248,235,0.80) 12%, rgba(255,225,190,0.55) 26%, rgba(255,200,150,0.30) 40%, rgba(255,170,110,0.12) 52%, rgba(255,170,110,0) 65%)`,
+        "INVERNO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(245,250,255,0.80) 12%, rgba(225,240,255,0.55) 26%, rgba(200,225,255,0.30) 40%, rgba(170,210,255,0.12) 52%, rgba(170,210,255,0) 65%)`,
+        "PRIMAVERA": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,245,250,0.80) 12%, rgba(255,225,240,0.55) 26%, rgba(255,200,230,0.30) 40%, rgba(255,170,220,0.12) 52%, rgba(255,170,220,0) 65%)`
     };
 
     const bgImage = seasonImages[season.name.toUpperCase()] || seasonImages["PRIMAVERA"];
