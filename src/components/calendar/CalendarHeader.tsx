@@ -160,18 +160,27 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                   >
                     <Bell
                       size={26}
-                      color={todayAppointmentsCount > 0 ? "#1e3a8a" : "#94a3b8"}
+                      color={todayAppointmentsCount > 0 ? "#1e40af" : "#94a3b8"}
                       strokeWidth={2.5}
+                      className={cn(
+                        todayAppointmentsCount > 0 && "filter drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]"
+                      )}
                     />
                     {todayAppointmentsCount > 0 && (
-                      <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
+                      <span className={cn(
+                        "absolute -top-[11px] -right-[13px] text-white text-[11px] font-[800] rounded-full px-[7px] py-[2.5px]",
+                        "animate-in zoom-in duration-300 flex items-center justify-center",
+                        "bg-[radial-gradient(circle_at_30%_30%,#ff6b6b_0%,#ef4444_60%,#b91c1c_100%)]",
+                        "shadow-[0_3px_6px_rgba(0,0,0,0.3),inset_0_1px_1.5px_rgba(255,255,255,0.5),inset_0_-1px_1.5px_rgba(0,0,0,0.3)]",
+                        "border border-red-600/20"
+                      )}>
                         {todayAppointmentsCount}
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center lg:mt-[15px]">
+                <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center lg:mt-[12px]">
                   <Button
                     onClick={goToToday}
                     variant="ghost"
