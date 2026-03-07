@@ -181,12 +181,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     />
                     <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex flex-col items-start leading-tight m-0">
                         {/* Badge Única: Mês e Ano */}
-                        <div className="hidden md:flex items-center justify-center px-[14px] py-0 rounded-[14px] shadow-[0_1px_4px_rgba(0,0,0,0.05)] bg-white/95 backdrop-blur-[6px] transition-all duration-300 gap-2">
-                            <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none">
+                        <div className="hidden md:flex items-center justify-center px-[14px] py-0 rounded-[14px] bg-white/95 backdrop-blur-[6px] transition-all duration-300 gap-2 antialiased">
+                            <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
                                 {MONTHS[month]}
                             </span>
-                            <span className="text-[#D14343] opacity-20 font-bold">•</span>
-                            <span className="text-[#D14343] font-black text-base md:text-[19px] leading-none">
+                            <span className="text-[#D14343] opacity-20 font-bold select-none">•</span>
+                            <span className="text-[#D14343] font-black text-base md:text-[19px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
                                 {year}
                             </span>
                         </div>
