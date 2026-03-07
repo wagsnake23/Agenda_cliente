@@ -447,7 +447,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
-      <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] bg-transparent lg:bg-[#dbeafe] pt-0 lg:pt-[96px] lg:pb-8 mb-2 lg:mb-0">
+      <section className="w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw] bg-transparent lg:bg-[#dbeafe] pt-0 lg:pt-[96px] lg:pb-8 mb-0 lg:mb-0">
         <div className="w-full max-w-[1600px] mx-auto px-0 lg:px-[60px]">
           <CalendarHeader
             month={month}
