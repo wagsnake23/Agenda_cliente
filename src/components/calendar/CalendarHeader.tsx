@@ -203,7 +203,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         {/* Card 2 - Navegação */}
         <div className={cn(
-          "flex items-center justify-center gap-2 bg-transparent border-none shadow-none p-0"
+          "flex items-center justify-center gap-2 bg-transparent border-none shadow-none p-0 -mt-[5px] lg:mt-0"
         )}>
           <Button
             variant="outline"
