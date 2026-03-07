@@ -81,7 +81,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                         </h4>
                     </div>
 
-                    <div className="flex flex-row md:flex-col items-center justify-center py-[2px] md:py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-[8px] text-[12px] md:text-[13px] bg-[#3b82f6]/15 text-[#2563eb] leading-[1.1] ml-auto">
+                    <div className="flex flex-row md:flex-col items-center justify-center py-[4px] md:py-[4px] px-[12px] md:px-[10px] rounded-[10px] md:rounded-[8px] text-[12px] md:text-[13px] bg-[#3b82f6]/15 text-[#2563eb] leading-[1.1] ml-auto border-[0.5px] border-[#3b82f6]/20 shadow-[inset_0_1px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.02)]">
                         <span className="font-bold uppercase tracking-wide">{MONTHS[month]?.substring(0, 3)}</span>
                         <span className="hidden md:inline font-bold opacity-90">{year}</span>
                         <span className="inline md:hidden font-bold opacity-90 ml-[2px]">/{year}</span>
