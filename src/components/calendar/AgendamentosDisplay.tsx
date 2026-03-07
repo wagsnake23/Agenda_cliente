@@ -89,7 +89,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                 </div>
             </div>
 
-            <div className="px-3 md:px-6 pt-1 md:pt-3 pb-5 flex flex-col justify-start flex-1">
+            <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-5 flex flex-col justify-start flex-1">
                 {isEmpty ? (
                     <div className="flex-1 flex items-center justify-start py-4">
                         <span className="text-[13px] md:text-[13px] lg:text-[14px] text-gray-400 font-normal italic leading-[1.6]">
@@ -117,7 +117,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                     <div
                                         onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
                                         className={cn(
-                                            "relative cursor-pointer transition-all duration-150 ease-in-out flex flex-col py-[8px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full active:scale-[0.98] origin-left",
+                                            "relative cursor-pointer transition-all duration-150 ease-in-out flex flex-col py-[4px] md:py-[8px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full active:scale-[0.98] origin-left",
                                             "before:content-[''] before:absolute before:left-[-12px] before:top-[14px] md:before:top-[16px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]",
                                             "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                                             isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
@@ -143,7 +143,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                                         )}
                                     </div>
                                     {index < currentMonthAgendamentos.length - 1 && (
-                                        <div className="h-[1px] my-[2px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
+                                        <div className="h-[1px] my-[1px] md:my-[2px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
                                     )}
                                 </React.Fragment>
                             );

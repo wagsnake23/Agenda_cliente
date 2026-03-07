@@ -70,7 +70,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
         </div>
       </div>
 
-      <div className="px-3 md:px-6 pt-1 md:pt-3 pb-5 flex flex-col justify-start flex-1">
+      <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-5 flex flex-col justify-start flex-1">
         {isEmpty ? (
           <div className="flex-1 flex items-center justify-start py-4">
             <span className="text-[13px] md:text-[13px] lg:text-[14px] text-gray-400 font-normal italic leading-[1.6]">
@@ -86,7 +86,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                 <React.Fragment key={i}>
                   <div
                     className={cn(
-                      "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
+                      "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[3px] md:py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
                       "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#f97316]",
                       "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
                       isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
@@ -105,7 +105,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
                     </div>
                   </div>
                   {i < currentMonthBirthdays.length - 1 && (
-                    <div className="h-[1px] my-[6px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
+                    <div className="h-[1px] my-[3px] md:my-[6px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
                   )}
                 </React.Fragment>
               );
