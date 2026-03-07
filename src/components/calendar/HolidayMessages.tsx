@@ -56,61 +56,70 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
             </span>
           </div>
         ) : (
-          messages.map((linha, i) => {
-            const dayMatch = linha.match(/^(\d{2})/); // Extrai o dia da string
-            const day = dayMatch ? parseInt(dayMatch[1], 10) : null;
-            const isHighlighted = day !== null && day === highlightedDay;
-            const isGrayEvent = linha.includes('Páscoa') ||
-              linha.includes('Dia das Mães') ||
-              linha.includes('Dia dos Pais') ||
-              linha.includes('Dia dos Namorados') ||
-              linha.includes('Dia do Bombeiro') ||
-              linha.includes('Dia Internacional da Mulher') ||
-              linha.includes('Quarta-feira de Cinzas') ||
-              linha.includes('Início d');
-            const emojiMatch = linha.match(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji_Component})+$/u);
-            const emoji = emojiMatch ? emojiMatch[0] : null;
-            const textWithoutEmoji = emoji ? linha.replace(emoji, '').trim() : linha;
+          <div className="relative pl-[18px] before:content-[''] before:absolute before:left-[6px] before:top-[4px] before:bottom-[4px] before:w-[2px] before:bg-[#e5e7eb] flex flex-col w-full">
+            {messages.map((linha, i) => {
+              const dayMatch = linha.match(/^(\d{2})/); // Extrai o dia da string
+              const day = dayMatch ? parseInt(dayMatch[1], 10) : null;
+              const isHighlighted = day !== null && day === highlightedDay;
+              const isGrayEvent = linha.includes('Páscoa') ||
+                linha.includes('Dia das Mães') ||
+                linha.includes('Dia dos Pais') ||
+                linha.includes('Dia dos Namorados') ||
+                linha.includes('Dia do Bombeiro') ||
+                linha.includes('Dia Internacional da Mulher') ||
+                linha.includes('Quarta-feira de Cinzas') ||
+                linha.includes('Início d');
+              const emojiMatch = linha.match(/(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji_Component})+$/u);
+              const emoji = emojiMatch ? emojiMatch[0] : null;
+              const textWithoutEmoji = emoji ? linha.replace(emoji, '').trim() : linha;
 
-            return (
-              <div
-                key={i}
-                className={cn(
-                  "transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5",
-                  "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
-                  isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md py-0.5 px-1 z-20 animate-bounce-twice font-semibold",
-                  isGrayEvent && !isHighlighted && "text-gray-400"
-                )}
-              >
-                <span className="font-medium">
-                  {dayMatch ? (
-                    <>
-                      <span className={cn(
-                        "font-semibold",
-                        isGrayEvent ? "text-[#475569]" : "text-[#c62828]"
-                      )}>
-                        {dayMatch[1]}/{formattedMonth}
+              return (
+                <React.Fragment key={i}>
+                  <div
+                    className={cn(
+                      "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
+                      "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full",
+                      isGrayEvent ? "before:bg-[#94a3b8]" : "before:bg-[#ef4444]",
+                      "text-[13px] md:text-[15px] lg:text-[16px] font-medium uppercase tracking-tight leading-[1.6]",
+                      isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold",
+                      isGrayEvent && !isHighlighted && "text-gray-400",
+                      !isGrayEvent && !isHighlighted && "text-[#1F2937]"
+                    )}
+                  >
+                    <div className="flex items-center gap-[8px] flex-1">
+                      {dayMatch ? (
+                        <span className={cn(
+                          "text-[12px] font-semibold px-[8px] py-[3px] rounded-[6px] shrink-0",
+                          isGrayEvent ? "bg-slate-100 text-slate-500" : "bg-[#f1f5f9] text-[#334155]"
+                        )}>
+                          {dayMatch[1]}/{formattedMonth}
+                        </span>
+                      ) : null}
+
+                      <span className={cn("flex items-center gap-1 truncate", isGrayEvent ? "text-[#475569]" : "text-[#334155]")}>
+                        <span className="truncate">
+                          {dayMatch ? textWithoutEmoji.replace(/^\d{2}\s*-\s*/, '') : textWithoutEmoji}
+                        </span>
+                        {emoji && (
+                          <span className="text-base md:text-xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] transition-transform hover:scale-110 transform -translate-y-[1px] shrink-0">
+                            {emoji}
+                          </span>
+                        )}
+                        {linha.includes('Independência do Brasil') && (
+                          <div className="md:scale-125 origin-left transition-transform shrink-0">
+                            <BrasilFlagIcon size={14} />
+                          </div>
+                        )}
                       </span>
-                      <span className={cn("opacity-50 mx-0.5 text-[10px]", isGrayEvent ? "text-[#475569]" : "text-[#c62828]")}>•</span>
-                      <span className={isGrayEvent ? "text-[#475569]" : "text-[#334155]"}>
-                        {textWithoutEmoji.replace(/^\d{2}\s*-\s*/, '')}
-                      </span>
-                    </>
-                  ) : textWithoutEmoji}
-                </span>
-                {emoji && (
-                  <span className="text-base md:text-xl drop-shadow-[0_3px_8px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] transition-transform hover:scale-110 transform -translate-y-[1px]">
-                    {emoji}
-                  </span>
-                )}
-                {linha.includes('Independência do Brasil') && (
-                  <div className="md:scale-125 origin-left transition-transform">
-                    <BrasilFlagIcon size={14} />
+                    </div>
                   </div>
-                )}
-              </div>
-            );
-          })
+                  {i < messages.length - 1 && (
+                    <div className="h-[1px] my-[6px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
         )}
       </div>
     </div >

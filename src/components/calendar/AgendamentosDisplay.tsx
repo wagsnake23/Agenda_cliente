@@ -39,25 +39,10 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
     const renderDate = (agendamento: Agendamento) => {
         const dInicio = new Date(agendamento.dataInicio + 'T12:00:00');
-        const dFim = new Date(agendamento.dataFim + 'T12:00:00');
         const diaInicio = String(dInicio.getDate()).padStart(2, '0');
-
-        // Mes abreviado com a primeira letra maíuscula
         const mesInicioAbbr = (MONTHS[dInicio.getMonth()] || '').substring(0, 3);
-        const mesInicio = mesInicioAbbr.charAt(0).toUpperCase() + mesInicioAbbr.slice(1).toLowerCase();
 
-        if (agendamento.dataInicio === agendamento.dataFim) {
-            return `${diaInicio}/${mesInicio}`;
-        } else {
-            const diaFim = String(dFim.getDate()).padStart(2, '0');
-            const mesFimAbbr = (MONTHS[dFim.getMonth()] || '').substring(0, 3);
-            const mesFim = mesFimAbbr.charAt(0).toUpperCase() + mesFimAbbr.slice(1).toLowerCase();
-
-            if (dInicio.getMonth() === dFim.getMonth()) {
-                return `${diaInicio} a ${diaFim}/${mesInicio}`;
-            }
-            return `${diaInicio}/${mesInicio} a ${diaFim}/${mesFim}`;
-        }
+        return `${diaInicio} ${mesInicioAbbr.toUpperCase()}`;
     };
 
     return (
@@ -104,48 +89,58 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
                         </span>
                     </div>
                 ) : (
-                    currentMonthAgendamentos.map((agendamento) => {
-                        const isHighlighted = highlightedDay !== null && (() => {
-                            const hoverDate = new Date(year, month, highlightedDay, 12, 0, 0);
-                            const dInicio = new Date(agendamento.dataInicio + 'T12:00:00');
-                            const dFim = new Date(agendamento.dataFim + 'T12:00:00');
-                            return hoverDate >= dInicio && hoverDate <= dFim;
-                        })();
+                    <div className="relative pl-[18px] before:content-[''] before:absolute before:left-[6px] before:top-0 before:bottom-0 before:w-[2px] before:bg-[#e5e7eb] flex flex-col w-full">
+                        {currentMonthAgendamentos.map((agendamento, index) => {
+                            const isHighlighted = highlightedDay !== null && (() => {
+                                const hoverDate = new Date(year, month, highlightedDay, 12, 0, 0);
+                                const dInicio = new Date(agendamento.dataInicio + 'T12:00:00');
+                                const dFim = new Date(agendamento.dataFim + 'T12:00:00');
+                                return hoverDate >= dInicio && hoverDate <= dFim;
+                            })();
 
-                        const emoji = agendamento.tipo.split(' ')[0];
-                        const tipoNome = agendamento.tipo.replace(emoji, '').trim();
-                        const userName = agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário';
-                        const dateText = renderDate(agendamento);
+                            const emoji = agendamento.tipo.split(' ')[0];
+                            const tipoNome = agendamento.tipo.replace(emoji, '').trim();
+                            const userName = agendamento.userName ? agendamento.userName.split(' ')[0] : 'Usuário';
+                            const dateText = renderDate(agendamento);
+                            const hasContinuation = agendamento.dataInicio !== agendamento.dataFim;
 
-                        return (
-                            <div
-                                key={agendamento.id}
-                                onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
-                                className={cn(
-                                    "cursor-pointer transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5 hover:opacity-80 active:scale-95 origin-left",
-                                    "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
-                                    isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md py-0.5 px-1 z-20 animate-bounce-twice font-semibold"
-                                )}
-                            >
-                                <span className="font-medium flex items-center gap-1">
-                                    <span className={cn(
-                                        "font-semibold text-[#1d4ed8]"
-                                    )}>
-                                        {dateText}
-                                    </span>
-                                    <span className="text-blue-500/50 mx-0.5 text-[10px]">•</span>
-                                    {emoji && (
-                                        <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1]">
-                                            {emoji}
-                                        </span>
+                            return (
+                                <React.Fragment key={agendamento.id}>
+                                    <div
+                                        onClick={() => onViewAgendamento(agendamento.dataInicio, agendamento.id)}
+                                        className={cn(
+                                            "relative cursor-pointer transition-all duration-150 ease-in-out flex flex-col py-[8px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full active:scale-[0.98] origin-left",
+                                            "before:content-[''] before:absolute before:left-[-12px] before:top-[14px] md:before:top-[16px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#3b82f6]",
+                                            "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
+                                            isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
+                                        )}
+                                    >
+                                        <div className="flex items-center gap-[8px] w-full">
+                                            <span className="bg-[#3b82f6]/15 text-[#2563eb] text-[12px] font-semibold px-[8px] py-[4px] rounded-[8px] shrink-0 uppercase">
+                                                {dateText}
+                                            </span>
+                                            <span className="flex items-center gap-1 text-[#334155] truncate">
+                                                {emoji && (
+                                                    <span className="text-base md:text-lg filter saturate-[1.3] brightness-[1.1]">
+                                                        {emoji}
+                                                    </span>
+                                                )}
+                                                <span className="truncate">{tipoNome} - {userName}</span>
+                                            </span>
+                                        </div>
+                                        {hasContinuation && (
+                                            <div className="flex w-full mt-2">
+                                                <div className="border-b border-dashed border-[#d1d5db] flex-1 ml-[10px]" />
+                                            </div>
+                                        )}
+                                    </div>
+                                    {index < currentMonthAgendamentos.length - 1 && (
+                                        <div className="h-[1px] my-[2px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
                                     )}
-                                    <span className="text-[#334155]">
-                                        {tipoNome} - {userName}
-                                    </span>
-                                </span>
-                            </div>
-                        );
-                    })
+                                </React.Fragment>
+                            );
+                        })}
+                    </div>
                 )}
             </div>
         </div>

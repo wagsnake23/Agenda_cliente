@@ -70,31 +70,39 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
             </span>
           </div>
         ) : (
-          currentMonthBirthdays.map((data, i) => {
-            const isHighlighted = data.day === highlightedDay;
+          <div className="relative pl-[18px] before:content-[''] before:absolute before:left-[6px] before:top-[4px] before:bottom-[4px] before:w-[2px] before:bg-[#e5e7eb] flex flex-col w-full">
+            {currentMonthBirthdays.map((data, i) => {
+              const isHighlighted = data.day === highlightedDay;
 
-            return (
-              <div
-                key={i}
-                className={cn(
-                  "transition-all duration-300 ease-in-out flex items-center justify-start gap-2 py-0.5",
-                  "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
-                  isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md py-0.5 px-1 z-20 animate-bounce-twice font-semibold"
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-[#b45309] shrink-0">{data.dateFormatted}</span>
-                  <div className="flex items-center gap-1 font-medium text-[#334155] truncate">
-                    <span className="opacity-50 mx-0.5 text-[10px] text-[#b45309]">•</span>
-                    <span className="truncate">{data.name.replace(/Bombeiro\s+/i, '')}</span>
-                    <span className="text-sm md:text-base transition-transform hover:scale-110 shrink-0 transform -translate-y-[1px]">
-                      🎂
-                    </span>
+              return (
+                <React.Fragment key={i}>
+                  <div
+                    className={cn(
+                      "relative transition-all duration-150 ease-in-out flex items-center gap-[8px] py-[6px] pl-0 hover:bg-[#f8fafc] hover:rounded-[6px] hover:pl-[4px] group w-full",
+                      "before:content-[''] before:absolute before:left-[-12px] before:top-[12px] md:before:top-[14px] before:w-[8px] before:h-[8px] before:rounded-full before:bg-[#f97316]",
+                      "text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] uppercase tracking-tight leading-[1.6]",
+                      isHighlighted && "bg-yellow-100 text-yellow-800 ring-2 ring-yellow-400 rounded-md z-20 animate-bounce-twice font-semibold"
+                    )}
+                  >
+                    <div className="flex items-center gap-[8px] flex-1">
+                      <span className="bg-[#f1f5f9] text-[#334155] text-[12px] font-semibold px-[8px] py-[3px] rounded-[6px] shrink-0">
+                        {data.dateFormatted}
+                      </span>
+                      <span className="flex items-center gap-1 text-[#334155] truncate">
+                        <span className="truncate">{data.name.replace(/Bombeiro\s+/i, '')}</span>
+                        <span className="text-sm md:text-base transition-transform hover:scale-110 shrink-0 transform -translate-y-[1px]">
+                          🎂
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })
+                  {i < currentMonthBirthdays.length - 1 && (
+                    <div className="h-[1px] my-[6px] bg-gradient-to-r from-transparent via-[#e5e7eb] to-transparent w-full" />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
         )}
       </div>
     </div>
