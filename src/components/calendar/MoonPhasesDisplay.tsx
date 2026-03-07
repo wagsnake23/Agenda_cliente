@@ -56,7 +56,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
         </div>
       </div>
 
-      <div className="px-3 md:px-6 pt-1 md:pt-3 pb-2 md:pb-5 flex flex-col justify-center items-center flex-1 w-full">
+      <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-0 md:pb-5 flex flex-col justify-center items-center flex-1 w-full">
         <div className="flex flex-nowrap gap-3 md:gap-8 justify-center w-full overflow-x-auto pb-2">
           {moonPhases.map((phase, index) => {
             const monthAbbr = (MONTHS[month] || 'Mês').substring(0, 3);

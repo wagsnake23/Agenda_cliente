@@ -70,7 +70,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
         </div>
       </div>
 
-      <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-5 flex flex-col justify-start flex-1">
+      <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-2 md:pb-5 flex flex-col justify-start flex-1">
         {isEmpty ? (
           <div className="flex-1 flex items-center justify-start py-4">
             <span className="text-[13px] md:text-[13px] lg:text-[14px] text-gray-400 font-normal italic leading-[1.6]">
