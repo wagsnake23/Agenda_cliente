@@ -19,7 +19,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MONTHS } from "@/utils/calendar-utils";
+import { MONTHS, DAYS_OF_WEEK } from "@/utils/calendar-utils";
 import { cn } from "@/lib/utils";
 import { useCalendarEventsContext } from "@/context/CalendarEventsContext";
 import { getEventsForDate } from "@/hooks/use-calendar-events";
@@ -115,67 +115,91 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         "flex flex-col lg:grid lg:grid-cols-3 gap-3 lg:gap-8 w-full transition-all duration-300 items-stretch"
       )}>
 
-        <div className={cn(
-          "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
-        )}>
-          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto auto auto 1fr', gridTemplateRows: '1fr 1fr', gap: '0px 12px' }}>
-            <div className="border-r border-gray-200 lg:border-[#1e2a44] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
-              <span className="text-[44px] lg:text-[42px] font-[800] leading-[1] text-[#1f2937] px-1">{String(new Date().getDate()).padStart(2, '0')}</span>
-            </div>
+        {(() => {
+          const today = new Date();
+          const todayEvents = getEventsForDate(calendarEvents, today);
+          const relevantEvent = todayEvents.find(e => e.type === 'holiday' || e.type === 'event');
 
-            <div className="" style={{ gridColumn: '2', gridRow: '1' }}>
-              <span className="text-[14px] font-[700] tracking-[1px] uppercase text-[#64748b] lg:text-[18px] lg:text-[#1e40af]">
-                {MONTHS[new Date().getMonth()].substring(0, 3)}
-              </span>
-            </div>
-
-            <div className="" style={{ gridColumn: '2', gridRow: '2' }}>
-              <span className="text-[14px] lg:text-[16px] font-[600] text-[#94a3b8] lg:text-[#374151]">
-                {new Date().getFullYear()}
-              </span>
-            </div>
-
-            {/* Sino de Notificações - Reposicionado e Maior */}
-            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex items-center justify-center px-2">
-              <div
-                onClick={todayAppointmentsCount > 0 ? handleOpenTodayAppointments : undefined}
-                className={cn(
-                  "relative transition-transform hidden lg:block",
-                  todayAppointmentsCount > 0
-                    ? "cursor-pointer hover:scale-110"
-                    : "cursor-default opacity-50"
-                )}
-              >
-                <Bell
-                  size={26}
-                  color={todayAppointmentsCount > 0 ? "#1e3a8a" : "#94a3b8"}
-                  strokeWidth={2.5}
-                />
-                {todayAppointmentsCount > 0 && (
-                  <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
-                    {todayAppointmentsCount}
+          return (
+            <div className={cn(
+              "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
+            )}>
+              <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto auto auto 1fr', gridTemplateRows: 'auto auto', gap: '0px 14px' }}>
+                {/* Coluna 1: Dia da Semana e Numero (Sem Badge) */}
+                <div className="flex flex-col items-center justify-center pt-0.5 border-r border-[#1e40af]/30 lg:border-[#1e40af]/50 pr-4 mr-1 h-full" style={{ gridRow: '1 / span 2', gridColumn: '1' }}>
+                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#64748b] tracking-[1.5px] uppercase mb-[2px] select-none leading-none">
+                    {DAYS_OF_WEEK[today.getDay()]}
                   </span>
-                )}
-              </div>
-            </div>
+                  <span className="text-[32px] lg:text-[36px] font-[800] text-[#1e40af] leading-none tracking-tighter">
+                    {String(today.getDate()).padStart(2, '0')}
+                  </span>
+                </div>
 
-            <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
-              <Button
-                onClick={goToToday}
-                variant="ghost"
-                className={cn(
-                  "py-[8px] px-[18px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
-                  "transition-all duration-300 cursor-pointer",
-                  "rounded-[10px] outline-none border-none",
-                  "bg-[#1e40af] text-white hover:brightness-110",
-                  "shadow-[0_6px_14px_rgba(30,64,175,0.3)] hover:shadow-[0_8px_18px_rgba(30,64,175,0.35)] hover:-translate-y-[1px]"
-                )}
-              >
-                HOJE
-              </Button>
+                <div className="flex items-end" style={{ gridColumn: '2', gridRow: '1' }}>
+                  <span className="text-[14px] font-[700] tracking-[1.5px] uppercase text-[#1e40af] lg:text-[17px] leading-none mb-[1px]">
+                    {MONTHS[today.getMonth()].substring(0, 3)}
+                  </span>
+                </div>
+
+                <div className="flex items-start" style={{ gridColumn: '2', gridRow: '2' }}>
+                  <span className="text-[14px] lg:text-[17px] font-[700] text-[#475569] leading-none mt-[2px]">
+                    {today.getFullYear()}
+                  </span>
+                </div>
+
+                {/* Sino de Notificações - Restaurado para span 2 */}
+                <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex items-center justify-center px-2">
+                  <div
+                    onClick={todayAppointmentsCount > 0 ? handleOpenTodayAppointments : undefined}
+                    className={cn(
+                      "relative transition-transform hidden lg:block",
+                      todayAppointmentsCount > 0
+                        ? "cursor-pointer hover:scale-110"
+                        : "cursor-default opacity-50"
+                    )}
+                  >
+                    <Bell
+                      size={26}
+                      color={todayAppointmentsCount > 0 ? "#1e3a8a" : "#94a3b8"}
+                      strokeWidth={2.5}
+                    />
+                    {todayAppointmentsCount > 0 && (
+                      <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
+                        {todayAppointmentsCount}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
+                  <Button
+                    onClick={goToToday}
+                    variant="ghost"
+                    className={cn(
+                      "py-[8px] px-[18px] h-auto text-[13px] font-[700] uppercase tracking-[0.5px]",
+                      "transition-all duration-300 cursor-pointer",
+                      "rounded-[10px] outline-none border-none",
+                      "bg-[#1e40af] text-white hover:brightness-110",
+                      "shadow-[0_6px_14px_rgba(30,64,175,0.3)] hover:shadow-[0_8px_18px_rgba(30,64,175,0.35)] hover:-translate-y-[1px]"
+                    )}
+                  >
+                    HOJE
+                  </Button>
+                </div>
+              </div>
+
+              {/* Texto do Feriado/Evento - Abaixo do Dia e Ano */}
+              {relevantEvent && (
+                <div className="flex items-center justify-center w-full pt-1.5" style={{ gridRow: '3', gridColumn: '1 / span 2' }}>
+                  <span className="text-[12px] md:text-[13px] italic text-[#64748b] font-medium leading-tight whitespace-normal text-center">
+                    {relevantEvent.emoji && <span>{relevantEvent.emoji} </span>}
+                    {relevantEvent.title}
+                  </span>
+                </div>
+              )}
             </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Card 2 - Navegação */}
         <div className={cn(
@@ -357,8 +381,6 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         </div>
 
         {/* Layout Mobile para os Filtros (Mantido oculto no desktop) */}
-        <div className="flex flex-col gap-2 w-full lg:hidden">
-        </div>
       </div>
     </div>
   );

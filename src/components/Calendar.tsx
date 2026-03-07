@@ -464,7 +464,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       <section
         className={cn(
           "w-full lg:w-screen lg:relative lg:left-1/2 lg:right-1/2 lg:-ml-[50vw] lg:-mr-[50vw]",
-          "pt-0 lg:pt-[84px] pb-0 lg:pb-10 mb-0.5 lg:mb-0 lg:max-w-full",
+          "pt-0 lg:pt-[84px] pb-0 lg:pb-[24px] mb-0.5 lg:mb-0 lg:max-w-full",
           "bg-transparent lg:bg-[linear-gradient(180deg,#c9d8ec_0%,#dbeafe_60%,#eef4ff_100%)]",
           "lg:border-t-[3px] lg:border-[#2563eb]",
           "lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
@@ -496,7 +496,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
         {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
         <div className="flex flex-col gap-3 lg:block w-full">
-          <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-0 lg:mt-0 lg:py-7">
+          <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-1.5 lg:mt-0 lg:py-7">
             <Carousel
               setApi={setApi}
               opts={{
