@@ -180,12 +180,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                         className="hidden md:block w-8 h-8 md:w-[54px] md:h-[54px] object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                     />
                     <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex items-center gap-1 m-0">
-                        <span className="hidden md:inline text-[#E51A1A] font-black" style={{ letterSpacing: '1.2px', textShadow: '-1.5px -1.5px 0 rgba(255,255,255,0.95), 1.5px -1.5px 0 rgba(255,255,255,0.95), -1.5px 1.5px 0 rgba(255,255,255,0.95), 1.5px 1.5px 0 rgba(255,255,255,0.95), 0 3px 5px rgba(0,0,0,0.4)' }}>
+                        <span className="hidden md:inline text-[#E51A1A] font-black drop-shadow-[0_2.5px_2.5px_rgba(0,0,0,0.3)]" style={{ letterSpacing: '1.2px', textShadow: '-1.5px -1.5px 0 rgba(249,250,251,0.95), 1.5px -1.5px 0 rgba(249,250,251,0.95), -1.5px 1.5px 0 rgba(249,250,251,0.95), 1.5px 1.5px 0 rgba(249,250,251,0.95), 0 4px 10px rgba(0,0,0,0.5)' }}>
                             {MONTHS[month]}
                         </span>
                         <div className="flex items-center gap-1">
                             <span className="hidden md:inline text-[#E51A1A] text-base md:text-lg opacity-60 flex-shrink-0" style={{ WebkitTextStroke: '0.6px #E51A1A' }}>•</span>
-                            <span className="text-[#222222] font-black opacity-100" style={{ letterSpacing: '0.8px', textShadow: '-0.5px -0.5px 0 rgba(255,255,255,0.8), 0.5px -0.5px 0 rgba(255,255,255,0.8), -0.5px 0.5px 0 rgba(255,255,255,0.8), 0.5px 0.5px 0 rgba(255,255,255,0.8), 0 2px 3px rgba(0,0,0,0.3)' }}>
+                            <span className="text-[#222222] font-black opacity-100 drop-shadow-[0_2px_2px_rgba(0,0,0,0.25)]" style={{ letterSpacing: '0.8px', textShadow: '-0.5px -0.5px 0 rgba(249,250,251,0.9), 0.5px -0.5px 0 rgba(249,250,251,0.9), -1.5px 1.5px 0 rgba(249,250,251,0.9), 1.5px 1.5px 0 rgba(249,250,251,0.9), 0 4px 8px rgba(0,0,0,0.4)' }}>
                                 {year}
                             </span>
                         </div>
@@ -197,7 +197,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <div
                         className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
                         style={{
-                            padding: '5px 14px',
+                            padding: '4px 12px',
                             borderRadius: '20px',
                             fontSize: '13.5px',
                             background: season.style.bg,
