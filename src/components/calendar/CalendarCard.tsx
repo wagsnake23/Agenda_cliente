@@ -7,6 +7,7 @@ import { MONTHS, getSeasonDataForDate } from '@/utils/calendar-utils';
 import { cn } from '@/lib/utils';
 import type { CalendarMode } from '@/hooks/use-calendar-mode';
 import type { CalendarEvent } from '@/hooks/use-calendar-events';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 interface CalendarCardProps {
     month: number;
@@ -205,28 +206,38 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     </h3>
                 </div>
 
-                {/* Badge da Estação (Desktop) */}
-                <div className="hidden md:flex absolute top-[16px] right-[14px] z-10">
-                    <div
-                        className="transition-all duration-300 hover:scale-[1.05] cursor-default select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
-                        style={{
-                            padding: '4px 12px',
-                            borderRadius: '20px',
-                            fontSize: '13.5px',
-                            background: season.style.bg,
-                            color: season.style.text,
-                            fontWeight: '800',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.6px',
-                            border: `0.5px solid ${season.style.border}`,
-                        }}
-                    >
-                        <span className="text-base transform transition-transform group-hover/season:rotate-12">{season.emoji}</span>
-                        <span>{season.name}</span>
-                    </div>
+                {/* Badge da Estação (Desktop) com Tooltip */}
+                <div className="hidden md:flex absolute top-[12px] right-[14px] z-10">
+                    <Tooltip delayDuration={300}>
+                        <TooltipTrigger asChild>
+                            <div
+                                className="transition-all duration-300 hover:scale-[1.10] cursor-pointer select-none group/season shadow-[0_4px_10px_rgba(0,0,0,0.12)]"
+                                style={{
+                                    padding: '4px',
+                                    borderRadius: '12px',
+                                    fontSize: '12.5px',
+                                    background: season.style.bg,
+                                    color: season.style.text,
+                                    fontWeight: '800',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    border: `0.5px solid ${season.style.border}`,
+                                    width: '34px',
+                                    height: '34px'
+                                }}
+                            >
+                                <span className="text-lg transform transition-transform group-hover/season:rotate-12">{season.emoji}</span>
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent
+                            side="left"
+                            className="bg-white/95 backdrop-blur-md border border-gray-100 shadow-xl font-bold text-[#334155] uppercase tracking-wider py-2 px-3 text-[11px] rounded-[10px]"
+                            sideOffset={8}
+                        >
+                            Estação: <span style={{ color: season.style.text }}>{season.name}</span>
+                        </TooltipContent>
+                    </Tooltip>
                 </div>
             </div>
 

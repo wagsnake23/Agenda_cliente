@@ -91,10 +91,13 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
 
             <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-2 md:pb-5 flex flex-col justify-start flex-1">
                 {isEmpty ? (
-                    <div className="flex-1 flex items-center justify-start py-4">
-                        <span className="text-[13px] md:text-[13px] lg:text-[14px] text-gray-400 font-normal italic leading-[1.6]">
-                            Nenhum agendamento neste mês.
-                        </span>
+                    <div className="flex flex-col items-start justify-start pt-3 pb-4 gap-1">
+                        <div className="flex items-center gap-2.5 px-0.5 opacity-60">
+                            <span className="text-lg md:text-xl filter grayscale contrast-50 select-none">📋</span>
+                            <span className="text-[11px] md:text-[12px] font-bold text-gray-400 uppercase tracking-[1px] leading-tight">
+                                Nenhum agendamento para este mês
+                            </span>
+                        </div>
                     </div>
                 ) : (
                     <div className="relative pl-[18px] before:content-[''] before:absolute before:left-[6px] before:top-0 before:bottom-0 before:w-[2px] before:bg-[#e5e7eb] flex flex-col w-full">
