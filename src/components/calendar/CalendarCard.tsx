@@ -241,7 +241,13 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 </div>
             </div>
 
-            <div className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:-mt-1 bg-transparent md:bg-gradient-to-br md:from-[#F0F9FF] md:to-[#E0F2FE] md:rounded-[20px] md:border-[0.5px] md:border-sky-400/20 opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] backdrop-blur-[2px]">
+            <div
+                className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:-mt-1 bg-transparent md:rounded-[20px] opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] transition-colors duration-500"
+                style={{
+                    background: isDesktopState ? 'linear-gradient(to bottom, #f0f9ff, #e0f2fe)' : 'transparent',
+                    border: isDesktopState ? '0.5px solid rgba(14, 165, 233, 0.2)' : 'none'
+                }}
+            >
                 <CalendarGrid
                     calendarData={calendarData}
                     isTransitioning={false}
