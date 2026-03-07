@@ -56,13 +56,13 @@ const Index = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#EFF3F6] lg:bg-[linear-gradient(135deg,#F0F4F8_0%,#E2E8F0_100%)] flex flex-col items-center justify-start px-[10px] py-2 lg:p-0 gap-y-2 overflow-x-hidden md:overflow-visible">
+      <div className="min-h-screen bg-[#EFF3F6] lg:bg-[linear-gradient(135deg,#F0F4F8_0%,#E2E8F0_100%)] flex flex-col items-stretch justify-start px-[10px] py-0 lg:p-0 gap-y-0 overflow-x-hidden md:overflow-visible">
         <Header />
 
-        {/* Wrapper de Escala apenas para Desktop - Aplica o padding-top p/ header fixo lg:pt-[74px] */}
-        <div className="w-full flex flex-col items-center justify-start lg:pt-[74px] md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
+        {/* Wrapper de Escala apenas para Desktop - Aplica o padding-top p/ header fixo lg:pt-0 agora, compensado no Calendar */}
+        <div className="w-full flex flex-col items-stretch justify-start">
 
-          <main className="w-full lg:max-w-[1600px] flex flex-col items-center">
+          <main className="w-full flex flex-col items-stretch">
             <Calendar
               month={currentMonth}
               year={currentYear}

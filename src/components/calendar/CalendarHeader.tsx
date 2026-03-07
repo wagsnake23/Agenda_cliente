@@ -106,16 +106,13 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   }, [isYearPopoverOpen, year]);
 
   return (
-    <div className="sticky top-[60px] z-40 w-full flex flex-col gap-1 -mt-3 md:mt-8 lg:mt-6 mb-1 md:mb-6 lg:mb-7 md:relative md:top-auto md:z-10">
+    <div className="w-full md:relative md:top-auto md:z-10 md:scale-[0.85] md:origin-top">
       <div className={cn(
-        "flex flex-col lg:grid lg:grid-cols-3 gap-2 lg:gap-8 w-full transition-all duration-300 items-stretch"
+        "flex flex-col lg:grid lg:grid-cols-3 gap-3 lg:gap-8 w-full transition-all duration-300 items-stretch"
       )}>
 
         <div className={cn(
-          "hidden lg:flex flex-col items-center justify-center w-full",
-          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
-          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
-          "lg:border lg:border-[#0F172A]/[0.05]"
+          "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
           <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto 1fr auto', gridTemplateRows: '1fr 1fr', gap: '4px 12px' }}>
             <div className="border-r border-[#e5e7eb] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
@@ -157,10 +154,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         {/* Card 2 - Navegação */}
         <div className={cn(
-          "flex items-center justify-center gap-2",
-          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
-          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
-          "lg:border lg:border-[#0F172A]/[0.05]"
+          "flex items-center justify-center gap-2 bg-transparent border-none shadow-none p-0"
         )}>
           <Button
             variant="outline"
@@ -279,10 +273,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
         {/* Card 3 - Filtros */}
         <div className={cn(
-          "hidden lg:flex flex-col items-center justify-center w-full",
-          "lg:bg-white lg:rounded-[20px] lg:p-[18px_24px]",
-          "lg:shadow-[0_12px_30px_rgba(15,23,42,0.08),0_4px_10px_rgba(15,23,42,0.04)]",
-          "lg:border lg:border-[#0F172A]/[0.05]"
+          "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
           <div className="grid grid-cols-2 gap-[12px] w-full">
             <Select

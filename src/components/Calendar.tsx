@@ -447,23 +447,28 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
-      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative">
-        <CalendarHeader
-          month={month}
-          year={year}
-          onMonthChange={onMonthChange}
-          onYearChange={onYearChange}
-          handlePrevMonth={handlePrevMonth}
-          handleNextMonth={handleNextMonth}
-          yearOptions={yearOptions}
-          isYearPopoverOpen={isYearPopoverOpen}
-          setIsYearPopoverOpen={setIsYearPopoverOpen}
-          goToToday={handleGoToToday}
-          formatToday={formatToday}
-          todayColors={todayColors}
-          scaleType={mode}
-          setScaleType={setMode}
-        />
+      <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#dbeafe] pt-6 md:pt-8 lg:pt-[96px] pb-6 md:pb-8 mb-0">
+        <div className="w-full max-w-[1600px] mx-auto px-5 md:px-[60px]">
+          <CalendarHeader
+            month={month}
+            year={year}
+            onMonthChange={onMonthChange}
+            onYearChange={onYearChange}
+            handlePrevMonth={handlePrevMonth}
+            handleNextMonth={handleNextMonth}
+            yearOptions={yearOptions}
+            isYearPopoverOpen={isYearPopoverOpen}
+            setIsYearPopoverOpen={setIsYearPopoverOpen}
+            goToToday={handleGoToToday}
+            formatToday={formatToday}
+            todayColors={todayColors}
+            scaleType={mode}
+            setScaleType={setMode}
+          />
+        </div>
+      </section>
+
+      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
 
         {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
         <div className="flex flex-col gap-3 lg:block w-full">
