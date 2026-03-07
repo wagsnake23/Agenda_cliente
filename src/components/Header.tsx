@@ -124,34 +124,43 @@ const Header = () => {
                                         {isAdmin && (
                                             <button
                                                 onClick={() => navigate('/usuarios')}
-                                                className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/usuarios')
-                                                    ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
-                                                    : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
+                                                className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/usuarios')
+                                                    ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
+                                                    : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
                                                     }`}
                                             >
                                                 Usuários
+                                                {location.pathname.startsWith('/usuarios') && (
+                                                    <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#fef08a] to-transparent rounded-full shadow-[0_0_12px_rgba(254,240,138,0.5)] animate-in fade-in slide-in-from-bottom-1 duration-500" />
+                                                )}
                                             </button>
                                         )}
 
                                         <button
                                             onClick={() => navigate('/admin/calendario')}
-                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname.startsWith('/admin/calendario')
-                                                ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
-                                                : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/admin/calendario')
+                                                ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
+                                                : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
                                                 }`}
                                         >
                                             Feriados e Eventos
+                                            {location.pathname.startsWith('/admin/calendario') && (
+                                                <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#fef08a] to-transparent rounded-full shadow-[0_0_12px_rgba(254,240,138,0.5)] animate-in fade-in slide-in-from-bottom-1 duration-500" />
+                                            )}
                                         </button>
 
                                         {/* Agendamentos */}
                                         <button
                                             onClick={() => navigate('/agendamentos')}
-                                            className={`px-[14px] py-2 rounded-lg text-[14px] font-bold transition-all duration-200 ease-in-out ${location.pathname === '/agendamentos'
-                                                ? 'text-[#facc15] border-b-2 border-[#facc15] rounded-b-none'
-                                                : 'text-white hover:bg-white/[0.08] border-b-2 border-transparent'
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname === '/agendamentos'
+                                                ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
+                                                : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
                                                 }`}
                                         >
                                             Agendamentos
+                                            {location.pathname === '/agendamentos' && (
+                                                <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#fef08a] to-transparent rounded-full shadow-[0_0_12px_rgba(254,240,138,0.5)] animate-in fade-in slide-in-from-bottom-1 duration-500" />
+                                            )}
                                         </button>
                                     </div>
 
@@ -169,7 +178,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
+                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fff9c4] to-[#fef08a] shadow-[0_4px_0_#fde047] hover:brightness-110 active:translate-y-[2px] active:shadow-[0_2px_0_#fde047] transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                 >
                                     <LogIn size={16} strokeWidth={3} /> Entrar
                                 </button>

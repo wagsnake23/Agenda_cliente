@@ -148,7 +148,7 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.pathname === '/agendamentos'
-                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-sm border border-[#facc15]/30"
+                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
@@ -162,7 +162,7 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.search.includes(`usuario=${profile?.id}`)
-                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-sm border border-[#facc15]/30"
+                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
@@ -179,7 +179,7 @@ const MobileMenu = () => {
                                         className={cn(
                                             "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                             location.pathname === '/admin/calendario'
-                                                ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-sm border border-[#facc15]/30"
+                                                ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
                                                 : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                         )}
                                     >
@@ -193,7 +193,7 @@ const MobileMenu = () => {
                                         className={cn(
                                             "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                             location.pathname.startsWith('/usuarios')
-                                                ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-sm border border-[#facc15]/30"
+                                                ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
                                                 : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                         )}
                                     >
@@ -209,7 +209,7 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.pathname === '/meu-perfil'
-                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-sm border border-[#facc15]/30"
+                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
@@ -232,7 +232,7 @@ const MobileMenu = () => {
                         <div className="px-1 pt-2">
                             <button
                                 onClick={() => handleNav('/auth')}
-                                className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#facc15] to-[#eab308] shadow-[0_4px_12px_rgba(0,0,0,0.15)] active:scale-95 transition-all"
+                                className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-full font-bold uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fff9c4] to-[#fef08a] shadow-[0_4px_12px_rgba(0,0,0,0.15)] active:scale-95 transition-all"
                             >
                                 <LogIn size={18} />
                                 <span>Entrar</span>
