@@ -118,7 +118,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <div className={cn(
           "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
         )}>
-          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto 1fr auto', gridTemplateRows: '1fr 1fr', gap: '0px 12px' }}>
+          <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto auto auto 1fr', gridTemplateRows: '1fr 1fr', gap: '0px 12px' }}>
             <div className="border-r border-gray-200 lg:border-[#1e2a44] pr-3 mr-1 flex items-center justify-center h-full" style={{ gridRow: '1 / span 2' }}>
               <span className="text-[44px] lg:text-[42px] font-[800] leading-[1] text-[#1f2937] px-1">{String(new Date().getDate()).padStart(2, '0')}</span>
             </div>
@@ -135,20 +135,22 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               </span>
             </div>
 
-            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center gap-6">
-              {/* Sino de Notificações - Somente Desktop */}
+            {/* Sino de Notificações - Reposicionado e Maior */}
+            <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex items-center justify-center px-2">
               <div
                 onClick={handleOpenTodayAppointments}
                 className="relative cursor-pointer hover:scale-110 transition-transform hidden lg:block"
               >
-                <Bell size={20} color="#1e3a8a" strokeWidth={2.5} />
+                <Bell size={26} color="#1e3a8a" strokeWidth={2.5} />
                 {todayAppointmentsCount > 0 && (
                   <span className="absolute -top-[10px] -right-[12px] bg-[#ef4444] text-white text-[11px] font-[700] rounded-full px-[6px] py-[2px] shadow-sm animate-in zoom-in duration-300">
                     {todayAppointmentsCount}
                   </span>
                 )}
               </div>
+            </div>
 
+            <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center">
               <Button
                 onClick={goToToday}
                 variant="ghost"
