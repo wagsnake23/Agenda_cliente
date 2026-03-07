@@ -122,11 +122,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
           return (
             <div className={cn(
-              "hidden lg:flex flex-col items-center justify-center w-full bg-transparent border-none shadow-none p-0"
+              "hidden lg:flex flex-col items-start justify-center w-full bg-transparent border-none shadow-none p-0"
             )}>
               <div className="w-full grid items-center" style={{ gridTemplateColumns: 'auto auto auto 1fr', gridTemplateRows: 'auto auto', gap: '0px 14px' }}>
                 {/* Coluna 1: Dia da Semana e Numero (Sem Badge) */}
-                <div className="flex flex-col items-center justify-center pt-0.5 border-r border-[#1e40af]/30 lg:border-[#1e40af]/50 pr-4 mr-1 h-full" style={{ gridRow: '1 / span 2', gridColumn: '1' }}>
+                <div className="flex flex-col items-start justify-center pt-0.5 border-r border-[#1e40af]/30 lg:border-[#1e40af]/50 pr-4 mr-1 h-full" style={{ gridRow: '1 / span 2', gridColumn: '1' }}>
                   <span className="text-[14px] lg:text-[17px] font-[700] text-[#64748b] tracking-[1.5px] uppercase mb-[2px] select-none leading-none">
                     {DAYS_OF_WEEK[today.getDay()]}
                   </span>
@@ -188,10 +188,10 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                 </div>
               </div>
 
-              {/* Texto do Feriado/Evento - Abaixo do Dia e Ano */}
+              {/* Texto do Feriado/Evento - Alinhado à esquerda com o dia */}
               {relevantEvent && (
-                <div className="flex items-center justify-center w-full pt-1.5" style={{ gridRow: '3', gridColumn: '1 / span 2' }}>
-                  <span className="text-[12px] md:text-[13px] italic text-[#64748b] font-medium leading-tight whitespace-normal text-center">
+                <div className="flex items-center justify-start w-full pt-1.5">
+                  <span className="text-[12px] md:text-[13px] italic text-[#64748b] font-medium leading-tight whitespace-normal text-left">
                     {relevantEvent.emoji && <span>{relevantEvent.emoji} </span>}
                     {relevantEvent.title}
                   </span>
