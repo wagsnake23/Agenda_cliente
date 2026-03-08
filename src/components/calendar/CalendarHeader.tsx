@@ -21,7 +21,7 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { MONTHS, DAYS_OF_WEEK, getSeasonDataForDate } from "@/utils/calendar-utils";
 import { cn } from "@/lib/utils";
-import { useCalendarEventsContext } from "@/contexts/CalendarEventsContext";
+import { useCalendarEventsContext } from "@/context/CalendarEventsContext";
 import { getEventsForDate } from "@/hooks/use-calendar-events";
 
 interface CalendarHeaderProps {

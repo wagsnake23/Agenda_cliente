@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { LogIn, LogOut, Users, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
 import MobileMenu from './MobileMenu';
 

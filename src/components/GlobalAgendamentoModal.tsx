@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import DrawerAgendamento from './calendar/DrawerAgendamento';
 import { useAgendamentos } from '@/hooks/useAgendamentos';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/contexts/ToastProvider';
 
 const GlobalAgendamentoModal = () => {

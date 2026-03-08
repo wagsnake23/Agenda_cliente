@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
-import { useAuth } from '@/contexts/AuthContext';
-import { useCalendarEventsContext } from '@/contexts/CalendarEventsContext';
+import { useAuth } from '@/context/AuthContext';
+import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
 import { useToast } from '@/contexts/ToastProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';

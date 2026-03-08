@@ -76,7 +76,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      external: [],
+      external: ['workbox-window'],
     },
   },
 }));
