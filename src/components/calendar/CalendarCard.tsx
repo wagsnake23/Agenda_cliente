@@ -192,7 +192,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                                 background: season.style.bg,
                                 border: `0.5px solid ${season.style.border}`,
                                 borderBottom: `2.5px solid ${season.style.border}`,
-                                borderRadius: '16px',
+                                borderRadius: '14px',
                             }}
                         >
                             <span className="text-[#D14343] font-black text-base md:text-[18px] leading-none select-none" style={{ textShadow: 'none', WebkitFontSmoothing: 'antialiased' }}>
