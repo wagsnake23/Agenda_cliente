@@ -382,9 +382,9 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                 <SelectValue placeholder={window.innerWidth >= 1024 ? "🔔 ESCALA" : "ESCALA"} />
               </SelectTrigger>
               <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50">
-                <SelectItem value="24x48" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 24x48</SelectItem>
-                <SelectItem value="12x36" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala 12x36</SelectItem>
-                <SelectItem value="adm" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">Escala Adm</SelectItem>
+                <SelectItem value="24x48" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">🧑‍🚒 Escala 24x48</SelectItem>
+                <SelectItem value="12x36" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">👮 Escala 12x36</SelectItem>
+                <SelectItem value="adm" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">👔 Escala Adm</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -507,9 +507,9 @@ const MeuPerfil: React.FC = () => {
                                             className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
                                         >
                                             <option value="">Não Definida</option>
-                                            <option value="Adm">Escala Adm</option>
-                                            <option value="12x36">Escala 12x36</option>
-                                            <option value="24x48">Escala 24x48</option>
+                                            <option value="Adm">👔 Escala Adm</option>
+                                            <option value="12x36">👮 Escala 12x36</option>
+                                            <option value="24x48">🧑‍🚒 Escala 24x48</option>
                                         </select>
                                     </div>
                                 </div>

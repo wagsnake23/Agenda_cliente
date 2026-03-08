@@ -121,9 +121,9 @@ const MobileMenu = () => {
                                 </div>
                             </SelectTrigger>
                             <SelectContent className="z-[202]">
-                                <SelectItem value="24x48" className="font-bold">24x48 Horas</SelectItem>
-                                <SelectItem value="12x36" className="font-bold">12x36 Horas</SelectItem>
-                                <SelectItem value="adm" className="font-bold">Adm</SelectItem>
+                                <SelectItem value="24x48" className="font-bold">🧑‍🚒 24x48 Horas</SelectItem>
+                                <SelectItem value="12x36" className="font-bold">👮 12x36 Horas</SelectItem>
+                                <SelectItem value="adm" className="font-bold">👔 Adm</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
