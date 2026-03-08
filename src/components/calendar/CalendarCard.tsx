@@ -110,17 +110,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         "PRIMAVERA": "/season/primavera.webp"
     };
 
-    const baseWhiteLight = "radial-gradient(circle at top left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.75) 12%, rgba(255,255,255,0.45) 24%, rgba(255,255,255,0.18) 36%, rgba(255,255,255,0.08) 48%, rgba(255,255,255,0) 62%)";
-
-    const seasonGradients: Record<string, string> = {
-        "VERÃO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,250,230,0.80) 12%, rgba(255,235,180,0.55) 26%, rgba(255,220,140,0.30) 40%, rgba(255,210,90,0.12) 52%, rgba(255,210,90,0) 65%)`,
-        "OUTONO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,248,235,0.80) 12%, rgba(255,225,190,0.55) 26%, rgba(255,200,150,0.30) 40%, rgba(255,170,110,0.12) 52%, rgba(255,170,110,0) 65%)`,
-        "INVERNO": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(245,250,255,0.80) 12%, rgba(225,240,255,0.55) 26%, rgba(200,225,255,0.30) 40%, rgba(170,210,255,0.12) 52%, rgba(170,210,255,0) 65%)`,
-        "PRIMAVERA": `${baseWhiteLight}, radial-gradient(circle at top left, rgba(255,255,255,0.96) 0%, rgba(255,245,250,0.80) 12%, rgba(255,225,240,0.55) 26%, rgba(255,200,230,0.30) 40%, rgba(255,170,220,0.12) 52%, rgba(255,170,220,0) 65%)`
-    };
-
     const bgImage = seasonImages[season.name.toUpperCase()] || seasonImages["PRIMAVERA"];
-    const bgGradient = seasonGradients[season.name.toUpperCase()] || seasonGradients["PRIMAVERA"];
 
     return (
         <div
@@ -153,22 +143,19 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             >
                 {/* Background da Estação */}
                 <div
-                    className="absolute inset-0 z-0 border-none outline-none contrast-[1.05] saturate-[1.05]"
+                    className="absolute inset-0 z-0 border-none outline-none contrast-[1.02] saturate-[1.05]"
                     style={{
-                        backgroundImage: `${bgGradient}, url(${bgImage})`,
+                        backgroundImage: `url(${bgImage})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center"
                     }}
                 >
-                    {/* Gradiente superior para melhorar a leitura do título do mês */}
+                    {/* Overlay local apenas para o ícone do calendário */}
                     <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.08) 20%, rgba(0,0,0,0) 45%)' }}
-                    />
-                    {/* Vignette suave nas bordas para criar profundidade no banner */}
-                    <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.10) 100%)' }}
+                        className="absolute top-0 left-0 w-[110px] h-[70px] pointer-events-none z-10"
+                        style={{
+                            background: 'radial-gradient(circle at top left, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0) 70%)'
+                        }}
                     />
                     {/* Gradiente fundindo diretamente com a base branca do cartão */}
                     <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
@@ -178,7 +165,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     <img
                         src="/logo.png"
                         alt="Logo"
-                        className="hidden md:block w-8 h-8 md:w-[54px] md:h-[54px] object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                        className="hidden md:block w-8 h-8 md:w-[54px] md:h-[54px] object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
                     />
                     <h3 className="text-lg md:text-2xl font-extrabold uppercase tracking-wide flex flex-col items-start leading-tight m-0">
                         {/* Badge Única: Mês e Ano */}

@@ -47,20 +47,7 @@ export const useCalendarEvents = () => {
             if (err) throw err;
             const dbEvents = (data || []).map(e => ({ ...e, is_system: false })) as CalendarEvent[];
 
-            // Injeta dados dinâmicos do ano atual e próximo ano (para cobrir escopo do calendário)
-            const currentYear = new Date().getFullYear();
-            const { getDynamicHolidays, getNationalHolidays } = await import('@/lib/dynamicHolidays');
-
-            const systemHolidays = [
-                ...getDynamicHolidays(currentYear - 1),
-                ...getNationalHolidays(currentYear - 1),
-                ...getDynamicHolidays(currentYear),
-                ...getNationalHolidays(currentYear),
-                ...getDynamicHolidays(currentYear + 1),
-                ...getNationalHolidays(currentYear + 1)
-            ] as CalendarEvent[];
-
-            setEvents([...dbEvents, ...systemHolidays]);
+            setEvents(dbEvents);
         } catch (e: any) {
             setError(e.message || 'Erro ao carregar eventos do calendário');
         } finally {
