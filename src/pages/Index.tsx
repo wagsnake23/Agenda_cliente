@@ -56,7 +56,7 @@ const Index = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-[#eef4ff] flex flex-col items-stretch justify-start px-[10px] py-2 lg:p-0 gap-y-2 overflow-x-hidden">
+      <div className="min-h-screen bg-[#eef4ff] flex flex-col items-stretch justify-start px-[14px] py-2 lg:p-0 gap-y-2 overflow-x-hidden">
         <Header />
 
         {/* Wrapper de Escala apenas para Desktop - Aplica o padding-top p/ header fixo lg:pt-0 agora, compensado no Calendar */}
