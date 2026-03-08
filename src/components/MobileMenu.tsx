@@ -1,10 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
 import {
-    Menu, X, LogOut, LogIn
+    Menu, X, LogOut, LogIn, LayoutDashboard
 } from 'lucide-react';
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue
@@ -15,6 +14,7 @@ const MobileMenu = () => {
     const { isOpen, setIsOpen } = useMobileMenu();
     const { isAuthenticated, isAdmin, profile, signOut, loading } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const { mode, setMode } = useCalendarMode();
 
     const modeMap = {
@@ -106,14 +106,14 @@ const MobileMenu = () => {
                 </div>
 
                 {/* Lista de Itens */}
-                <div className="flex-1 overflow-y-auto py-2 px-3 flex flex-col gap-0.5">
+                <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-[linear-gradient(180deg,#f8fafc_0%,#eef4ff_100%)]">
 
                     {/* Item 1: Escala */}
                     <div className="px-1 py-0.5 flex items-center justify-between">
                         <Select value={mode} onValueChange={(val) => { setMode(val as any); setIsOpen(false); }}>
                             <SelectTrigger className="w-full h-10 bg-white border-none shadow-none text-slate-700 font-bold text-sm px-2 hover:bg-slate-50 transition-colors focus:ring-0">
                                 <div className="flex items-center gap-3">
-                                    <span className="text-lg drop-shadow-sm">⏱️</span>
+                                    <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]">⏱️</span>
                                     <div className="flex gap-1">
                                         <span>Escala</span>
                                         <SelectValue />
@@ -138,7 +138,7 @@ const MobileMenu = () => {
                                 onClick={handleAgendar}
                                 className="flex items-center gap-3 px-4 py-2 w-full text-left text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-full transition-colors group"
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📝</span>
+                                <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">📝</span>
                                 <span className="font-bold text-sm">Agendar</span>
                             </button>
 
@@ -148,11 +148,11 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.pathname === '/agendamentos'
-                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
+                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-[0_2px_0_#eab308] border border-[#eab308]/20"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📋</span>
+                                <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">📋</span>
                                 <span className="font-bold text-sm">Agendamentos</span>
                             </button>
 
@@ -162,11 +162,11 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.search.includes(`usuario=${profile?.id}`)
-                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
+                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-[0_2px_0_#eab308] border border-[#eab308]/20"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">🗓️</span>
+                                <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">🗓️</span>
                                 <span className="font-bold text-sm">Meus Agendamentos</span>
                             </button>
 
@@ -179,11 +179,11 @@ const MobileMenu = () => {
                                         className={cn(
                                             "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                             location.pathname === '/admin/calendario'
-                                                ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
+                                                ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-[0_2px_0_#eab308] border border-[#eab308]/20"
                                                 : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                         )}
                                     >
-                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">📅</span>
+                                        <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">📅</span>
                                         <span className="font-bold text-sm">Feriados e Eventos</span>
                                     </button>
 
@@ -193,11 +193,11 @@ const MobileMenu = () => {
                                         className={cn(
                                             "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                             location.pathname.startsWith('/usuarios')
-                                                ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
+                                                ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-[0_2px_0_#eab308] border border-[#eab308]/20"
                                                 : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                         )}
                                     >
-                                        <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👥</span>
+                                        <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">👥</span>
                                         <span className="font-bold text-sm">Usuários</span>
                                     </button>
                                 </>
@@ -209,11 +209,11 @@ const MobileMenu = () => {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-2 w-full text-left rounded-full transition-all group",
                                     location.pathname === '/meu-perfil'
-                                        ? "bg-gradient-to-b from-[#fff9c4] to-[#fef08a] text-[#0B1221] shadow-sm border border-[#fde047]/30"
+                                        ? "bg-gradient-to-b from-[#fef08a] to-[#facc15] text-[#0B1221] shadow-[0_2px_0_#eab308] border border-[#eab308]/20"
                                         : "text-slate-700 hover:bg-blue-50 hover:text-blue-700"
                                 )}
                             >
-                                <span className="text-lg drop-shadow-sm group-hover:scale-110 transition-transform">👤</span>
+                                <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)] drop-shadow-[0_4px_10px_rgba(0,0,0,0.1)] group-hover:scale-110 transition-transform">👤</span>
                                 <span className="font-bold text-sm">Meu Perfil</span>
                             </button>
 
@@ -224,7 +224,7 @@ const MobileMenu = () => {
                                 onClick={() => { signOut(); setIsOpen(false); }}
                                 className="flex items-center gap-3 px-4 py-2 w-full text-left text-red-600 hover:bg-red-50 rounded-full transition-colors group"
                             >
-                                <LogOut size={20} className="group-hover:scale-110 transition-transform" />
+                                <LogOut size={22} className="group-hover:scale-110 transition-transform filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]" />
                                 <span className="font-bold text-sm">Sair</span>
                             </button>
                         </>
@@ -234,12 +234,11 @@ const MobileMenu = () => {
                                 onClick={() => handleNav('/auth')}
                                 className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer"
                             >
-                                <LogIn size={18} strokeWidth={3} />
+                                <LogIn size={18} strokeWidth={3} className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]" />
                                 <span>Entrar</span>
                             </button>
                         </div>
                     )}
-
                 </div>
             </div>
         </>
