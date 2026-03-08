@@ -72,14 +72,14 @@ const AuthPage: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-[#0B1221] flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-[#1e3a8a] via-[#111827] to-[#0b1221] flex items-center justify-center">
                 <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-white md:bg-[#0B1221] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
+        <div className="min-h-screen bg-white md:bg-[linear-gradient(135deg,#1e3a8a_0%,#111827_50%,#0b1221_100%)] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
 
             {/* Logo lateral esquerda superior como botão link */}
             <div className="absolute top-6 left-6 z-[60]">
