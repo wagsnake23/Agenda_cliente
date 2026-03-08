@@ -178,7 +178,7 @@ const Header = () => {
                             ) : (
                                 <button
                                     onClick={() => navigate('/auth')}
-                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fff9c4] to-[#fef08a] shadow-[0_4px_0_#fde047] hover:brightness-110 active:translate-y-[2px] active:shadow-[0_2px_0_#fde047] transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
+                                    className="px-5 py-2 rounded-xl lg:rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-[0_4px_0_#eab308] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 cursor-pointer flex items-center gap-2 border-none ring-0 outline-none"
                                 >
                                     <LogIn size={16} strokeWidth={3} /> Entrar
                                 </button>
