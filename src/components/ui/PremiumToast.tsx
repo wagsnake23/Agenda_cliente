@@ -26,6 +26,8 @@ const TOAST_STYLES: Record<ToastType, {
     titleColor: string;
     descColor: string;
     progressColor: string;
+    closeBtn: string;
+    closeBtnHover: string;
     Icon: React.FC<{ className?: string }>;
 }> = {
     success: {
@@ -35,6 +37,8 @@ const TOAST_STYLES: Record<ToastType, {
         titleColor: 'text-[#166534]',
         descColor: 'text-[#15803D]',
         progressColor: 'bg-emerald-500',
+        closeBtn: 'bg-[#BBF7D0]',
+        closeBtnHover: 'hover:bg-[#86EFAC]',
         Icon: ({ className }) => <CheckCircle2 className={className} />,
     },
     error: {
@@ -44,6 +48,8 @@ const TOAST_STYLES: Record<ToastType, {
         titleColor: 'text-[#991B1B]',
         descColor: 'text-[#B91C1C]',
         progressColor: 'bg-red-500',
+        closeBtn: 'bg-[#FEE2E2]',
+        closeBtnHover: 'hover:bg-[#FECACA]',
         Icon: ({ className }) => <XCircle className={className} />,
     },
     loading: {
@@ -53,6 +59,8 @@ const TOAST_STYLES: Record<ToastType, {
         titleColor: 'text-slate-800',
         descColor: 'text-slate-500',
         progressColor: 'bg-blue-500',
+        closeBtn: 'bg-slate-100',
+        closeBtnHover: 'hover:bg-slate-200',
         Icon: ({ className }) => <Loader2 className={`${className} animate-spin`} />,
     },
 };
@@ -165,7 +173,7 @@ const PremiumToast: React.FC<PremiumToastProps> = ({ toast: t, onDismiss }) => {
                 {/* Close Button */}
                 <button
                     onClick={handleDismiss}
-                    className="shrink-0 flex items-center justify-center rounded-full bg-[#FEE2E2] hover:bg-[#FECACA] text-[#1F2937] transition-colors p-1.5 mt-0.5"
+                    className={`shrink-0 flex items-center justify-center rounded-full ${style.closeBtn} ${style.closeBtnHover} text-[#1F2937] transition-colors p-1.5 mt-0.5`}
                     aria-label="Fechar notificação"
                 >
                     <X size={14} />
