@@ -55,9 +55,7 @@ const InstallPWAButton: React.FC = () => {
     if (deferredPrompt) {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        showSuccessToast('Instalação aceita. Adicionando à tela inicial...');
-      } else {
+      if (outcome !== 'accepted') {
         showErrorToast('Instalação recusada.');
       }
       setDeferredPrompt(null); // O prompt só pode ser usado uma vez
