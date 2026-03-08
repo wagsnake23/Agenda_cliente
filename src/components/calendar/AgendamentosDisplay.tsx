@@ -48,7 +48,7 @@ const AgendamentosDisplay: React.FC<AgendamentosDisplayProps> = ({
     return (
         <div
             className={cn(
-                "bg-white rounded-2xl md:rounded-[22px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300",
+                "bg-[#ffffff] rounded-2xl md:rounded-[22px] relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-sm",
                 "border border-blue-400/30 md:border-blue-300/40",
                 isEmpty ? "hidden md:flex" : "flex"
             )}

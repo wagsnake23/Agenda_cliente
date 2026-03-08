@@ -20,7 +20,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
   const formattedMonth = monthName.charAt(0).toUpperCase() + monthName.slice(1).toLowerCase();
 
   return (
-    <div className="bg-white rounded-2xl md:rounded-[22px] border border-red-400/30 md:border-red-300/40 relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300">
+    <div className="bg-[#ffffff] rounded-2xl md:rounded-[22px] border border-red-400/30 md:border-red-300/40 relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-sm">
       <div className="relative w-full h-9 md:h-[52px] flex items-center">
         {/* Faixa de fundo com gradiente horizontal equilibrado */}
         <div
