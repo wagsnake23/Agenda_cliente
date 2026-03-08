@@ -392,7 +392,7 @@ const MeuPerfil: React.FC = () => {
                             </div>
 
                             {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
-                            <div className="md:col-span-7 bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-white/60 p-6 sm:p-8 flex flex-col h-full">
+                            <div className="md:col-span-7 bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-6 sm:p-8 flex flex-col h-full">
                                 <div className="mb-6 flex items-center gap-3 border-b border-slate-200/60 pb-4">
                                     <span className="text-2xl select-none filter drop-shadow-sm">👤</span>
                                     <h3 className="font-bold text-slate-700 text-sm tracking-widest uppercase">
