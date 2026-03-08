@@ -5,7 +5,7 @@ import Calendar from '@/components/Calendar';
 import { format } from 'date-fns';
 import InstallPWAButton from '@/components/InstallPWAButton';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import {
   Select,

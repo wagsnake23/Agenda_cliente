@@ -12,7 +12,7 @@ Deno.serve(async (req) => {
     }
 
     try {
-        // 2. Corrigindo as variáveis de ambiente padrões do Supabase Edge Functions
+        // 2. Variáveis de ambiente do Supabase Edge Functions
         const supabaseUrl = Deno.env.get('URL_PROJETO') || Deno.env.get('SUPABASE_URL');
         const supabaseKey = Deno.env.get('CHAVE_MESTRA') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
@@ -22,7 +22,41 @@ Deno.serve(async (req) => {
 
         const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
 
-        // 3. Obtém o userId recebido na requisição do client (frontend)
+        // 3. ✅ VERIFICAÇÃO DE AUTENTICAÇÃO — Extrair e validar JWT
+        const authHeader = req.headers.get('Authorization');
+        if (!authHeader) {
+            return new Response(
+                JSON.stringify({ error: "Não autorizado. Token ausente." }),
+                { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+        }
+
+        const { data: { user: caller }, error: authError } = await supabaseAdmin.auth.getUser(
+            authHeader.replace('Bearer ', '')
+        );
+
+        if (authError || !caller) {
+            return new Response(
+                JSON.stringify({ error: "Sessão inválida ou expirada." }),
+                { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+        }
+
+        // 4. ✅ VERIFICAÇÃO DE ADMINISTRADOR
+        const { data: profile } = await supabaseAdmin
+            .from('profiles')
+            .select('perfil')
+            .eq('id', caller.id)
+            .single();
+
+        if (profile?.perfil !== 'administrador') {
+            return new Response(
+                JSON.stringify({ error: "Acesso negado. Apenas administradores podem resetar senhas." }),
+                { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+        }
+
+        // 5. Obtém o userId recebido na requisição do client (frontend)
         const { userId } = await req.json();
 
         if (!userId) {
@@ -32,7 +66,15 @@ Deno.serve(async (req) => {
             );
         }
 
-        // 4. Utiliza o admin role para resetar a senha 
+        // 6. Evitar que o admin resete sua própria senha por engano
+        if (userId === caller.id) {
+            return new Response(
+                JSON.stringify({ error: "Você não pode resetar sua própria senha por aqui." }),
+                { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+            );
+        }
+
+        // 7. Utiliza o admin role para resetar a senha 
         const { error } = await supabaseAdmin.auth.admin.updateUserById(
             userId,
             { password: "Agenda1" }
@@ -45,7 +87,7 @@ Deno.serve(async (req) => {
             );
         }
 
-        // 5. Retorna sucesso!
+        // 8. Retorna sucesso!
         return new Response(
             JSON.stringify({ success: true }),
             { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }

@@ -26,9 +26,9 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useAgendamentos } from '@/hooks/useAgendamentos';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/contexts/ToastProvider';
-import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
+import { useCalendarEventsContext } from '@/contexts/CalendarEventsContext';
 import { supabase } from '@/lib/supabase';
 import { dedupeById } from '@/utils/dedupeById';
 

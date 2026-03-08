@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
 import {
