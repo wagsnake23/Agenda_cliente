@@ -600,7 +600,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             }
                                         }}
                                         variant="outline"
-                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider border-red-200 text-red-600 hover:text-red-900 hover:bg-red-50 hover:border-red-300 transition-all duration-300 shadow-sm"
+                                        className="flex-1 h-10.5 md:h-12 rounded-2xl text-[0.9rem] md:text-[1rem] font-black uppercase tracking-wider bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200 hover:text-slate-700 transition-all duration-300 shadow-sm"
                                     >
                                         Cancelar
                                     </Button>
@@ -786,7 +786,18 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCalendarModalOpen(false)} />
                         <div className="relative bg-[#F8FAFC] rounded-2xl md:rounded-[24px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200/60 z-10 flex flex-col animate-in zoom-in-95 duration-200 w-[98%] max-w-[98%] md:w-full md:max-w-[380px] overflow-hidden max-h-[90vh]">
                             <div className="w-full flex justify-between items-center p-4 md:px-5 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)] shadow-[inset_0_-1px_0_rgba(255,255,255,0.1)]">
-                                <h3 className="font-bold text-white uppercase tracking-[1px] text-sm">Selecione o Período</h3>
+                                <div className="flex flex-col gap-1">
+                                    <h3 className="font-bold text-white uppercase tracking-[1px] text-sm leading-tight">Selecione o Período</h3>
+                                    {dataInicio && (
+                                        <div className="mt-1 bg-gradient-to-b from-blue-50/90 to-blue-100/80 border border-blue-200/60 rounded-[10px] py-1 px-3 flex items-center justify-center gap-1.5 shadow-[0_2px_4px_rgba(0,0,0,0.1),inset_0_1.5px_1px_rgba(255,255,255,1)] w-fit">
+                                            <span className="text-[11px] sm:text-[12px] font-black text-blue-800 uppercase tracking-tight">
+                                                {format(parseISO(dataInicio), 'dd/MM')}
+                                                {dataFim && dataFim !== dataInicio && ` - ${format(parseISO(dataFim), 'dd/MM')}`}
+                                                {` • ${totalDias} ${totalDias === 1 ? 'dia' : 'dias'}`}
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                                 <button
                                     onClick={() => setIsCalendarModalOpen(false)}
                                     className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90"
@@ -839,34 +850,6 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     components={{
                                         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
                                         IconRight: () => <ChevronRight className="h-4 w-4" />,
-                                        Footer: () => {
-                                            const rInicio = dataInicio ? format(parseISO(dataInicio), 'dd/MM/yyyy') : 'XX/XX/XXXX';
-                                            const rFim = dataFim ? format(parseISO(dataFim), 'dd/MM/yyyy') : '—';
-                                            return (
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colSpan={7}>
-                                                            <div className="w-full mt-3 mb-0 bg-gradient-to-b from-blue-50/90 to-blue-100/80 border border-blue-200/60 rounded-[12px] py-1.5 px-2 flex flex-nowrap items-center justify-center gap-1.5 sm:gap-2 shadow-[0_2px_4px_rgba(30,64,175,0.08),inset_0_1.5px_1px_rgba(255,255,255,1)] mx-auto">
-                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
-                                                                    <span className="font-medium">Início:</span>
-                                                                    <strong className="text-blue-800 font-black">{rInicio}</strong>
-                                                                </div>
-                                                                <span className="text-blue-200/80 font-light text-[11px]">|</span>
-                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
-                                                                    <span className="font-medium">Fim:</span>
-                                                                    <strong className="text-blue-800 font-black">{rFim}</strong>
-                                                                </div>
-                                                                <span className="text-blue-200/80 font-light text-[11px]">|</span>
-                                                                <div className="flex items-center gap-1 text-[11px] sm:text-[12px] text-blue-700/80 whitespace-nowrap">
-                                                                    <span className="font-medium">Total:</span>
-                                                                    <strong className="text-blue-800 font-black">{totalDias}d</strong>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
-                                            );
-                                        },
                                         DayContent: (props: { date: Date }) => {
                                             const dStr = format(props.date, 'yyyy-MM-dd');
                                             const ags = todosAgendamentos?.filter(a => a.dataInicio <= dStr && a.dataFim >= dStr);
@@ -879,6 +862,28 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         }
                                     }}
                                 />
+                            </div>
+
+                            {/* Rodapé do Modal com Ações */}
+                            <div className="px-5 pb-5 pt-1.5 flex gap-3 bg-[#F8FAFC]">
+                                <button
+                                    onClick={() => handleSelectRange(undefined)}
+                                    className="flex-1 h-11 rounded-xl bg-red-50 text-red-600 font-black text-sm border border-red-100 shadow-sm hover:bg-red-100/50 active:translate-y-[1px] transition-all uppercase tracking-wider"
+                                >
+                                    Limpar
+                                </button>
+                                <button
+                                    onClick={() => setIsCalendarModalOpen(false)}
+                                    disabled={!dataInicio}
+                                    className={cn(
+                                        "flex-1 h-11 rounded-xl font-black text-sm shadow-md transition-all active:translate-y-[1px] uppercase tracking-wider",
+                                        dataInicio
+                                            ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200"
+                                            : "bg-slate-200 text-slate-400 shadow-none cursor-not-allowed"
+                                    )}
+                                >
+                                    Confirmar
+                                </button>
                             </div>
                         </div>
                     </div>,
