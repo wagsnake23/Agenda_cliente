@@ -68,7 +68,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
         const seasonInfo = getSeasonDataForDate(m, targetDay);
 
-        // Definição de Gradientes Premium Suaves por Estação
         const gradients: Record<string, { bg: string, text: string, border: string }> = {
             'Primavera': {
                 bg: 'linear-gradient(to bottom, #fff5f8, #ffe4e6)',
@@ -117,17 +116,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             className={cn(
                 "w-full transition-all duration-500 ease-out flex flex-col",
                 "px-2 py-2 md:px-8 md:pt-4 md:pb-8",
-                "bg-white/95 backdrop-blur-sm opacity-100",
+                "bg-white/95 md:bg-white backdrop-blur-sm md:backdrop-blur-none opacity-100",
                 "antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] [contain:paint]",
-                // Efeito 3D Mobile (borda muito fina e sombra interna adaptada para telas menores)
-                "border-[0.5px] border-slate-300/60",
-                "shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_4px_rgba(0,0,0,0.04),0_4px_12px_-4px_rgba(0,0,0,0.1)]",
-                // Efeito 3D Desktop (borda fina e sombra interna)
-                "md:border-[0.5px] md:border-slate-300/80",
-                "md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06),0_12px_30px_rgba(0,0,0,0.08)]",
-                "before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent before:z-20",
-                "shadow-inner shadow-white/40",
-                "md:bg-white",
+                // Efeito 3D Mobile
+                "border-[0.5px] border-slate-300/60 shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_4px_rgba(0,0,0,0.04),0_4px_12px_-4px_rgba(0,0,0,0.1)]",
+                // Efeito 3D Desktop (REMOCK OUTER SHADOW/BLUR ONLY)
+                "md:border-[0.5px] md:border-slate-300/80 md:shadow-[inset_0_2px_4px_rgba(255,255,255,0.8),inset_0_-2px_6px_rgba(0,0,0,0.06)]",
                 "rounded-2xl md:rounded-[29px] bg-clip-padding",
                 "relative group/card overflow-hidden"
             )}
@@ -157,8 +151,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             background: 'radial-gradient(circle at top left, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0) 70%)'
                         }}
                     />
-                    {/* Gradiente fundindo diretamente com a base branca do cartão */}
-                    <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent border-none outline-none" />
                 </div>
 
                 <div className="inline-flex items-center gap-2 relative z-10 md:-ml-2 -mt-[9px]">
@@ -229,7 +221,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             </div>
 
             <div
-                className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:-mt-1 bg-transparent md:rounded-[20px] opacity-100 md:shadow-[0_4px_16px_-4px_rgba(14,165,233,0.15),inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)] transition-colors duration-500"
+                className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:mt-0 bg-transparent md:rounded-[20px] opacity-100 transition-colors duration-500 md:shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)]"
                 style={{
                     background: isDesktopState ? 'linear-gradient(to bottom, #f0f9ff, #e0f2fe)' : 'transparent',
                     border: isDesktopState ? '0.5px solid rgba(14, 165, 233, 0.2)' : 'none'
