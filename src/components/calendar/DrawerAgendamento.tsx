@@ -444,7 +444,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             <div className="text-center mt-1 min-w-0">
                                                 <span className={cn(
                                                     "font-bold text-slate-500 uppercase tracking-tight block truncate w-full",
-                                                    mode === 'create' ? "text-[9.5px]" : "text-[8.5px]"
+                                                    mode === 'create' ? "text-[11px]" : "text-[10px]"
                                                 )}>
                                                     {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                                 </span>
@@ -519,7 +519,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <div className="text-center mt-1.5 min-w-0">
                                         <span className={cn(
                                             "font-bold text-slate-500 uppercase tracking-tight block truncate max-w-[100px]",
-                                            variant === 'modal' ? "text-[9px] md:text-[12px]" : "text-[9px] md:text-[10px]"
+                                            variant === 'modal' ? "text-[10.5px] md:text-[13px]" : "text-[10px] md:text-[11px]"
                                         )}>
                                             {agendamentoEditando?.userName?.split(' ')[0] || (mode === 'create' ? (profile?.apelido || profile?.nome?.split(' ')[0] || "Novo") : "Usuário")}
                                         </span>
@@ -546,7 +546,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
 
                             {/* Data de Criação Informativa e Status */}
                             {agendamentoEditando && (
-                                <div className="mt-5 md:mt-2 flex flex-col gap-2.5">
+                                <div className="mt-2 md:mt-2 flex flex-col gap-2.5">
                                     {/* Exibir Status Atual do Agendamento e Data da Ação */}
                                     <div className="flex flex-col items-start gap-1 md:gap-2 ml-1">
                                         <div className="flex flex-row items-center gap-2">
