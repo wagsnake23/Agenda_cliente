@@ -83,7 +83,7 @@ const AdminCalendario: React.FC = () => {
     const [events, setEvents] = useState<(CalendarEvent & { is_active: boolean })[]>([]);
     const [loading, setLoading] = useState(true);
     const [filterType, setFilterType] = useState<FilterType>('all');
-    const [filterStatus, setFilterStatus] = useState<FilterStatus>('active');
+    const [filterStatus, setFilterStatus] = useState<FilterStatus>('all');
     const [search, setSearch] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -332,7 +332,7 @@ const AdminCalendario: React.FC = () => {
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
                         {/* Busca */}
                         <div className="flex-1 md:flex-[0.6]">
-                            <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Buscar por nome</label>
+                            <label className="hidden">Buscar por nome</label>
                             <div className="relative">
                                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                                 <input
@@ -340,16 +340,16 @@ const AdminCalendario: React.FC = () => {
                                     placeholder="Buscar por nome..."
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
-                                    className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-white"
+                                    className="w-full h-11 pl-11 pr-4 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all bg-gradient-to-br from-[#f8fbff] to-[#f1f7ff] md:bg-white"
                                 />
                             </div>
                         </div>
 
                         {/* Tipo */}
                         <div className="w-full md:flex-[0.25]">
-                            <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Tipo de evento</label>
+                            <label className="hidden">Tipo de evento</label>
                             <Select value={filterType} onValueChange={(v) => setFilterType(v as FilterType)}>
-                                <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 font-medium">
+                                <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-gradient-to-br from-[#f8fbff] to-[#f1f7ff] md:bg-white text-slate-700 font-medium">
                                     <SelectValue placeholder="Tipo" />
                                 </SelectTrigger>
                                 <SelectContent className="rounded-xl border-slate-200 shadow-xl">
@@ -363,9 +363,9 @@ const AdminCalendario: React.FC = () => {
 
                         {/* Status */}
                         <div className="w-full md:flex-[0.15]">
-                            <label className="block text-xs font-black text-slate-500 uppercase tracking-wider mb-1.5 md:hidden">Status</label>
+                            <label className="hidden">Status</label>
                             <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as FilterStatus)}>
-                                <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-white text-slate-700 font-medium">
+                                <SelectTrigger className="w-full h-11 rounded-xl border-slate-200 text-sm focus:ring-2 focus:ring-blue-500 bg-gradient-to-br from-[#f8fbff] to-[#f1f7ff] md:bg-white text-slate-700 font-medium">
                                     <SelectValue placeholder="Status" />
                                 </SelectTrigger>
                                 <SelectContent className="rounded-xl border-slate-200 shadow-xl">
