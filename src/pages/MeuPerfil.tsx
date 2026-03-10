@@ -365,10 +365,10 @@ const MeuPerfil: React.FC = () => {
                                 type="button"
                                 onClick={() => fileInputRef.current?.click()}
                                 disabled={uploadingPhoto}
-                                className="w-full h-11 rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#1d4ed8] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none"
+                                className="w-full h-11 rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 text-white font-bold text-[15px] sm:text-[16px] shadow-[0_4px_0_#1d4ed8] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none disabled:opacity-50 disabled:pointer-events-none"
                             >
                                 <Camera size={16} className="text-white/90" />
-                                {uploadingPhoto ? 'Enviando...' : 'Alterar Foto de Perfil'}
+                                {uploadingPhoto ? 'Enviando...' : 'Alterar Foto'}
                             </button>
 
                             <p className="text-slate-400 text-[11px] mt-2 mb-1">JPG, PNG ou WebP · máx. 15MB</p>
@@ -384,19 +384,21 @@ const MeuPerfil: React.FC = () => {
                                         setConfirmPassword('');
                                         setShowPasswordModal(true);
                                     }}
-                                    className="w-full h-11 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-white font-black uppercase text-xs sm:text-sm tracking-widest shadow-[0_4px_0_#c2410c] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none"
+                                    className="w-full h-11 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-white font-bold text-[15px] sm:text-[16px] shadow-[0_4px_0_#c2410c] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2 border-none ring-0 outline-none"
                                 >
                                     <Lock size={16} className="text-white/90" />
-                                    Alterar Senha de Acesso
+                                    Alterar Senha
                                 </button>
                             </div>
                         </div>
 
                         {/* 🟩 CARD 2 – INFORMAÇÕES PESSOAIS (COLUNA DIREITA 60% -> col-span-7) */}
                         <div className="md:col-span-7 bg-white rounded-3xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100/60 p-6 sm:p-8 flex flex-col h-full">
-                            <div className="mb-6 flex items-center gap-3 border-b border-slate-200/60 pb-4">
-                                <span className="text-2xl select-none filter drop-shadow-sm">👤</span>
-                                <h3 className="font-bold text-slate-700 text-sm tracking-widest uppercase">
+                            <div className="mb-6 flex items-center gap-3.5 border-b border-slate-200/60 pb-4">
+                                <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                                    <span className="text-xl drop-shadow-sm">ℹ️</span>
+                                </div>
+                                <h3 className="font-black text-[1.15rem] md:text-[1.3rem] tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-900">
                                     Informações Pessoais
                                 </h3>
                             </div>
@@ -404,7 +406,7 @@ const MeuPerfil: React.FC = () => {
                             <div className="grid grid-cols-12 gap-x-4 gap-y-5">
                                 {/* LINHA 1: Nome (9) e Matrícula (3) */}
                                 <div className="col-span-12 md:col-span-9">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">📝</span>
                                         Nome Completo <span className="text-red-400">*</span>
                                     </label>
@@ -412,7 +414,7 @@ const MeuPerfil: React.FC = () => {
                                         {...form.register('nome')}
                                         type="text"
                                         placeholder="Seu nome"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                     />
                                     {form.formState.errors.nome && (
                                         <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -422,7 +424,7 @@ const MeuPerfil: React.FC = () => {
                                 </div>
 
                                 <div className="col-span-12 md:col-span-3">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">🆔</span>
                                         Matrícula <span className="text-red-400">*</span>
                                     </label>
@@ -430,7 +432,7 @@ const MeuPerfil: React.FC = () => {
                                         {...form.register('matricula')}
                                         type="text"
                                         placeholder="Nº"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                     />
                                     {form.formState.errors.matricula && (
                                         <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -441,7 +443,7 @@ const MeuPerfil: React.FC = () => {
 
                                 {/* LINHA 2: Apelido (6) e Cargo (6) */}
                                 <div className="col-span-12 md:col-span-6">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">🏷️</span>
                                         Apelido
                                     </label>
@@ -449,12 +451,12 @@ const MeuPerfil: React.FC = () => {
                                         {...form.register('apelido')}
                                         type="text"
                                         placeholder="Como prefere ser chamado"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                     />
                                 </div>
 
                                 <div className="col-span-12 md:col-span-6">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">🎖️</span>
                                         Cargo <span className="text-red-400">*</span>
                                     </label>
@@ -462,7 +464,7 @@ const MeuPerfil: React.FC = () => {
                                         {...form.register('cargo')}
                                         type="text"
                                         placeholder="Ex: Soldado BM"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all placeholder-slate-300 shadow-sm"
                                     />
                                     {form.formState.errors.cargo && (
                                         <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">
@@ -473,7 +475,7 @@ const MeuPerfil: React.FC = () => {
 
                                 {/* LINHA 3: Email (12) */}
                                 <div className="col-span-12">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">📧</span>
                                         Email
                                     </label>
@@ -481,31 +483,31 @@ const MeuPerfil: React.FC = () => {
                                         type="email"
                                         value={profile?.email || ''}
                                         readOnly
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200/60 bg-slate-100/50 text-slate-400 text-sm font-medium cursor-not-allowed shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200/60 bg-slate-100/50 text-slate-400 text-sm md:text-[15px] font-medium cursor-not-allowed shadow-sm"
                                     />
                                 </div>
 
                                 {/* LINHA 4: Data Nascimento (6) e Escala (6) */}
                                 <div className="col-span-12 md:col-span-6">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">🎂</span>
                                         Data de Nascimento
                                     </label>
                                     <input
                                         {...form.register('data_nascimento')}
                                         type="date"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm"
                                     />
                                 </div>
 
                                 <div className="col-span-12 md:col-span-6">
-                                    <label className="flex items-center gap-2 text-slate-600 text-[11px] font-bold uppercase tracking-wider mb-1.5 ml-1">
+                                    <label className="flex items-center gap-2 text-slate-600 text-[13px] font-bold mb-1.5 ml-1">
                                         <span className="text-sm">📅</span>
                                         Escala Preferida
                                     </label>
                                     <select
                                         {...form.register('escala')}
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
+                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-[#F0F7FF] text-slate-700 text-sm md:text-[15px] font-medium focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-sm appearance-none cursor-pointer"
                                     >
                                         <option value="">Não Definida</option>
                                         <option value="Adm">👔 Escala Adm</option>
@@ -520,7 +522,7 @@ const MeuPerfil: React.FC = () => {
                                 <button
                                     type="submit"
                                     disabled={saving || uploadingPhoto}
-                                    className="w-full md:w-auto md:min-w-[280px] h-12 rounded-xl bg-gradient-to-b from-[#2563EB] to-[#1D4ED8] text-white font-black uppercase tracking-widest text-sm shadow-[0_4px_0_#1e3a8a] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:pointer-events-none"
+                                    className="w-full md:w-auto md:min-w-[280px] h-12 rounded-xl bg-gradient-to-b from-[#2563EB] to-[#1D4ED8] text-white font-bold text-[16px] shadow-[0_4px_0_#1e3a8a] hover:brightness-110 active:translate-y-[4px] active:shadow-none transition-all duration-200 flex items-center justify-center gap-2.5 disabled:opacity-70 disabled:pointer-events-none"
                                 >
                                     {saving ? (
                                         <><Loader2 size={20} className="animate-spin" /> Salvando...</>
@@ -536,80 +538,82 @@ const MeuPerfil: React.FC = () => {
             {/* Footer exibido apenas em desktop */}
             <Footer className="hidden md:block" />
 
-            {
-                showPasswordModal && (
-                    <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
-                        <div className="absolute inset-0" onClick={() => setShowPasswordModal(false)} />
-                        <div className="relative bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-[24px] shadow-2xl border border-white/60 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
-                            <button
-                                onClick={() => setShowPasswordModal(false)}
-                                className="absolute right-4 top-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all"
-                            >
-                                <X size={18} strokeWidth={3} />
-                            </button>
+            {showPasswordModal && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 bg-black/60 backdrop-blur-sm">
+                    <div className="absolute inset-0" onClick={() => setShowPasswordModal(false)} />
+                    <div className="relative bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-[24px] shadow-2xl border border-white/60 p-7 md:p-9 w-[99%] md:max-w-[440px] z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                        <button
+                            onClick={() => setShowPasswordModal(false)}
+                            className="absolute right-4 top-4 md:right-6 md:top-6 w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all"
+                        >
+                            <X size={18} strokeWidth={3} />
+                        </button>
 
-                            <div className="flex flex-col items-center text-center mb-6">
-                                <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 mb-1">
-                                    <span className="text-2xl">🔐</span>
-                                </div>
-                                <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Alterar Senha</h3>
-                                <p className="text-slate-600 font-medium text-xs px-2 leading-relaxed">Defina sua nova senha de acesso.</p>
+                        <div className="flex items-center gap-3 mb-8 md:mb-10">
+                            <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                                <span className="text-xl md:text-2xl drop-shadow-sm">🔐</span>
                             </div>
-
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Nova Senha</label>
-                                    <div className="relative">
-                                        <input
-                                            type={showPass ? 'text' : 'password'}
-                                            value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}
-                                            placeholder=""
-                                            autoComplete="new-password"
-                                            className="w-full h-11 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPass(!showPass)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                                        >
-                                            {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1.5 ml-1">Confirmar Senha</label>
-                                    <input
-                                        type={showPass ? 'text' : 'password'}
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        placeholder=""
-                                        autoComplete="new-password"
-                                        className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm focus:outline-none focus:border-blue-500 transition-all font-bold"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-3 mt-8">
-                                <button
-                                    onClick={() => setShowPasswordModal(false)}
-                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    onClick={handleUpdatePassword}
-                                    disabled={changingPassword}
-                                    className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                                >
-                                    {changingPassword ? <Loader2 size={20} className="animate-spin" /> : 'Alterar'}
-                                </button>
+                            <div className="flex flex-col">
+                                <h3 className="text-lg md:text-[1.35rem] font-black tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">
+                                    Alterar Senha
+                                </h3>
+                                <p className="text-slate-500 font-medium text-[11px] md:text-[13px] leading-tight mt-0.5">Defina sua nova senha de acesso.</p>
                             </div>
                         </div>
+
+                        <div className="space-y-5 md:space-y-6">
+                            <div>
+                                <label className="block text-[13px] md:text-[14px] font-black text-slate-500 mb-2 ml-1">Nova Senha</label>
+                                <div className="relative">
+                                    <input
+                                        type={showPass ? 'text' : 'password'}
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                        placeholder=""
+                                        autoComplete="new-password"
+                                        className="w-full h-11 md:h-12 px-4 pr-10 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm md:text-base focus:outline-none focus:border-blue-500 transition-all font-bold"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPass(!showPass)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                    >
+                                        {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-[13px] md:text-[14px] font-black text-slate-500 mb-2 ml-1">Confirmar Senha</label>
+                                <input
+                                    type={showPass ? 'text' : 'password'}
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    placeholder=""
+                                    autoComplete="new-password"
+                                    className="w-full h-11 md:h-12 px-4 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm md:text-base focus:outline-none focus:border-blue-500 transition-all font-bold"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 mt-10 md:mt-12">
+                            <button
+                                onClick={() => setShowPasswordModal(false)}
+                                className="flex-1 h-12 md:h-13 rounded-xl bg-slate-200 border border-slate-300 text-slate-700 font-bold text-[16px] md:text-[17px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={handleUpdatePassword}
+                                disabled={changingPassword}
+                                className="flex-1 h-12 md:h-13 rounded-xl bg-gradient-to-b from-blue-600 to-blue-700 text-white font-bold text-[16px] md:text-[17px] shadow-[0_4px_0_#1E3A8A] hover:brightness-110 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            >
+                                {changingPassword ? <><Loader2 size={18} className="animate-spin" /> Alterando...</> : 'Alterar'}
+                            </button>
+                        </div>
                     </div>
-                )
-            }
+                </div>
+            )}
         </div>
     );
 };
