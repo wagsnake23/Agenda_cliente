@@ -94,7 +94,7 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[64px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
+            <header className="hidden lg:flex fixed top-0 w-full h-[68px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
                         <img
@@ -124,9 +124,9 @@ const Header = () => {
                                         {isAdmin && (
                                             <button
                                                 onClick={() => navigate('/usuarios')}
-                                                className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/usuarios')
-                                                    ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
-                                                    : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
+                                                className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/usuarios')
+                                                    ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
+                                                    : 'text-white hover:bg-white/[0.08]'
                                                     }`}
                                             >
                                                 Usuários
@@ -138,9 +138,9 @@ const Header = () => {
 
                                         <button
                                             onClick={() => navigate('/admin/calendario')}
-                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/admin/calendario')
-                                                ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
-                                                : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname.startsWith('/admin/calendario')
+                                                ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
+                                                : 'text-white hover:bg-white/[0.08]'
                                                 }`}
                                         >
                                             Feriados e Eventos
@@ -152,9 +152,9 @@ const Header = () => {
                                         {/* Agendamentos */}
                                         <button
                                             onClick={() => navigate('/agendamentos')}
-                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[14px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname === '/agendamentos'
-                                                ? 'text-[#fef9c3] drop-shadow-[0_0_8px_rgba(254,249,195,0.4)]'
-                                                : 'text-white/90 hover:text-white hover:bg-white/[0.08]'
+                                            className={`px-[14px] py-2 lg:py-2.5 rounded-lg text-[15px] font-bold transition-all duration-300 ease-in-out relative group ${location.pathname === '/agendamentos'
+                                                ? 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]'
+                                                : 'text-white hover:bg-white/[0.08]'
                                                 }`}
                                         >
                                             Agendamentos
@@ -189,7 +189,7 @@ const Header = () => {
             </header>
 
             {/* Header Mobile/Tablet */}
-            <header className="sticky top-0 z-50 w-full h-[60px] bg-[#eef4ff] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
+            <header className="sticky top-0 z-50 w-full h-[64px] bg-[#eef4ff] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
                 <div className="flex items-center cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
                     <div className="flex items-center gap-4 w-full max-w-[320px]">
                         <img
