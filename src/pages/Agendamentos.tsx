@@ -238,9 +238,11 @@ const AgendamentosPage: React.FC = () => {
             <div className="w-full max-w-[1400px] mx-auto px-0 md:px-8 pb-6">
                 {/* Filtros */}
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
-                    <div className="flex items-center gap-2 mb-3">
-                        <Filter size={14} className="text-blue-600" />
-                        <span className="text-slate-600 text-xs font-bold uppercase tracking-wide">Filtros</span>
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center border border-blue-100/50 shadow-[inset_0_1px_1px_white]">
+                            <Filter size={14} className="text-blue-600" />
+                        </div>
+                        <span className="text-blue-900/70 text-[11px] font-black uppercase tracking-wider">Filtros de Busca</span>
                     </div>
                     <div className="flex flex-wrap gap-3">
                         <div className="w-full md:w-[180px]">
@@ -317,24 +319,34 @@ const AgendamentosPage: React.FC = () => {
                         </div>
 
                         {(filterStatus || filterUsuario || filterPeriodo || filterTipo) && (
-                            <button
-                                onClick={() => { setFilterStatus(''); setFilterUsuario(''); setFilterPeriodo(''); setFilterTipo(''); }}
-                                className="h-9 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold hover:bg-red-100 transition-all"
-                            >
-                                Limpar
-                            </button>
+                            <div className="flex items-center gap-2 w-full md:w-auto">
+                                <button
+                                    onClick={() => { setFilterStatus(''); setFilterUsuario(''); setFilterPeriodo(''); setFilterTipo(''); }}
+                                    className="h-9 px-3 rounded-xl border border-red-200 bg-red-50 text-red-600 text-xs font-bold hover:bg-red-100 transition-all"
+                                >
+                                    Limpar
+                                </button>
+
+                                {/* Contagem Mobile - Apenas com filtro ativo */}
+                                <div className="flex md:hidden ml-auto items-center gap-1.5 bg-blue-50/50 px-3 py-1.5 rounded-xl border border-blue-100/50 h-9">
+                                    <div className="w-1 h-1 rounded-full bg-blue-500 animate-pulse" />
+                                    <span className="text-blue-900/70 text-[10px] font-black uppercase tracking-wider">
+                                        {filtrados.length} {filtrados.length !== 1 ? 'itens' : 'item'}
+                                    </span>
+                                </div>
+                            </div>
                         )}
+
+                        {/* Contador Desktop Interno ao Card - Inferior Direita */}
+                        <div className="hidden md:flex md:ml-auto items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50/50 px-3 py-1.5 rounded-xl border border-blue-100/50 shadow-[0_2px_4px_rgba(37,99,235,0.03)] group transition-all hover:shadow-md h-9">
+                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                            <span className="text-blue-900/60 text-[10px] font-black uppercase tracking-wider">
+                                {filtrados.length} <span className="opacity-70">agendamento{filtrados.length !== 1 ? 's' : ''}</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Contagem */}
-                <div className="flex items-center justify-end mb-4">
-                    <div className="bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-blue-100 shadow-sm">
-                        <span className="text-blue-900/70 text-sm font-bold">
-                            {filtrados.length} agendamento{filtrados.length !== 1 ? 's' : ''}
-                        </span>
-                    </div>
-                </div>
 
                 {/* Loading */}
                 {loading ? (
