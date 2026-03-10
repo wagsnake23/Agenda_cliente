@@ -18,7 +18,7 @@ interface MoonPhasesDisplayProps {
 
 const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month, year }) => {
   return (
-    <div className="bg-[#FBFBFA] rounded-2xl md:rounded-[22px] border border-slate-400/30 md:border-slate-300/40 relative z-10 min-h-[44px] h-full flex flex-col overflow-hidden transition-all duration-300">
+    <div className="bg-[#FBFBFA] max-md:bg-white rounded-2xl md:rounded-[22px] border border-slate-400/30 md:border-slate-300/40 relative z-10 min-h-[44px] h-full flex flex-col overflow-hidden transition-all duration-300">
       <div className="relative w-full h-9 md:h-[52px] flex items-center">
         {/* Faixa de fundo com gradiente horizontal */}
         {/* Faixa de fundo com gradiente horizontal equilibrado */}

@@ -31,7 +31,7 @@ const BirthdayMessages: React.FC<BirthdayMessagesProps> = ({ month, year, highli
 
   return (
     <div className={cn(
-      "bg-[#FBFBFA] rounded-2xl md:rounded-[22px] border border-orange-500/30 md:border-orange-500/40 relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-sm",
+      "bg-[#FBFBFA] max-md:bg-white rounded-2xl md:rounded-[22px] border border-orange-500/30 md:border-orange-500/40 relative z-10 min-h-[100px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-sm",
       isEmpty ? "hidden lg:flex" : "flex"
     )}>
       <div className="relative w-full h-9 md:h-[52px] flex items-center">
