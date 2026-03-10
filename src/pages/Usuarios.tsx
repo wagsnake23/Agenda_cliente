@@ -493,8 +493,8 @@ const UsuariosPage: React.FC = () => {
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div className="flex items-center justify-center md:justify-start gap-3 flex-1">
-                            <h2 className="text-2xl md:text-4xl font-black tracking-tight flex items-center justify-center md:justify-start gap-3 flex-1 md:flex-none">
-                                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl shadow-[0_4px_0_#e2e8f0] border border-slate-200 flex items-center justify-center shrink-0">
+                            <h2 className="text-[1.4rem] md:text-[2.1rem] font-black tracking-tight flex items-center justify-center md:justify-start gap-3 flex-1 md:flex-none">
+                                <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-[#f0f7ff] via-[#e1effe] to-[#dbeafe] rounded-xl md:rounded-2xl border border-blue-200/50 shadow-[inset_0_1.5px_1.5px_white,0_2px_4px_rgba(37,99,235,0.06)] flex items-center justify-center shrink-0">
                                     <span className="text-xl md:text-3xl">👥</span>
                                 </div>
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-blue-900">Usuários</span>

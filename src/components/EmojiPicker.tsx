@@ -55,13 +55,13 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ open, onClose, onSelect, curr
             />
 
             {/* Modal Container */}
-            <div className="relative bg-white rounded-[24px] shadow-2xl w-[99%] max-w-[360px] max-h-[70vh] z-10 flex flex-col animate-in zoom-in-95 duration-200">
+            <div className="relative bg-white rounded-[24px] shadow-2xl border border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] max-w-[360px] max-h-[70vh] z-10 flex flex-col animate-in zoom-in-95 duration-200 overflow-hidden">
 
                 {/* Header */}
                 <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed] rounded-t-[24px] shrink-0">
                     <div>
-                        <h3 className="font-black text-white uppercase tracking-tight text-sm">
-                            Escolher Emoji
+                        <h3 className="font-black text-white tracking-tight text-sm">
+                            Escolher emoji
                         </h3>
                         {currentEmoji && (
                             <p className="text-white/70 text-xs mt-0.5">
@@ -71,10 +71,10 @@ const EmojiPicker: React.FC<EmojiPickerProps> = ({ open, onClose, onSelect, curr
                     </div>
                     <button
                         onClick={onClose}
-                        className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-md active:scale-90 transition-all"
+                        className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-lg active:scale-90 transition-all"
                         title="Fechar"
                     >
-                        <X size={16} strokeWidth={3} />
+                        <X className="w-4 h-4 md:w-[22px] md:h-[22px]" strokeWidth={4} />
                     </button>
                 </div>
 
