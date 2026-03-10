@@ -250,10 +250,8 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
             <SelectTrigger
               className="flex-1 max-w-[200px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
                          bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[12px]
-                         focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-[#e5e7eb]
-                         focus-visible:border-red-600 focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                         hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
-                         data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600"
+                         focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-[#e5e7eb] outline-none
+                         hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
             >
               <SelectValue />
             </SelectTrigger>
@@ -279,10 +277,8 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
                 role="combobox"
                 className="w-[90px] lg:max-w-[110px] h-9 lg:h-11 justify-between font-bold text-sm md:text-[14px] lg:text-[15px] uppercase tracking-[0.5px] transition-all
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] rounded-[12px] lg:rounded-[12px]
-                           focus-visible:border-red-600 
-                           focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-2 
-                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]
-                           data-[state=open]:!ring-2 data-[state=open]:!ring-red-600 data-[state=open]:!border-red-600 shrink-0"
+                           focus:ring-0 focus:ring-offset-0 focus:border-gray-200 lg:focus:border-[#e5e7eb] outline-none
+                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)] shrink-0"
               >
                 {year}
                 <ChevronDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
@@ -361,8 +357,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               <SelectTrigger
                 className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.5px] transition-all
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[12px]
-                           focus-visible:border-red-600 focus-visible:ring-2 
-                           focus-visible:ring-red-600 focus-visible:ring-offset-2 
+                           focus:ring-0 focus:ring-offset-0 focus:border-[#e5e7eb] outline-none
                            hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
               >
                 <SelectValue placeholder={window.innerWidth >= 1024 ? "📅 FERIADOS" : "FERIADOS"} />
@@ -390,8 +385,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               <SelectTrigger
                 className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
                            bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[12px]
-                           focus-visible:border-red-600 focus-visible:ring-2 
-                           focus-visible:ring-red-600 focus-visible:ring-offset-2 
+                           focus:ring-0 focus:ring-offset-0 focus:border-[#e5e7eb] outline-none
                            hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
               >
                 <SelectValue placeholder={window.innerWidth >= 1024 ? "🔔 ESCALA" : "ESCALA"} />
