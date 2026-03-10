@@ -76,14 +76,14 @@ const ConfirmDialog: React.FC<{
                 <div className="flex gap-3">
                     <button
                         onClick={onCancel}
-                        className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-sm 
+                        className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[17px] 
                                  border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         Cancelar
                     </button>
                     <button
                         onClick={onConfirm}
-                        className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-sm 
+                        className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-[17px] 
                                  shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all"
                     >
                         Confirmar

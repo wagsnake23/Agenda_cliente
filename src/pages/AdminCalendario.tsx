@@ -767,14 +767,14 @@ const AdminCalendario: React.FC = () => {
                                 <button
                                     onClick={() => setConfirmDeleteId(null)}
                                     disabled={deleting}
-                                    className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[16px] md:text-base border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
+                                    className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[17px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     onClick={handleDelete}
                                     disabled={deleting}
-                                    className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-[16px] md:text-base shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                                    className="flex-1 h-12 rounded-xl bg-red-600 text-white font-bold text-[17px] shadow-[0_4px_0_#991B1B] hover:bg-red-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
                                 >
                                     {deleting ? <Loader2 size={16} className="animate-spin" /> : null}
                                     {deleting ? 'Aguarde...' : 'Excluir'}
