@@ -320,11 +320,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                         : "p-2 md:p-3 bg-[linear-gradient(135deg,#0f3c78,#1f5fa8,#2f80ed)]"
                 )}>
                     <div className="flex flex-row items-center gap-2.5 md:gap-3.5 pt-0.5 md:pt-0">
-                        <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
-                            <span className="text-lg md:text-xl drop-shadow-sm">
-                                {modoEdicao ? '📝' : mode === 'create' ? '📝' : '📅'}
-                            </span>
-                        </div>
+                        {(!modoEdicao && mode !== 'create') ? (
+                            <span className="text-lg md:text-xl drop-shadow-sm shrink-0">📅</span>
+                        ) : (
+                            <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
+                                <span className="text-lg md:text-xl drop-shadow-sm">
+                                    📝
+                                </span>
+                            </div>
+                        )}
 
                         <div className="flex flex-col justify-center min-w-0">
                             <h2 className={cn(
@@ -337,7 +341,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                     <span>Novo Agendamento</span>
                                 ) : (
                                     <div className="flex flex-wrap items-center gap-x-2">
-                                        <span className="opacity-100 md:opacity-90">Agendamentos Do Dia</span>
+                                        <span className="opacity-100 md:opacity-90">Agendamentos do dia</span>
                                         <span className="opacity-100 font-extrabold">
                                             {initialDate && (() => {
                                                 const d = new Date(initialDate + 'T12:00:00');
