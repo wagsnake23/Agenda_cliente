@@ -368,14 +368,14 @@ const AgendamentosPage: React.FC = () => {
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Usuário</th>
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Período</th>
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Dias</th>
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Tipo</th>
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Status</th>
-                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Observação</th>
-                                            <th className="px-4 py-3.5 text-right text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Ações</th>
+                                        <tr className="bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#1e3a8a] border-b border-blue-400/30 shadow-[0_4px_10px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,0.1)]">
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Usuário</th>
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Período</th>
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Dias</th>
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Tipo</th>
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Status</th>
+                                            <th className="px-4 py-4 text-left text-[11px] font-black text-white uppercase tracking-widest">Observação</th>
+                                            <th className="px-4 py-4 text-right text-[11px] font-black text-white uppercase tracking-widest">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>

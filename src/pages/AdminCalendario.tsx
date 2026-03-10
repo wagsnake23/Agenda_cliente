@@ -395,14 +395,14 @@ const AdminCalendario: React.FC = () => {
                             <div className="hidden md:block overflow-x-auto">
                                 <table className="w-full text-sm">
                                     <thead>
-                                        <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
-                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70 w-14">Emoji</th>
-                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Nome</th>
-                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Data</th>
-                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Tipo</th>
-                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Recorrência</th>
-                                            <th className="text-center px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Ativo</th>
-                                            <th className="text-right px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Ações</th>
+                                        <tr className="bg-gradient-to-r from-[#1e3a8a] via-[#2563eb] to-[#1e3a8a] border-b border-blue-400/30 shadow-[0_4px_10px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,0.1)]">
+                                            <th className="text-left px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white w-14">Emoji</th>
+                                            <th className="text-left px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Nome</th>
+                                            <th className="text-left px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Data</th>
+                                            <th className="text-left px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Tipo</th>
+                                            <th className="text-left px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Recorrência</th>
+                                            <th className="text-center px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Ativo</th>
+                                            <th className="text-right px-5 py-4 text-[11px] font-extrabold uppercase tracking-widest text-white">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">
@@ -410,7 +410,7 @@ const AdminCalendario: React.FC = () => {
                                             <tr key={ev.id} className={`transition-colors ${!ev.is_active ? 'opacity-50 bg-slate-50/50' : 'hover:bg-slate-50/50'}`}>
                                                 <td className="px-5 py-3.5 text-2xl">{ev.emoji || '📅'}</td>
                                                 <td className="px-5 py-3.5 font-semibold text-slate-800">{ev.title}</td>
-                                                <td className="px-5 py-3.5 text-slate-600 font-mono text-xs">{formatDisplayDate(ev.date, ev.is_fixed)}</td>
+                                                <td className="px-5 py-3.5 font-semibold text-slate-800">{formatDisplayDate(ev.date, ev.is_fixed)}</td>
                                                 <td className="px-5 py-3.5">{typeBadge(ev.type)}</td>
                                                 <td className="px-5 py-3.5">
                                                     <span className={`px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide ${ev.is_fixed ? 'bg-amber-100 text-amber-700' : 'bg-purple-100 text-purple-700'}`}>
