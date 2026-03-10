@@ -123,14 +123,14 @@ const AuthPage: React.FC = () => {
                     <form onSubmit={loginForm.handleSubmit(handleLogin)} className="w-full space-y-5 md:space-y-2">
                         {/* Email */}
                         <div className="space-y-2">
-                            <label className="text-slate-500 md:text-slate-700 text-xs font-black uppercase tracking-wider ml-1 opacity-70">Email</label>
+                            <label className="text-slate-500 md:text-slate-700 text-[13px] font-bold ml-1 opacity-70">Email</label>
                             <div className="relative group">
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">📧</span>
                                 <input
                                     {...loginForm.register('email')}
                                     type="email"
                                     placeholder="seu@email.com"
-                                    className="w-full h-12 md:h-12 pl-12 pr-4 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all shadow-sm"
+                                    className="w-full h-12 md:h-12 pl-12 pr-4 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm md:text-[15.5px] focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:bg-white transition-all shadow-sm"
                                 />
                             </div>
                             {loginForm.formState.errors.email && (
@@ -142,14 +142,14 @@ const AuthPage: React.FC = () => {
 
                         {/* Senha */}
                         <div className="space-y-2">
-                            <label className="text-slate-500 md:text-slate-700 text-xs font-black uppercase tracking-wider ml-1 opacity-70">Senha</label>
+                            <label className="text-slate-500 md:text-slate-700 text-[13px] font-bold ml-1 opacity-70">Senha</label>
                             <div className="relative group">
                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">🔐</span>
                                 <input
                                     {...loginForm.register('password')}
                                     type={showPassword ? 'text' : 'password'}
                                     placeholder="••••••••"
-                                    className="w-full h-12 md:h-12 pl-12 pr-12 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all shadow-sm"
+                                    className="w-full h-12 md:h-12 pl-12 pr-12 rounded-2xl bg-[#E8F0FE] border border-slate-300 md:border-slate-300/50 text-slate-800 placeholder-slate-400 font-bold text-sm md:text-[15.5px] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all shadow-sm"
                                 />
                                 <button
                                     type="button"
@@ -171,7 +171,7 @@ const AuthPage: React.FC = () => {
                             <button
                                 type="submit"
                                 disabled={loginForm.formState.isSubmitting}
-                                className="w-full h-12 md:h-12 rounded-2xl bg-gradient-to-b from-[#E53935] to-[#B71C1C] hover:from-[#EF5350] hover:to-[#C62828] text-white font-black text-sm md:text-base uppercase tracking-widest shadow-[0_5px_0_#991B1B,0_10px_20px_rgba(183,28,28,0.25)] active:translate-y-[4px] active:shadow-[0_1px_0_#991B1B] transition-all duration-150 disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-3 border border-white/10"
+                                className="w-full h-12 md:h-12 rounded-2xl bg-gradient-to-b from-[#E53935] to-[#B71C1C] hover:from-[#EF5350] hover:to-[#C62828] text-white font-black text-[17.5px] shadow-[0_4px_0_#991B1B,0_10px_20px_rgba(183,28,28,0.25)] active:translate-y-[4px] active:shadow-[0_1px_0_#991B1B] transition-all duration-150 disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-3 border border-white/10"
                             >
                                 {loginForm.formState.isSubmitting ? (
                                     <><Loader2 size={24} className="animate-spin" /> Entrando...</>
@@ -185,7 +185,7 @@ const AuthPage: React.FC = () => {
                     {/* Esqueci a Senha */}
                     <button
                         type="button"
-                        className="mt-8 md:mt-4 mb-4 md:mb-0 text-blue-900 font-bold text-xs uppercase tracking-widest hover:text-blue-700 transition-all"
+                        className="mt-8 md:mt-4 mb-4 md:mb-0 text-blue-900 font-black text-[14.5px] hover:text-blue-700 transition-all decoration-blue-900/30 underline-offset-4"
                         onClick={() => setShowResetModal(true)}
                     >
                         Esqueceu sua senha?
@@ -206,20 +206,22 @@ const AuthPage: React.FC = () => {
             {showResetModal && (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-2">
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowResetModal(false)} />
-                    <div className="relative bg-gradient-to-br from-[#f8fbff] to-[#e0efff] rounded-[24px] shadow-2xl border border-white/60 p-6 w-[99%] max-w-sm z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex flex-col items-center gap-2 mb-6 text-center">
-                            <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 mb-1">
-                                <span className="text-2xl">🔑</span>
+                    <div className="relative bg-gradient-to-br from-[#F4F9FF] to-[#E6F0FD] rounded-[24px] shadow-2xl border border-blue-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] p-6 md:p-8 w-[99%] md:w-full md:max-w-md z-10 animate-in zoom-in-95 duration-200" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex flex-col items-center gap-4 mb-6 text-center">
+                            <div className="flex items-center justify-center gap-3">
+                                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_4px_0_#93c5fd] border border-blue-200 flex items-center justify-center shrink-0">
+                                    <span className="text-xl">🔑</span>
+                                </div>
+                                <h3 className="text-[1.35rem] font-black text-slate-800 leading-tight">Recuperar Senha</h3>
                             </div>
-                            <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Recuperar Senha</h3>
-                            <p className="text-slate-600 font-medium text-xs px-2 leading-relaxed">
+                            <p className="text-slate-600 font-bold text-sm px-2 leading-relaxed">
                                 Enviaremos um link seguro para o seu e-mail para você redefinir sua senha.
                             </p>
                         </div>
 
                         <form onSubmit={handleResetPassword}>
-                            <div className="mb-6 space-y-2">
-                                <label className="text-slate-500 text-[10px] font-black uppercase tracking-wider ml-1">Email Cadastrado</label>
+                            <div className="mb-6 space-y-2 text-left">
+                                <label className="text-slate-500 text-[13px] font-bold ml-1">Email Cadastrado</label>
                                 <div className="relative">
                                     <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xl">📧</span>
                                     <input
@@ -237,14 +239,14 @@ const AuthPage: React.FC = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowResetModal(false)}
-                                    className="flex-1 h-12 rounded-xl bg-slate-100 text-slate-600 font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#CBD5E1] hover:bg-slate-200 active:translate-y-[2px] active:shadow-none transition-all"
+                                    className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-600 font-bold text-[17px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={isResetting}
-                                    className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-base uppercase tracking-wider shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center"
+                                    className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-[17px] shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center"
                                 >
                                     {isResetting ? <Loader2 size={18} className="animate-spin" /> : 'Enviar'}
                                 </button>
