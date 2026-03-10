@@ -119,7 +119,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
                    ? cn(
                        "bg-white",
                        mode === 'adm' 
-                         ? "bg-white border-[0.1px] border-slate-400/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.07)]" 
+                         ? "bg-white max-md:bg-white border-[0.1px] border-slate-400/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.07)]" 
                          : "max-md:bg-[#FBFBFA] max-md:border-slate-400/45"
                      )
                    : dayData.colors.bg)
