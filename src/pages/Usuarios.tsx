@@ -230,8 +230,8 @@ const UserModal: React.FC<{
     return (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-2 md:p-4">
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-            <div className="relative bg-white rounded-2xl shadow-2xl w-[99%] max-w-[99%] md:max-w-md z-10 overflow-hidden animate-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between p-4 md:p-5 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
+            <div className="relative bg-white rounded-[24px] shadow-2xl border border-slate-200 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),inset_0_1.5px_1px_white] w-[99%] max-w-lg z-10 animate-in zoom-in-95 duration-200 overflow-hidden">
+                <div className="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-[#0f3c78] to-[#2f80ed]">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-50 to-blue-200 shadow-[0_2px_0_#93c5fd,inset_0_1.5px_1px_white] border border-blue-200/80 shrink-0">
                             <span className="text-lg drop-shadow-sm">{isEditing ? '✏️' : '👤'}</span>
@@ -240,8 +240,8 @@ const UserModal: React.FC<{
                             {isEditing ? 'Editar Usuário' : 'Novo Usuário'}
                         </h3>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] transition-all text-white shadow-md active:scale-90" title="Fechar">
-                        <X size={18} strokeWidth={3} />
+                    <button onClick={onClose} className="w-7 h-7 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-[#E53935] hover:bg-[#C62828] text-white shadow-lg active:scale-90 transition-all">
+                        <X className="w-4 h-4 md:w-[22px] md:h-[22px]" strokeWidth={4} />
                     </button>
                 </div>
 
@@ -250,7 +250,7 @@ const UserModal: React.FC<{
                         console.log("Erros de validação:", errors);
                         showErrorToast('Verifique os campos obrigatórios');
                     })}
-                    className="p-5 space-y-4"
+                    className="p-6 space-y-4"
                 >
                     <div>
                         <label className="text-[13px] font-bold text-slate-500 ml-1 mb-1 block">Nome</label>
@@ -346,8 +346,8 @@ const UserModal: React.FC<{
                         )}
 
                         <div className="flex gap-3">
-                            <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-700 font-bold text-[15px] shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
-                            <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[15px] shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
+                            <button type="button" onClick={onClose} className="flex-1 h-12 rounded-xl bg-slate-200 text-slate-700 font-bold text-[16px] md:text-base shadow-[0_4px_0_#CBD5E1] hover:bg-slate-300 active:translate-y-[2px] active:shadow-none transition-all">Cancelar</button>
+                            <button type="submit" disabled={form.formState.isSubmitting} className="flex-1 h-12 rounded-xl bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-[16px] md:text-base shadow-[0_4px_0_#1E3A8A] hover:from-blue-500 hover:to-blue-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-60 flex items-center justify-center gap-2">
                                 {form.formState.isSubmitting ? <><Loader2 size={16} className="animate-spin" /> Salvando...</> : 'Salvar'}
                             </button>
                         </div>
@@ -545,14 +545,14 @@ const UsuariosPage: React.FC = () => {
                         <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="bg-gradient-to-r from-slate-50 to-gray-50 border-b border-gray-100">
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Usuário</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Email</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Cargo</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Matrícula</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Perfil</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Status</th>
-                                        <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Ações</th>
+                                    <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Usuário</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Email</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Cargo</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Matrícula</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Perfil</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Status</th>
+                                        <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>

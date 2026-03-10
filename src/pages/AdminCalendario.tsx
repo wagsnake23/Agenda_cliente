@@ -395,14 +395,14 @@ const AdminCalendario: React.FC = () => {
                             <div className="hidden md:block overflow-x-auto">
                                 <table className="w-full text-sm">
                                     <thead>
-                                        <tr className="bg-slate-50 border-b border-slate-200">
-                                            <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500 w-14">Emoji</th>
-                                            <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Nome</th>
-                                            <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Data</th>
-                                            <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Tipo</th>
-                                            <th className="text-left px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Recorrência</th>
-                                            <th className="text-center px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Ativo</th>
-                                            <th className="text-right px-5 py-3.5 text-xs font-black uppercase tracking-wider text-slate-500">Ações</th>
+                                        <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
+                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70 w-14">Emoji</th>
+                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Nome</th>
+                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Data</th>
+                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Tipo</th>
+                                            <th className="text-left px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Recorrência</th>
+                                            <th className="text-center px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Ativo</th>
+                                            <th className="text-right px-5 py-3.5 text-[10px] md:text-[11px] font-black uppercase tracking-wider text-blue-900/70">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-slate-100">

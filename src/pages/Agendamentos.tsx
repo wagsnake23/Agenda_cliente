@@ -328,10 +328,12 @@ const AgendamentosPage: React.FC = () => {
                 </div>
 
                 {/* Contagem */}
-                <div className="flex items-center justify-between mb-4">
-                    <span className="text-slate-500 text-sm font-medium">
-                        {filtrados.length} agendamento{filtrados.length !== 1 ? 's' : ''}
-                    </span>
+                <div className="flex items-center justify-end mb-4">
+                    <div className="bg-white/50 backdrop-blur-sm px-4 py-1.5 rounded-full border border-blue-100 shadow-sm">
+                        <span className="text-blue-900/70 text-sm font-bold">
+                            {filtrados.length} agendamento{filtrados.length !== 1 ? 's' : ''}
+                        </span>
+                    </div>
                 </div>
 
                 {/* Loading */}
@@ -354,14 +356,14 @@ const AgendamentosPage: React.FC = () => {
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="bg-gradient-to-r from-slate-50 to-gray-50 border-b border-gray-100">
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Usuário</th>
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Período</th>
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Dias</th>
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Tipo</th>
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Status</th>
-                                            <th className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wide">Observação</th>
-                                            <th className="px-4 py-3 text-right text-xs font-bold text-slate-500 uppercase tracking-wide">Ações</th>
+                                        <tr className="bg-gradient-to-r from-[#dbeafe] via-[#f1f8ff] to-[#dbeafe] border-b border-blue-200/60 shadow-[inset_0_-1px_0_rgba(37,99,235,0.1)]">
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Usuário</th>
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Período</th>
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Dias</th>
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Tipo</th>
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Status</th>
+                                            <th className="px-4 py-3.5 text-left text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Observação</th>
+                                            <th className="px-4 py-3.5 text-right text-[10px] md:text-[11px] font-black text-blue-900/70 uppercase tracking-wider">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
