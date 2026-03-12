@@ -311,8 +311,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   }, []);
 
   const todayAppointmentsCount = useMemo(() => {
-    return agendamentos.filter(ag => ag.dataInicio === todayStr).length;
-  }, [agendamentos, todayStr]);
+    return agendamentosComEventosGerais.filter(ag => ag.dataInicio === todayStr).length;
+  }, [agendamentosComEventosGerais, todayStr]);
 
   const handleOpenTodayAppointmentsBell = () => {
     handleOpenViewDrawer(todayStr);
