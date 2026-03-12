@@ -732,7 +732,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>
                                                     <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "whitespace-normal" : "whitespace-nowrap text-ellipsis")}>
                                                         {renderPeriod()}
-                                                        {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] text-slate-800 font-black shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
+                                                        {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
