@@ -96,19 +96,43 @@ const Header = () => {
             {/* Barra de Título Institucional - Desktop Apenas */}
             <header className="hidden lg:flex fixed top-0 w-full h-[76px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
-                    <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer">
+                    <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer relative">
+                        {/* Spot Light Localizado */}
+                        <div 
+                            className="absolute -left-[40px] -top-[20px] w-[260px] h-[120px] pointer-events-none z-0"
+                            style={{ 
+                                background: 'radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)' 
+                            }} 
+                        />
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-[60px] h-[60px] drop-shadow-lg object-contain pointer-events-auto filter brightness-[1.1]"
+                            className="w-[60px] h-[60px] object-contain pointer-events-auto relative z-10"
+                            style={{ 
+                                filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.35)) drop-shadow(0 0 6px rgba(255,255,255,0.15)) brightness(1.1)' 
+                            }}
                         />
                         <h1
-                            className="font-black md:text-[1.15rem] tracking-wider text-white uppercase leading-none inline-flex items-center pointer-events-auto"
+                            className="md:font-extrabold font-black md:text-[1.35rem] tracking-wider uppercase leading-none inline-flex items-center pointer-events-auto select-none gap-2 relative z-10"
                             style={{
-                                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
+                                textShadow: `
+                                    0 1px 0 rgba(255,255,255,0.35),
+                                    0 2px 6px rgba(0,0,0,0.35)
+                                `
                             }}
                         >
-                            CALENDÁRIO AGENDA
+                            <span style={{ color: '#f87171' }}>CALENDÁRIO</span>
+                            <span 
+                                style={{ 
+                                    background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent'
+                                }}
+                            >
+                                AGENDA
+                            </span>
                         </h1>
                     </div>
 
@@ -198,10 +222,8 @@ const Header = () => {
                             className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
                         />
                         <h1
-                            className="text-[1.1rem] md:text-[1.6rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1.5 select-none relative -left-[3px] md:-left-0 text-[#C62828]"
-                            style={{
-                                textShadow: '0 1px 0 rgba(0,0,0,0.15)'
-                            }}
+                            className="text-[1.05rem] md:text-[1.5rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1 select-none relative -left-[3px] md:-left-0"
+                            style={{ color: '#ef4444' }}
                         >
                             <span>CALENDÁRIO</span>
                             <span>AGENDA</span>

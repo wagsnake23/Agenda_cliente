@@ -61,7 +61,7 @@ const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month
                 <span className="text-[13px] md:text-[15px] lg:text-[16px] font-medium text-[#1F2937] text-center leading-[1.6] uppercase tracking-tighter opacity-90">
                   {phase.phaseName}
                 </span>
-                <div className="flex flex-row mt-0.5 md:mt-1.5 items-center justify-center py-0 md:py-[4px] px-0 md:px-[10px] rounded-none md:rounded-[8px] text-[11px] md:text-[12px] bg-transparent md:bg-gradient-to-b md:from-indigo-400 md:to-indigo-500 text-[#6366f1] md:text-white leading-[1.6] md:leading-[1.1] md:border-[0.5px] md:border-white/30 shadow-none md:shadow-[inset_0_1px_4px_rgba(0,0,0,0.1)] shrink-0">
+                <div className="flex flex-row mt-0.5 md:mt-1.5 items-center justify-center py-0 px-0 bg-transparent text-[#6366f1] text-[11px] md:text-[14px] leading-[1.6] md:leading-[1.1] shrink-0 border-none shadow-none">
                   <span className="font-semibold md:font-bold uppercase tracking-wide">{String(phase.date).padStart(2, '0')}</span>
                   <span className="font-semibold md:font-bold opacity-90 ml-[2px] uppercase">/{formattedMonth}</span>
                 </div>

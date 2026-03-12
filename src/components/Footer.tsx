@@ -14,15 +14,27 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                     <div className="flex items-center gap-3">
                         <img src="/logo.png" alt="Logo" className="w-14 h-14 opacity-90 drop-shadow-md" />
                         <h3
-                            className="font-black text-lg md:text-xl tracking-wider uppercase whitespace-nowrap"
+                            className="font-bold text-lg md:text-xl tracking-wider uppercase whitespace-nowrap flex gap-2"
                             style={{
-                                background: 'linear-gradient(to bottom, #ffffff 40%, #94a3b8 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))'
+                                textShadow: `
+                                    0 1px 0 rgba(255,255,255,0.25),
+                                    0 2px 4px rgba(0,0,0,0.25),
+                                    0 6px 10px rgba(0,0,0,0.15)
+                                `
                             }}
                         >
-                            CALENDÁRIO AGENDA
+                            <span style={{ color: '#f87171', filter: 'saturate(1.2)' }}>CALENDÁRIO</span>
+                            <span 
+                                style={{ 
+                                    background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent'
+                                }}
+                            >
+                                AGENDA
+                            </span>
                         </h3>
                     </div>
                     <p className="text-gray-400 text-xs md:text-sm font-medium opacity-80 max-w-[300px]">
@@ -32,8 +44,14 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
 
                 {/* Lado Direito */}
                 <div className="flex flex-col items-center md:items-end gap-1.5">
-                    <span className="text-gray-400 text-xs font-semibold tracking-wide uppercase">
-                        © 2026 — CALENDÁRIO AGENDA
+                    <span className="text-gray-400 text-[10px] font-semibold tracking-wide uppercase">
+                        © 2026 — <span style={{ color: '#f87171' }}>CALENDÁRIO</span> <span style={{ 
+                            background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            color: 'transparent'
+                        }}>AGENDA</span>
                     </span>
 
                     <div className="flex items-center gap-1.5 text-xs font-bold text-gray-300">
