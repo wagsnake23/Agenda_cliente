@@ -84,13 +84,17 @@ export const getEventsForDate = (
     const monthDay = `${month}-${day}`;
 
     return events.filter(event => {
+        // Extrai apenas a parte da data YYYY-MM-DD, ignorando tempo se houver
+        const eventDatePart = event.date.includes(' ') ? event.date.split(' ')[0] : 
+                             event.date.includes('T') ? event.date.split('T')[0] : event.date;
+
         if (event.is_fixed) {
-            // date está no formato YYYY-MM-DD — só compara a parte MM-DD
-            const eventMonthDay = event.date.slice(5); // pega "MM-DD"
+            // Evento Anual: compara apenas MM-DD
+            const eventMonthDay = eventDatePart.slice(5, 10);
             return eventMonthDay === monthDay;
         } else {
-            // data específica → compara completo
-            return event.date === fullDate;
+            // Data específica: compara YYYY-MM-DD completo
+            return eventDatePart === fullDate;
         }
     });
 };
@@ -128,8 +132,8 @@ export const getEventsForMonth = (
     events: CalendarEvent[],
     month: number,  // 0-indexed
     year: number
-): { day: number; name: string; emoji: string | null; type: CalendarEventType }[] => {
-    const result: { day: number; name: string; emoji: string | null; type: CalendarEventType }[] = [];
+): { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean }[] => {
+    const result: { day: number; name: string; emoji: string | null; type: CalendarEventType; is_fixed: boolean }[] = [];
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -137,7 +141,13 @@ export const getEventsForMonth = (
         const dayEvents = getEventsForDate(events, date);
         for (const event of dayEvents) {
             if (event.type !== 'birthday') {
-                result.push({ day, name: event.title, emoji: event.emoji, type: event.type });
+                result.push({ 
+                    day, 
+                    name: event.title, 
+                    emoji: event.emoji, 
+                    type: event.type,
+                    is_fixed: event.is_fixed 
+                });
             }
         }
     }

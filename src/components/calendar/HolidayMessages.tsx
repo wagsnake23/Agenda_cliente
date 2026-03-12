@@ -7,7 +7,7 @@ import { Calendar } from 'lucide-react';
 import BrasilFlagIcon from '@/components/BrasilFlagIcon';
 
 interface HolidayMessagesProps {
-  messages: { day: number; name: string; emoji: string | null; type: string }[];
+  messages: { day: number; name: string; emoji: string | null; type: string; is_fixed?: boolean }[];
   highlightedDay: number | null;
   month: number;
   year: number;
@@ -101,7 +101,9 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
                     )}>
                       <span className={cn(
                         "text-[12px] md:text-[14px] font-bold px-[8px] py-[3px] rounded-[6px] shrink-0",
-                        isInfoEvent ? "bg-[#e2e8f0] text-[#1e293b]" : "bg-[#ef4444]/15 text-[#c62828]"
+                        !event.is_fixed && event.type === 'event' 
+                          ? "bg-[#dbeafe] text-[#1e40af]" 
+                          : isInfoEvent ? "bg-[#e2e8f0] text-[#1e293b]" : "bg-[#ef4444]/15 text-[#c62828]"
                       )}>
                         {String(day).padStart(2, '0')}/{formattedMonth}
                       </span>

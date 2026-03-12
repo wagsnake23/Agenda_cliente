@@ -44,7 +44,7 @@ const EMPTY_FORM: EventForm = {
     description: '',
     date: '',
     type: 'event',
-    is_fixed: true,
+    is_fixed: false,
     color_mode: 'event_only',
     emoji: '',
     is_active: true,
@@ -61,8 +61,9 @@ const typeBadge = (type: CalendarEventType) => {
 
 const formatDisplayDate = (dateStr: string, isFixed: boolean): string => {
     if (!dateStr) return '-';
-    // dateStr always in YYYY-MM-DD format from Supabase
-    const [y, m, d] = dateStr.split('-');
+    // Se a data vier com tempo (ISO), pegamos apenas a parte da data
+    const datePart = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+    const [y, m, d] = datePart.split('-');
     if (isFixed) {
         return `${d}/${m}`;
     }
@@ -136,10 +137,19 @@ const AdminCalendario: React.FC = () => {
     // Abrir modal editar
     const openEdit = (ev: CalendarEvent & { is_active: boolean }) => {
         setEditingId(ev.id);
+        
+        // Garantir que a data carregue corretamente no input datetime-local ou texto conforme o caso
+        let formDate = ev.date;
+        if (!ev.is_fixed) {
+            // Pegamos apenas os primeiros 16 caracteres (YYYY-MM-DD HH:MM) e trocamos espaço por T
+            // Isso evita que o JavaScript tente converter o fuso horário automaticamente
+            formDate = ev.date.substring(0, 16).replace(' ', 'T');
+        }
+
         setForm({
             title: ev.title,
             description: ev.description || '',
-            date: ev.date,
+            date: formDate,
             type: ev.type,
             is_fixed: ev.is_fixed,
             color_mode: ev.color_mode,
@@ -200,7 +210,7 @@ const AdminCalendario: React.FC = () => {
             const payload = {
                 title: form.title.trim(),
                 description: form.description.trim() || null,
-                date: form.date,
+                date: form.is_fixed ? (form.date.includes('T') ? form.date.split('T')[0] : form.date) : form.date.replace('T', ' '),
                 type: form.type,
                 is_fixed: form.is_fixed,
                 color_mode: form.color_mode,
@@ -564,7 +574,7 @@ const AdminCalendario: React.FC = () => {
                             <form onSubmit={handleSave} className="p-6 space-y-4 overflow-y-auto max-h-[75vh]">
                                 {/* Nome */}
                                 <div>
-                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Nome *</label>
+                                    <label className="text-[13px] font-semibold text-slate-500 mb-1 block">Nome *</label>
                                     <input
                                         value={form.title}
                                         onChange={e => setForm(p => ({ ...p, title: e.target.value }))}
@@ -576,7 +586,7 @@ const AdminCalendario: React.FC = () => {
 
                                 {/* Descrição */}
                                 <div>
-                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Descrição</label>
+                                    <label className="text-[13px] font-semibold text-slate-500 mb-1 block">Descrição</label>
                                     <input
                                         value={form.description}
                                         onChange={e => setForm(p => ({ ...p, description: e.target.value }))}
@@ -587,7 +597,7 @@ const AdminCalendario: React.FC = () => {
 
                                 {/* Tipo */}
                                 <div>
-                                    <label className="text-[13px] font-black text-slate-500 mb-1 block">Tipo *</label>
+                                    <label className="text-[13px] font-semibold text-slate-500 mb-1 block">Tipo *</label>
                                     <select
                                         value={form.type}
                                         onChange={e => handleTypeChange(e.target.value as CalendarEventType)}
@@ -603,7 +613,7 @@ const AdminCalendario: React.FC = () => {
                                 {/* Data e formato */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <label className="text-[13px] font-black text-slate-500 mb-1 block">
+                                        <label className="text-[13px] font-semibold text-slate-500 mb-1 block">
                                             {form.is_fixed ? 'Data (Mês-Dia) *' : 'Data Completa *'}
                                         </label>
                                         {form.is_fixed ? (
@@ -656,7 +666,7 @@ const AdminCalendario: React.FC = () => {
                                             />
                                         ) : (
                                             <input
-                                                type="date"
+                                                type="datetime-local"
                                                 value={form.date}
                                                 onChange={e => setForm(p => ({ ...p, date: e.target.value }))}
                                                 disabled={form.is_system}
@@ -665,7 +675,7 @@ const AdminCalendario: React.FC = () => {
                                         )}
                                     </div>
                                     <div>
-                                        <label className="text-[13px] font-black text-slate-500 mb-1 block">Emoji</label>
+                                        <label className="text-[13px] font-semibold text-slate-500 mb-1 block">Emoji</label>
                                         <button
                                             type="button"
                                             onClick={() => setEmojiPickerOpen(true)}
@@ -703,7 +713,7 @@ const AdminCalendario: React.FC = () => {
                                             className="w-4 h-4 accent-amber-500"
                                         />
                                         <div>
-                                            <p className="text-[13px] font-black text-slate-700">Evento Anual</p>
+                                            <p className="text-[13px] font-semibold text-slate-700">Evento Anual</p>
                                             <p className="text-[10px] text-slate-500">Repete todo ano automaticamente</p>
                                         </div>
                                     </label>
