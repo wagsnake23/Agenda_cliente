@@ -346,16 +346,15 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 ) : mode === 'create' ? (
                                     <span>Novo Agendamento</span>
                                 ) : (
-                                    <div className="flex flex-wrap items-center gap-x-2">
-                                        <span className="opacity-100 md:opacity-90">Agendamentos do dia</span>
-                                        <span className="opacity-100 font-extrabold">
-                                            {initialDate && (() => {
-                                                const d = new Date(initialDate + 'T12:00:00');
-                                                const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-                                                return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-                                            })()}
-                                        </span>
-                                    </div>
+                                    <span>
+                                        {initialDate ? (() => {
+                                            const d = new Date(initialDate + 'T12:00:00');
+                                            const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                                            const dia = String(d.getDate()).padStart(2, '0');
+                                            const mes = months[d.getMonth()].toUpperCase();
+                                            return `AGENDAMENTOS DIA ${dia}/${mes}`;
+                                        })() : 'AGENDAMENTOS DO DIA'}
+                                    </span>
                                 )}
                             </h2>
                             {modoEdicao && agendamentoEditando?.createdAt && (
