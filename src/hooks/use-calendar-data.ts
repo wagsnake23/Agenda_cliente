@@ -53,7 +53,7 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       if (dayEvents.length > 0) {
         const priorityOrder = ['holiday', 'event', 'birthday'];
         for (const type of priorityOrder) {
-          const match = dayEvents.find(e => e.type === type);
+          const match = dayEvents.find(e => e.type === type && (type !== 'event' || e.is_fixed !== false));
           if (match) {
             eventColor = getBackgroundByType(type);
             break;
@@ -74,8 +74,8 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       const isBirthdayDay = !!birthdayEvent;
       const birthdayName = birthdayEvent?.title;
 
-      // Verifica evento (para exibir emoji se tiver)
-      const specialEvent = dayEvents.find(e => e.type === 'event');
+      // Verifica evento (para exibir emoji se tiver) - exclui eventos não-fixos, pois vão para o card de agendamentos
+      const specialEvent = dayEvents.find(e => e.type === 'event' && e.is_fixed !== false);
       const specialEmojiName = specialEvent?.title;
       const specialEmojiIcon = specialEvent?.emoji || undefined;
 

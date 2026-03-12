@@ -224,12 +224,12 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   useEffect(() => {
     if (selectedAgendamentoId) {
-      const ag = agendamentos.find(a => a.id === selectedAgendamentoId);
+      const ag = agendamentosComEventosGerais.find(a => a.id === selectedAgendamentoId);
       if (ag) {
         setSelectedPeriod({ start: ag.dataInicio, end: ag.dataFim });
       }
     }
-  }, [selectedAgendamentoId, agendamentos]);
+  }, [selectedAgendamentoId, agendamentosComEventosGerais]);
 
   const baseDate = useMemo(() => {
     const now = new Date();
@@ -612,7 +612,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                         isCenter={position === 'center'}
                         position={position}
                         mode={mode}
-                        agendamentos={agendamentos}
+                        agendamentos={agendamentosComEventosGerais}
                         onViewAgendamento={handleOpenViewDrawer}
                         onOpenCreateDrawer={handleOpenCreateDrawer}
                         selectedPeriod={selectedPeriod}
@@ -646,8 +646,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 mode="view"
                 variant="drawer"
                 initialDate={selectedDrawerDate}
-                agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-                todosAgendamentos={agendamentos}
+                agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+                todosAgendamentos={agendamentosComEventosGerais}
                 onSave={salvarAgendamento}
                 onDelete={excluirAgendamento}
                 onUpdate={editarAgendamento}
@@ -667,8 +667,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               mode="create"
               variant="modal"
               initialDate={selectedDrawerDate}
-              agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-              todosAgendamentos={agendamentos}
+              agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+              todosAgendamentos={agendamentosComEventosGerais}
               onSave={salvarAgendamento}
               onDelete={excluirAgendamento}
               onUpdate={editarAgendamento}
@@ -743,8 +743,8 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         mode="create"
         variant="modal"
         initialDate={selectedDrawerDate}
-        agendamentosNoDia={agendamentos.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-        todosAgendamentos={agendamentos}
+        agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
+        todosAgendamentos={agendamentosComEventosGerais}
         onSave={salvarAgendamento}
         onDelete={excluirAgendamento}
         onUpdate={editarAgendamento}

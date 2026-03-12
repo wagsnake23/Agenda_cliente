@@ -648,6 +648,8 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                 agendamentosNoDia.map((agenda) => {
                                     const emoji = agenda.tipo.split(' ')[0];
                                     const tipoNome = agenda.tipo.replace(emoji, '').trim();
+                                    const isEventSpecial = agenda.userName === '_SPECIAL_EVENT_';
+                                    const displayUserName = isEventSpecial ? 'Evento' : (agenda.userName || "Usuário");
 
                                     const formatDateAbbr = (dateStr: string, isStart: boolean) => {
                                         const d = new Date(dateStr + 'T12:00:00');
@@ -703,12 +705,12 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                                <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />
+                                                                {isEventSpecial ? <CalendarIcon className="w-5 h-5 md:w-7 md:h-7" /> : <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />}
                                                             </div>
                                                         )}
                                                     </div>
                                                     <span className="text-[9px] md:text-[10px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
-                                                        {agenda.userName || "Usuário"}
+                                                        {displayUserName}
                                                     </span>
                                                 </div>
 
@@ -750,7 +752,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
-                                                {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
+                                                {!isEventSpecial && profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
                                                     <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {
@@ -866,7 +868,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                         DayContent: (props: { date: Date }) => {
                                             const dStr = format(props.date, 'yyyy-MM-dd');
                                             const ags = todosAgendamentos?.filter(a => a.dataInicio <= dStr && a.dataFim >= dStr);
-                                            const titleText = ags?.length > 0 ? ags.map(a => `${a.tipo.split(' ')[0]} ${a.userName || 'Usuário'}`).join('\n') : undefined;
+                                            const titleText = ags?.length > 0 ? ags.map(a => `${a.tipo.split(' ')[0]} ${a.userName === '_SPECIAL_EVENT_' ? 'Evento' : (a.userName || 'Usuário')}`).join('\n') : undefined;
                                             return (
                                                 <div title={titleText} className="w-full h-full flex flex-col items-center justify-center relative cursor-pointer">
                                                     <span>{props.date.getDate()}</span>
