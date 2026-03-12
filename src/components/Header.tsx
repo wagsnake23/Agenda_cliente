@@ -189,7 +189,7 @@ const Header = () => {
             </header>
 
             {/* Header Mobile/Tablet */}
-            <header className="sticky top-0 z-50 w-full h-[64px] bg-[#eaf4ff] flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
+            <header className="sticky top-0 z-50 w-full h-[64px] bg-transparent flex flex-row items-center justify-between mt-0 md:mt-0 mb-1 pl-1 pr-2 select-none lg:hidden md:relative md:z-auto md:h-auto overflow-hidden">
                 <div className="flex items-center cursor-pointer relative -top-[1px]" onClick={() => navigate('/')}>
                     <div className="flex items-center gap-4 w-full max-w-[320px]">
                         <img

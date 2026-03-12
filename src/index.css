@@ -67,7 +67,15 @@ All colors MUST be HSL.
   }
 
   body {
-    background-color: #eaf4ff;
+    background: linear-gradient(
+      180deg,
+      #dbeafe 0%,
+      #eef2ff 25%,
+      #f5f7fb 60%,
+      #f8fafc 100%
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
     @apply text-foreground;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
@@ -75,16 +83,6 @@ All colors MUST be HSL.
 
   html {
     overflow-x: hidden;
-  }
-
-  @media (min-width: 1024px) {
-    body {
-      background-image: url("/backgrounds/nuvens.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-    }
   }
 
   /* Adicione a regra @font-face aqui */

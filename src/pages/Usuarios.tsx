@@ -488,7 +488,7 @@ const UsuariosPage: React.FC = () => {
                 editingUser={editingUser}
             />
 
-            <section className="w-full pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-[#eaf4ff] lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
+            <section className="w-full pt-0 lg:pt-[96px] pb-0 lg:pb-8 bg-transparent lg:bg-[linear-gradient(180deg,#bdd2ee_0%,#c2dbfe_60%,#eaf4ff_100%)] lg:border-t-[3px] lg:border-[#2563eb] lg:shadow-[0_12px_28px_rgba(0,0,0,0.08)] mb-6">
                 <div className="max-w-[1400px] mx-auto px-4 md:px-8 pt-0 sm:pt-6">
                     {/* Header interno do Módulo */}
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

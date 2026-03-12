@@ -18,43 +18,33 @@ interface MoonPhasesDisplayProps {
 
 const MoonPhasesDisplay: React.FC<MoonPhasesDisplayProps> = ({ moonPhases, month, year }) => {
   return (
-    <div className="bg-[#FBFBFA] max-md:bg-white rounded-2xl md:rounded-[22px] border border-slate-400/30 md:border-slate-300/40 relative z-10 min-h-[44px] h-full flex flex-col overflow-hidden transition-all duration-300">
-      <div className="relative w-full h-9 md:h-[52px] flex items-center">
-        {/* Faixa de fundo com gradiente horizontal */}
-        {/* Faixa de fundo com gradiente horizontal equilibrado */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to right, rgba(71,85,105,0.38) 0%, rgba(71,85,105,0.28) 30%, rgba(71,85,105,0.16) 65%, rgba(71,85,105,0.07) 100%)'
-          }}
-        />
-
-        {/* Barra lateral */}
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-slate-400/80 rounded-r-md z-10" />
-
+    <div className="bg-[#ffffff] rounded-[16px] relative z-10 min-h-[44px] h-full flex flex-col overflow-hidden transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.05)]">
+      {/* Highlight de topo sutil */}
+      <div 
+        className="absolute inset-x-0 top-0 h-[1.5px] z-30 pointer-events-none" 
+        style={{ background: 'linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%)' }} 
+      />
+      <div 
+        className="relative w-full h-9 md:h-[52px] flex items-center"
+        style={{ background: 'linear-gradient(180deg, #818cf8 0%, #6366f1 100%)' }}
+      >
         {/* Conteúdo do Header */}
         <div className="relative flex items-center justify-between pl-3 pr-2 md:pl-6 md:pr-4 z-20 w-full">
           <div className="flex items-center gap-2">
             <span className="text-lg md:text-xl drop-shadow-[0_2px_5px_rgba(0,0,0,0.2)] filter saturate-[1.3] brightness-[1.1] select-none">🌙</span>
-            <h4 className="font-bold text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
-              <span style={{
-                background: 'linear-gradient(135deg, #334155 0%, #475569 55%, #5a6a7d 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}>
-                Fases da Lua
-              </span>
+            <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
+              Fases da Lua
             </h4>
           </div>
 
-          <div className="flex flex-row md:flex-col items-center justify-center py-[4px] md:py-[4px] px-[12px] md:px-[10px] rounded-[10px] md:rounded-[8px] text-[12px] md:text-[13px] bg-[#64748b]/15 text-[#475569] leading-[1.1] ml-auto border-[0.5px] border-[#64748b]/20 shadow-[inset_0_1px_4px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.02)]">
+          <div className="flex flex-row md:flex-col items-center justify-center py-[4px] md:py-[4px] px-[12px] md:px-[10px] rounded-[10px] md:rounded-[8px] text-[12px] md:text-[13px] bg-white/20 text-white leading-[1.1] ml-auto border-[0.5px] border-white/30 shadow-[inset_0_1px_4px_rgba(0,0,0,0.05)]">
             <span className="font-bold uppercase tracking-wide">{MONTHS[month]?.substring(0, 3)}</span>
             <span className="hidden md:inline font-bold opacity-90">{year}</span>
             <span className="inline md:hidden font-bold opacity-90 ml-[2px]">/{year}</span>
           </div>
         </div>
       </div>
+
 
       <div className="px-3 md:px-6 pt-0.5 md:pt-3 pb-0 md:pb-5 flex flex-col justify-center items-center flex-1 w-full">
         <div className="flex flex-nowrap gap-3 md:gap-8 justify-center w-full overflow-x-auto pb-2">

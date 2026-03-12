@@ -64,7 +64,7 @@ const MobileMenu = () => {
             {/* Menu Lateral Deslizante */}
             <div
                 className={cn(
-                    "fixed top-0 right-0 h-full w-[280px] bg-white z-[201] md:hidden flex flex-col shadow-[-4px_0_24px_rgba(0,0,0,0.15)] transition-transform duration-300 ease-in-out",
+                    "fixed top-0 right-0 h-full w-[280px] z-[201] md:hidden flex flex-col shadow-[-4px_0_24px_rgba(0,0,0,0.15)] transition-transform duration-300 ease-in-out",
                     isOpen ? 'translate-x-0' : 'translate-x-full'
                 )}
             >
@@ -105,8 +105,8 @@ const MobileMenu = () => {
                     )}
                 </div>
 
-                {/* Lista de Itens */}
-                <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-[linear-gradient(180deg,#f8fafc_0%,#eaf4ff_100%)]">
+                {/* Lista de Itens - Sincronizado com o fundo da página */}
+                <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-gradient-to-b from-[#dbeafe] via-[#eef2ff] to-[#f8fafc]">
 
                     {/* Item 1: Escala */}
                     <div className="px-1 py-1">
