@@ -704,7 +704,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
+                                            <div className={cn("grid grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative", isEventSpecial ? "grid-cols-[65px_1fr] md:grid-cols-[80px_1fr]" : "grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px]")}>
                                                 {/* COLUNA 1: USUÁRIO */}
                                                 <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:ml-0">
                                                     <div className="w-[54px] h-[54px] md:w-[78px] md:h-[78px] md:-translate-y-1.5 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
@@ -722,17 +722,17 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 2: CONTEÚDO */}
-                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 overflow-hidden py-0.5 -ml-1 md:ml-0">
+                                                <div className="col-start-2 row-start-1 flex items-center gap-1.5 md:gap-2 py-0.5 -ml-1 md:ml-0 overflow-hidden pr-2 md:pr-0">
                                                     {!isEventSpecial && <span className="text-[1rem] md:text-[1.1rem] drop-shadow-sm leading-none shrink-0">{emoji}</span>}
-                                                    <span className="text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight truncate">
+                                                    <span className={cn("text-[11.5px] md:text-[clamp(12px,0.85vw,13.5px)] font-black text-slate-800 uppercase tracking-tight", isEventSpecial ? "whitespace-normal break-words leading-tight" : "truncate")}>
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0">
-                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70">📋</span>
-                                                    <span className="text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 whitespace-nowrap text-ellipsis flex items-center">
+                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0 mt-0.5">
+                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>
+                                                    <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "whitespace-normal" : "whitespace-nowrap text-ellipsis")}>
                                                         {renderPeriod()}
-                                                        {timeStr ? <span className="ml-[4px] md:ml-[6px] inline-flex items-center gap-[3px] text-slate-800 font-black">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
+                                                        {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] text-slate-800 font-black shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
                                                     </span>
                                                 </div>
                                                 {agenda.observacao && (
