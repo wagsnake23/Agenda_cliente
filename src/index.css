@@ -67,18 +67,43 @@ All colors MUST be HSL.
   }
 
   body {
-    background: 
+    min-height: 100vh;
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    background-color: hsl(210, 100%, 97%); /* Suave azul claro para Mobile */
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      background:
+        radial-gradient(circle at 0% 0%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
+        radial-gradient(circle at 100% 0%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.6) 0%, transparent 60%),
+        linear-gradient(160deg, hsl(210, 100%, 97%) 0%, hsl(214, 95%, 94%) 40%, hsl(216, 100%, 98%) 100%);
+      background-attachment: fixed;
+    }
+  }
+
+  /* Utilitário para forçar o fundo se necessário */
+  .premium-aurora-bg {
+    background:
       radial-gradient(circle at 0% 0%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
       radial-gradient(circle at 100% 0%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
       radial-gradient(circle at 100% 100%, hsla(199, 89%, 86%, 0.45) 0%, transparent 50%),
       radial-gradient(circle at 0% 100%, hsla(214, 94%, 87%, 0.45) 0%, transparent 50%),
       radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.6) 0%, transparent 60%),
       linear-gradient(160deg, hsl(210, 100%, 97%) 0%, hsl(214, 95%, 94%) 40%, hsl(216, 100%, 98%) 100%);
-    background-attachment: fixed;
-    min-height: 100vh;
-    color: hsl(var(--foreground));
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+  @media (min-width: 1024px) {
+    .premium-aurora-bg {
+      background-attachment: fixed;
+    }
   }
 
   html {
@@ -93,6 +118,12 @@ All colors MUST be HSL.
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+  }
+
+  .premium-subheader-bg {
+    background-color: #eaf3fd;
+    background-image: none;
+    background-attachment: fixed;
   }
 }
 

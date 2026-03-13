@@ -232,9 +232,9 @@ const MobileMenu = () => {
                         <div className="px-1 pt-2">
                             <button
                                 onClick={() => handleNav('/auth')}
-                                className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-2xl font-black uppercase text-sm text-[#0B1221] bg-gradient-to-b from-[#fef08a] to-[#facc15] shadow-md hover:brightness-110 transition-all duration-200 cursor-pointer"
+                                className="flex items-center justify-center gap-3 px-4 py-3 w-full rounded-2xl font-black uppercase text-sm text-white bg-gradient-to-b from-[#3b82f6] to-[#2563eb] shadow-md shadow-blue-500/10 active:translate-y-[2px] mb-2 transition-all duration-200 cursor-pointer"
                             >
-                                <LogIn size={18} strokeWidth={3} className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]" />
+                                <LogIn size={18} strokeWidth={3} className="filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)]" />
                                 <span>Entrar</span>
                             </button>
                         </div>

@@ -94,7 +94,10 @@ const Header = () => {
     return (
         <>
             {/* Barra de Título Institucional - Desktop Apenas */}
-            <header className="hidden lg:flex fixed top-0 w-full h-[76px] bg-gradient-to-r from-[#1e2a44] to-[#243552] items-center z-[100] select-none shadow-[0_4px_14px_rgba(0,0,0,0.25)]">
+            <header 
+                className="hidden lg:flex fixed top-0 w-full h-[76px] bg-[#243552] items-center z-[100] select-none"
+                style={{ boxShadow: '0 4px 14px rgba(0,0,0,0.25), inset 0 -1px 0 rgba(255,255,255,0.15)' }}
+            >
                 <div className="w-full max-w-[1600px] mx-auto px-8 flex items-center justify-between">
                     <div onClick={() => navigate('/')} className="flex items-center gap-4 cursor-pointer relative">
                         {/* Spot Light Localizado */}
