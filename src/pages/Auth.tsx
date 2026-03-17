@@ -85,11 +85,33 @@ const AuthPage: React.FC = () => {
             <div className="absolute top-6 left-6 z-[60]">
                 <button
                     onClick={() => navigate('/')}
-                    className="flex items-center gap-2 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                    className="flex items-center gap-3 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                    <img src="/logo-bombeiros.png" alt="Brasão" className="w-10 h-10 object-contain drop-shadow-md" />
-                    <div className="flex items-center gap-2 text-blue-900 md:text-white">
-                        <span className="font-black text-lg md:text-xl uppercase tracking-tight leading-none whitespace-nowrap">Bombeiros Agudos</span>
+                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain drop-shadow-md" />
+                    <div className="flex items-center gap-2">
+                         <h3
+                            className="font-bold text-lg md:text-xl tracking-wider uppercase whitespace-nowrap flex gap-2"
+                            style={{
+                                textShadow: `
+                                    0 1px 0 rgba(255,255,255,0.25),
+                                    0 2px 4px rgba(0,0,0,0.25),
+                                    0 6px 10px rgba(0,0,0,0.15)
+                                `
+                            }}
+                        >
+                            <span style={{ color: '#f87171', filter: 'saturate(1.2)' }}>CALENDÁRIO</span>
+                            <span 
+                                style={{ 
+                                    background: 'linear-gradient(180deg, #ffffff 40%, #dbeafe 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent'
+                                }}
+                            >
+                                AGENDA
+                            </span>
+                        </h3>
                     </div>
                 </button>
             </div>
@@ -98,24 +120,33 @@ const AuthPage: React.FC = () => {
                 {/* Card de Login - No Mobile fundo branco direto, no Desktop com Card */}
                 <div className="bg-white md:bg-[#F8FAFC] md:rounded-[31px] md:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,1),inset_0_2px_10px_rgba(0,0,0,0.05)] overflow-hidden px-4 md:px-8 pt-3 md:pt-4 pb-6 md:pb-1 flex flex-col items-center md:border-[4px] md:border-white/60">
 
-                    {/* Logo Original */}
+                    {/* Logo Principal */}
                     <img
                         src="/logo.png"
                         alt="Calendário"
                         className="w-20 md:w-20 h-20 md:h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.3)] object-contain filter brightness-[1.1] mb-2 md:mb-1 transform hover:scale-105 transition-transform duration-500"
                     />
 
-                    {/* Títulos com Gradiente Premium */}
-                    <div className="text-center mb-8 md:mb-4">
+                    {/* Títulos com Gradiente Premium - Refletindo o Estilo da Home */}
+                    <div className="text-center mb-8 md:mb-6">
                         <h1
-                            className="font-black text-xl uppercase leading-tight"
+                            className="font-black text-2xl uppercase tracking-wider flex flex-col items-center gap-1"
                             style={{
-                                background: 'linear-gradient(to bottom, #FF4D4D 0%, #D32F2F 50%, #8B0000 100%)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
+                                textShadow: '0 2px 10px rgba(0,0,0,0.15)'
                             }}
                         >
-                            Calendário Agenda
+                            <span className="text-[#f87171]">CALENDÁRIO</span>
+                            <span 
+                                style={{ 
+                                    background: 'linear-gradient(180deg, #1e3a8a 40%, #1e40af 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent'
+                                }}
+                            >
+                                AGENDA
+                            </span>
                         </h1>
                     </div>
 

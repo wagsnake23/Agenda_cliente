@@ -1,13 +1,9 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { useCalendarMode } from '@/hooks/use-calendar-mode';
 import { useMobileMenu } from '@/hooks/useMobileMenu';
 import {
     Menu, X, LogOut, LogIn, LayoutDashboard
 } from 'lucide-react';
-import {
-    Select, SelectContent, SelectItem, SelectTrigger, SelectValue
-} from "@/components/ui/select";
 import { cn } from '@/lib/utils';
 
 const MobileMenu = () => {
@@ -15,13 +11,7 @@ const MobileMenu = () => {
     const { isAuthenticated, isAdmin, profile, signOut, loading } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
-    const { mode, setMode } = useCalendarMode();
 
-    const modeMap = {
-        '24x48': '24H',
-        '12x36': '12H',
-        'adm': '8H'
-    };
 
     const handleNav = (path: string) => {
         navigate(path);
@@ -107,26 +97,6 @@ const MobileMenu = () => {
 
                 {/* Lista de Itens - Sincronizado com o fundo da página */}
                 <div className="flex-1 overflow-y-auto py-3 px-3.5 flex flex-col gap-1.5 bg-gradient-to-b from-[#dbeafe] via-[#eef2ff] to-[#f8fafc]">
-
-                    {/* Item 1: Escala */}
-                    <div className="px-1 py-1">
-                        <Select value={mode} onValueChange={(val) => { setMode(val as any); setIsOpen(false); }}>
-                            <SelectTrigger className="w-full h-11 bg-blue-50/60 border border-blue-200/60 shadow-none text-slate-700 font-bold text-sm px-3 hover:bg-blue-100/40 transition-colors focus:ring-0 rounded-xl">
-                                <div className="flex items-center gap-3">
-                                    <span className="text-[20px] filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] drop-shadow-[0_4px_8px_rgba(0,0,0,0.1)]">⏱️</span>
-                                    <div className="flex gap-1">
-                                        <span>Escala</span>
-                                        <SelectValue />
-                                    </div>
-                                </div>
-                            </SelectTrigger>
-                            <SelectContent className="z-[202]">
-                                <SelectItem value="24x48" className="font-bold">24x48 Horas</SelectItem>
-                                <SelectItem value="12x36" className="font-bold">12x36 Horas</SelectItem>
-                                <SelectItem value="adm" className="font-bold">Adm</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
 
                     {/* Autenticado ou Não */}
                     {isAuthenticated ? (

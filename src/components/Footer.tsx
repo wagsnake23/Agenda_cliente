@@ -38,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
                         </h3>
                     </div>
                     <p className="text-gray-400 text-xs md:text-sm font-medium opacity-80 max-w-[300px]">
-                        Calendário digital de organização de escala operacional
+                        Plataforma digital para organização de agenda e eventos
                     </p>
                 </div>
 
