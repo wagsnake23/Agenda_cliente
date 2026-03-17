@@ -302,14 +302,14 @@ const GlobalEventModal = () => {
                             type="button"
                             onClick={() => setIsOpen(false)}
                             disabled={saving}
-                            className="flex-1 h-12 rounded-xl bg-white text-slate-600 font-bold border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-50 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
+                            className="flex-1 h-12 rounded-xl bg-white text-slate-600 font-bold text-[17px] border border-slate-300 shadow-[0_4px_0_#CBD5E1] hover:bg-slate-50 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-50"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
                             disabled={saving}
-                            className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
+                            className="flex-1 h-12 rounded-xl bg-blue-600 text-white font-bold text-[17px] shadow-[0_4px_0_#1E3A8A] hover:bg-blue-700 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70 flex items-center justify-center gap-2"
                         >
                             {saving ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
                             {saving ? 'Salvando...' : 'Salvar'}
