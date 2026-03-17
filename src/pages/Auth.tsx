@@ -79,7 +79,7 @@ const AuthPage: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-white md:bg-[linear-gradient(135deg,#1e3a8a_0%,#111827_50%,#0b1221_100%)] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
+        <div className="min-h-screen bg-white md:bg-[linear-gradient(135deg,#881337_0%,#4c0519_50%,#1a0208_100%)] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
 
             {/* Logo lateral esquerda superior como botão link */}
             <div className="absolute top-6 left-6 z-[60]">
