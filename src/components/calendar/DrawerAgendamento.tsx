@@ -703,7 +703,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className={cn("grid grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative", isEventSpecial ? "grid-cols-[65px_1fr] md:grid-cols-[80px_1fr]" : "grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px]")}>
+                                            <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
                                                 {/* COLUNA 1: USUÁRIO */}
                                                 <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:ml-0">
                                                     <div className="w-[54px] h-[54px] md:w-[78px] md:h-[78px] md:-translate-y-1.5 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
@@ -764,7 +764,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
-                                                {!isEventSpecial && profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && (
+                                                {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && agenda.userId !== 'system' && (
                                                     <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
                                                         <button
                                                             onClick={(e) => {

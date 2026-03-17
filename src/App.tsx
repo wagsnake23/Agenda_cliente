@@ -15,6 +15,7 @@ import { CalendarModeProvider } from "@/hooks/use-calendar-mode";
 import { CalendarEventsProvider } from "@/context/CalendarEventsContext";
 import AdminCalendario from "./pages/AdminCalendario";
 
+import GlobalEventModal from "@/components/GlobalEventModal";
 import GlobalAgendamentoModal from "@/components/GlobalAgendamentoModal";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const AppProviders = () => (
         <CalendarModeProvider>
           <CalendarEventsProvider>
             <GlobalAgendamentoModal />
+            <GlobalEventModal />
             <Outlet />
           </CalendarEventsProvider>
         </CalendarModeProvider>

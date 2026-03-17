@@ -160,6 +160,18 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   };
 
   const excluirAgendamento = async (id: string) => {
+    if (id.startsWith('evento-')) {
+      const realId = id.replace('evento-', '');
+      const { error } = await supabase.from('calendar_events').delete().eq('id', realId);
+      if (error) {
+        showErrorToast('Erro ao excluir evento');
+      } else {
+        showSuccessToast('Evento excluído!');
+        setEvents((prev: any) => prev.filter((e: any) => e.id !== realId));
+      }
+      return;
+    }
+
     const { error } = await excluir(id);
     if (error) {
       showErrorToast('Erro ao excluir agendamento');
@@ -192,6 +204,19 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   };
 
   const handleEditRequest = (ag: DrawerAgendamentoType) => {
+    if (ag.id.startsWith('evento-')) {
+      const realId = ag.id.replace('evento-', '');
+      const eventObj = calendarEvents.find(e => e.id === realId);
+      if (eventObj) {
+        window.dispatchEvent(
+          new CustomEvent('open-global-event-modal', {
+            detail: { mode: 'edit', event: eventObj }
+          })
+        );
+      }
+      return;
+    }
+
     window.dispatchEvent(
       new CustomEvent('open-global-agendamento-modal', {
         detail: { mode: 'edit', agendamento: ag }
