@@ -85,12 +85,17 @@ const AuthPage: React.FC = () => {
             <div className="absolute top-6 left-6 z-[60]">
                 <button
                     onClick={() => navigate('/')}
-                    className="flex items-center gap-3 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+                    className="flex items-center gap-2 md:gap-3 group transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain drop-shadow-md" />
+                    <img 
+                        src="/logo.png" 
+                        alt="Logo" 
+                        className="w-10 h-10 md:w-11 md:h-11 object-contain drop-shadow-md" 
+                    />
                     <div className="flex items-center gap-2">
+                         {/* Versão Desktop (Gradients) */}
                          <h3
-                            className="font-bold text-lg md:text-xl tracking-wider uppercase whitespace-nowrap flex gap-2"
+                            className="hidden md:flex font-bold text-lg md:text-xl tracking-wider uppercase whitespace-nowrap gap-2"
                             style={{
                                 textShadow: `
                                     0 1px 0 rgba(255,255,255,0.25),
@@ -112,6 +117,12 @@ const AuthPage: React.FC = () => {
                                 AGENDA
                             </span>
                         </h3>
+
+                        {/* Versão Mobile (Cor Sólida #ef4444 para combinar com Header Mobile) */}
+                        <h3 className="md:hidden flex font-black text-[1.05rem] tracking-wider uppercase whitespace-nowrap gap-1 text-[#ef4444] select-none">
+                            <span>CALENDÁRIO</span>
+                            <span>AGENDA</span>
+                        </h3>
                     </div>
                 </button>
             </div>
@@ -130,12 +141,12 @@ const AuthPage: React.FC = () => {
                     {/* Títulos com Gradiente Premium - Refletindo o Estilo da Home */}
                     <div className="text-center mb-8 md:mb-6">
                         <h1
-                            className="font-black text-2xl uppercase tracking-wider flex flex-col items-center gap-1"
+                            className="font-black text-[1.1rem] md:text-[1.5rem] uppercase tracking-wider flex flex-row items-center justify-center gap-2"
                             style={{
                                 textShadow: '0 2px 10px rgba(0,0,0,0.15)'
                             }}
                         >
-                            <span className="text-[#f87171]">CALENDÁRIO</span>
+                            <span className="text-[#ff1744] filter saturate-[1.3]">CALENDÁRIO</span>
                             <span 
                                 style={{ 
                                     background: 'linear-gradient(180deg, #1e3a8a 40%, #1e40af 100%)',
