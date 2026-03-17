@@ -340,6 +340,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   }, [agendamentosComEventosGerais, todayStr]);
 
   const handleOpenTodayAppointmentsBell = () => {
+    goToToday();
     handleOpenViewDrawer(todayStr);
   };
 
