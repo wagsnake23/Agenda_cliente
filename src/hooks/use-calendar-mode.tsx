@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type CalendarMode = '24x48' | '12x36' | 'adm';
+export type CalendarMode = 'adm';
 
 interface CalendarModeContextType {
     mode: CalendarMode;
@@ -12,10 +12,10 @@ interface CalendarModeContextType {
 const CalendarModeContext = createContext<CalendarModeContextType | undefined>(undefined);
 
 export function CalendarModeProvider({ children }: { children: ReactNode }) {
-    const [mode, setMode] = useState<CalendarMode>('24x48');
+    const [mode, setMode] = useState<CalendarMode>('adm');
 
     return (
-        <CalendarModeContext.Provider value={{ mode, setMode }}>
+        <CalendarModeContext.Provider value={{ mode, setMode: () => {} }}>
             {children}
         </CalendarModeContext.Provider>
     );

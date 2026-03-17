@@ -4,7 +4,6 @@ import React, { useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import BrasilFlagIcon from "@/components/BrasilFlagIcon";
 import { cn } from "@/lib/utils";
-import { useCalendarMode } from "@/hooks/use-calendar-mode";
 
 interface CalendarDayProps {
   dayData: {
@@ -41,7 +40,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const { mode } = useCalendarMode();
+
 
   if (!dayData || month === undefined || year === undefined) {
     return <div className="w-full h-full rounded-[9px] md:rounded-[11px]" />;
@@ -100,29 +99,12 @@ const CalendarDay: React.FC<CalendarDayProps> = ({
         "will-change-[background-color,border-color,transform]",
         "border-[0.5px] border-slate-300/60 shadow-none",
         isSelected && "bg-[#FFFDDF] border-orange-400/60 z-10",
-
-        mode === "adm"
-          ? cn(
-            "border-[0.5px]",
-            !isSelected && dayData.colors.border ? dayData.colors.border : "border-slate-300/80"
-          )
-          : !isSelected && "border-slate-300/50",
+        dayData.colors.border || "border-slate-300/80",
 
         !isSelected && (
-          dayData.colors.bg === "bg-calendar-blue"
-            ? "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] border-blue-400/30"
-            : dayData.colors.bg === "bg-calendar-green"
-              ? "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] border-green-400/30"
-              : dayData.colors.bg === "bg-calendar-yellow"
-                ? "bg-gradient-to-br from-[#fde047] to-[#f59e0b] border-yellow-400/30"
-                : (dayData.colors.bg === "bg-white" 
-                   ? cn(
-                       "bg-white",
-                       mode === 'adm' 
-                         ? "bg-white max-md:bg-white border-[0.1px] border-slate-400/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.07)]" 
-                         : "max-md:bg-[#FBFBFA] max-md:border-slate-400/45"
-                     )
-                   : dayData.colors.bg)
+          dayData.colors.bg === "bg-white" 
+            ? "bg-white border-[0.1px] border-slate-400/60 shadow-[inset_0_1px_3px_rgba(0,0,0,0.07)]" 
+            : dayData.colors.bg
         ),
         isSelected ? "text-black drop-shadow-none" : dayData.colors.text,
         dayData.isToday && cn(

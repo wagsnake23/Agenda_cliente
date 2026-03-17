@@ -5,7 +5,6 @@ import { Skeleton } from '@/components/ui/skeleton';
 import CalendarDay from './CalendarDay';
 import { DAYS_OF_WEEK } from '@/utils/calendar-utils';
 import { cn } from '@/lib/utils';
-import { useCalendarMode } from '@/hooks/use-calendar-mode';
 
 interface CalendarGridProps {
   calendarData: ({
@@ -45,7 +44,6 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   year,
   selectedPeriod,
 }) => {
-  const { mode } = useCalendarMode();
 
   return (
     <>
@@ -78,42 +76,10 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 // Pseudo brilho fixo
                 "after:absolute after:inset-0 after:rounded-[9px] md:after:rounded-[11px] after:bg-gradient-to-b after:from-white/20 after:to-transparent after:pointer-events-none",
 
-                // =====================
-                // MODO ADM
-                // =====================
-                mode === 'adm'
-                  ? cn(
-                    "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.1)]",
-                    "bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]",
-                    isWeekend ? "text-red-900" : "text-slate-900",
-                    isToday && "z-20"
-                  )
-
-                  // =====================
-                  // MODO NORMAL
-                  // =====================
-                  : cn(
-                    "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.1)]",
-
-                    isToday
-                      ? cn(
-                        "z-10",
-                        "shadow-[inset_0_0_0_1px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.08)]",
-
-                        todayColors.bg === 'bg-calendar-blue' &&
-                        "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
-
-                        todayColors.bg === 'bg-calendar-green' &&
-                        "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
-
-                        todayColors.bg === 'bg-calendar-yellow' &&
-                        "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]"
-                      )
-                      : cn(
-                        isWeekend ? 'text-red-900' : 'text-slate-900',
-                        "bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]"
-                      )
-                  )
+                "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.1)]",
+                "bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]",
+                isWeekend ? "text-red-900" : "text-slate-900",
+                isToday && "z-20"
               )}
             >
               {day}

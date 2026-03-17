@@ -26,16 +26,8 @@ const Index = () => {
 
   // Sincronizar escala do perfil ao carregar
   useEffect(() => {
-    if (isAuthenticated && profile?.escala) {
-      const savedEscala = profile.escala;
-      // Mapear se necessário (ex: 'Adm' -> 'adm')
-      if (savedEscala === 'Adm') {
-        setMode('adm');
-      } else if (savedEscala === '12x36' || savedEscala === '24x48') {
-        setMode(savedEscala);
-      }
-    }
-  }, [isAuthenticated, profile?.escala, setMode]);
+    setMode('adm');
+  }, [setMode]);
 
   const handleMonthChange = (newMonth: number) => {
     setCurrentMonth(newMonth);

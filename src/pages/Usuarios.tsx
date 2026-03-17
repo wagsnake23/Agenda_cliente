@@ -174,12 +174,17 @@ const UserModal: React.FC<{
                         matricula: data.matricula,
                         perfil: data.perfil,
                         ativo: data.ativo
+                    },
+                    headers: {
+                      Authorization: `Bearer ${s.access_token}`
                     }
                 });
 
                 if (functionError) {
                     console.error("Erro invoke:", functionError);
-                    throw new Error(functionError.message || 'Erro de rede ou permissão');
+                    // Captura erros de status como 401 da Gateway
+                    const errorMsg = functionError.message || 'Erro de rede ou permissão';
+                    throw new Error(`Erro na Edge Function: ${errorMsg}`);
                 }
 
                 if (functionData && functionData.success === false) {

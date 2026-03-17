@@ -1,40 +1,75 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
-
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-serve(async (req) => {
-    if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
+Deno.serve(async (req) => {
+    // 1. Handle CORS
+    if (req.method === 'OPTIONS') {
+        return new Response('ok', { headers: corsHeaders })
+    }
 
     try {
-        const url = Deno.env.get('URL_PROJETO') || Deno.env.get('SUPABASE_URL')
-        const serviceRole = Deno.env.get('CHAVE_MESTRA') || Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+        console.log("🚀 Function admin-create-user starting...")
 
-        if (!url || !serviceRole) {
-            throw new Error("Erro de configuração: Chaves ausentes no servidor.")
+        // 2. Client Setup
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ""
+        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ""
+
+        if (!supabaseUrl || !supabaseServiceKey) {
+            console.error("❌ ERROR: Missing environment variables (SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY)")
+            throw new Error("Configuração do servidor incompleta.")
         }
 
+        const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+
+        // 3. Auth Check
         const authHeader = req.headers.get('Authorization')
-        if (!authHeader) throw new Error("Não autorizado.")
+        if (!authHeader) {
+            console.error("❌ ERROR: Missing Authorization header")
+            return new Response(JSON.stringify({ error: "No authorization header" }), {
+                status: 401,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            })
+        }
 
-        const supabaseAdmin = createClient(url, serviceRole)
+        const token = authHeader.replace('Bearer ', '')
+        const { data: { user: caller }, error: authError } = await supabaseAdmin.auth.getUser(token)
 
-        // A. Validar sessao
-        const { data: { user: caller }, error: authError } = await supabaseAdmin.auth.getUser(authHeader.replace('Bearer ', ''))
-        if (authError || !caller) throw new Error("Sessão inválida.")
+        if (authError || !caller) {
+            console.error("❌ ERROR: Invalid session", authError)
+            return new Response(JSON.stringify({ error: "Sessão inválida" }), {
+                status: 401,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            })
+        }
 
-        // B. Conferir Admin
-        const { data: profile } = await supabaseAdmin.from('profiles').select('perfil').eq('id', caller.id).single()
-        if (profile?.perfil !== 'administrador') throw new Error("Acesso negado.")
+        // 4. Admin Permission Check
+        const { data: profile, error: profileError } = await supabaseAdmin
+            .from('profiles')
+            .select('perfil')
+            .eq('id', caller.id)
+            .single()
 
-        // C. Cadastro no Auth
-        const { email, password, nome, cargo, matricula, perfil, ativo } = await req.json()
+        if (profileError || profile?.perfil !== 'administrador') {
+            console.error("❌ ERROR: Permission denied for user", caller.id)
+            return new Response(JSON.stringify({ error: "Acesso negado. Apenas administradores." }), {
+                status: 403,
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+            })
+        }
 
-        console.log(`🔨 Criando conta no Auth para: ${email}`)
+        // 5. Payload Processing
+        const body = await req.json()
+        const { email, password, nome, cargo, matricula, perfil, ativo } = body
 
+        if (!email || !password || !nome) {
+            throw new Error("E-mail, senha e nome são obrigatórios.")
+        }
+
+        console.log(`🔨 Creating user: ${email}`)
+
+        // 6. Create User in Auth
         const { data: authData, error: createError } = await supabaseAdmin.auth.admin.createUser({
             email,
             password,
@@ -44,9 +79,9 @@ serve(async (req) => {
 
         if (createError) throw createError
 
-        // D. AGUARDAR E ATUALIZAR (UPSERT)
-        // Usamos um pequeno timeout para garantir que o Trigger do BD ja tenha criado o perfil base
-        await new Promise(res => setTimeout(res, 500));
+        // 7. Sync to Profile Table
+        // Wait a bit for potential triggers
+        await new Promise(res => setTimeout(res, 500))
 
         const { error: updateError } = await supabaseAdmin
             .from('profiles')
@@ -61,19 +96,23 @@ serve(async (req) => {
             })
 
         if (updateError) {
-            console.error("⚠️ Erro ao atualizar detalhes, mas usuario Auth ja existe:", updateError.message)
-            // Nesse caso nao deletamos, para permitir que o admin apenas edite o usuario depois
+            console.warn("⚠️ Warning: Profile sync error", updateError.message)
         }
 
-        return new Response(JSON.stringify({ success: true }), {
+        console.log("✅ User created successfully")
+
+        return new Response(JSON.stringify({ success: true, user: authData.user }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             status: 200
         })
 
-    } catch (errorValue: any) {
-        return new Response(JSON.stringify({ success: false, error: errorValue.message }), {
+    } catch (err: any) {
+        console.error("❌ UNCAUGHT ERROR:", err.message)
+        return new Response(JSON.stringify({ success: false, error: err.message }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 200
+            status: 400
         })
     }
 })
+
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7"

@@ -38,8 +38,6 @@ interface CalendarHeaderProps {
   goToToday: () => void;
   formatToday: () => string;
   todayColors: { bg: string; text: string };
-  scaleType: '24x48' | '12x36' | 'adm';
-  setScaleType: (scale: '24x48' | '12x36' | 'adm') => void;
   todayAppointmentsCount?: number;
   handleOpenTodayAppointments?: () => void;
 }
@@ -57,8 +55,6 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   goToToday,
   formatToday,
   todayColors,
-  scaleType,
-  setScaleType,
   todayAppointmentsCount = 0,
   handleOpenTodayAppointments,
 }) => {
@@ -378,24 +374,6 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
               </SelectContent>
             </Select>
 
-            <Select
-              value={scaleType}
-              onValueChange={(val) => setScaleType(val as '24x48' | '12x36' | 'adm')}
-            >
-              <SelectTrigger
-                className="w-[200px] h-11 justify-between font-bold text-[14px] lg:text-[14px] uppercase tracking-[0.4px] transition-all
-                           bg-white border-gray-200 lg:border-[#e5e7eb] shadow-sm lg:shadow-[0_3px_6px_rgba(0,0,0,0.06)] border text-[#334155] lg:rounded-[12px]
-                           focus:ring-0 focus:ring-offset-0 focus:border-[#e5e7eb] outline-none
-                           hover:!border-gray-300 lg:hover:shadow-[0_4px_10px_rgba(0,0,0,0.08)]"
-              >
-                <SelectValue placeholder={window.innerWidth >= 1024 ? "🔔 ESCALA" : "ESCALA"} />
-              </SelectTrigger>
-              <SelectContent className="backdrop-blur-xl bg-popover/95 border border-white/20 z-50">
-                <SelectItem value="24x48" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">🧑‍🚒 Escala 24x48</SelectItem>
-                <SelectItem value="12x36" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">👮 Escala 12x36</SelectItem>
-                <SelectItem value="adm" className="font-sans focus:!bg-red-500 hover:!bg-red-500 focus:!text-white">👔 Escala Adm</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
         </div>
 

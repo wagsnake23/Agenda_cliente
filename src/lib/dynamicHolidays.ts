@@ -1,3 +1,5 @@
+import type { CalendarEvent } from '@/hooks/use-calendar-events';
+
 export const calculateEaster = (year: number): Date => {
     const a = year % 19;
     const b = Math.floor(year / 100);
@@ -17,7 +19,7 @@ export const calculateEaster = (year: number): Date => {
     return new Date(year, month, day);
 };
 
-export const getDynamicHolidays = (year: number) => {
+export const getDynamicHolidays = (year: number): CalendarEvent[] => {
     const easter = calculateEaster(year);
 
     const carnival = new Date(easter);
@@ -37,33 +39,33 @@ export const getDynamicHolidays = (year: number) => {
     mothersDay.setDate(mothersDay.getDate() + 7);
 
     const fathersDay = new Date(year, 7, 1);
-    while (fathersDay.getDay() !== 0) fathersDay.setDate(fathersDay.getDate() + 1);
+    while (fathersDay.getDay() !== 0) fathersDay.setDate(fathersDay.getDay() + 1);
     fathersDay.setDate(fathersDay.getDate() + 7);
 
     const fmt = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
     return [
-        { id: 'sys-carnaval', title: 'Carnaval', date: fmt(carnival), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🎭' },
-        { id: 'sys-cinzas', title: 'Quarta-feira de Cinzas', date: fmt(ashWednesday), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '⚱️' },
-        { id: 'sys-sexta-santa', title: 'Sexta-feira Santa', date: fmt(goodFriday), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '✝️' },
-        { id: 'sys-pascoa', title: 'Páscoa', date: fmt(easter), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🥚' },
-        { id: 'sys-corpus', title: 'Corpus Christi', date: fmt(corpusChristi), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⛪' },
-        { id: 'sys-maes', title: 'Dia das Mães', date: fmt(mothersDay), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '🤱' },
-        { id: 'sys-pais', title: 'Dia dos Pais', date: fmt(fathersDay), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '👨‍👦' }
-    ];
+        { id: 'sys-carnaval', title: 'Carnaval', date: fmt(carnival), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🎭', description: null },
+        { id: 'sys-cinzas', title: 'Quarta-feira de Cinzas', date: fmt(ashWednesday), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '⚱️', description: null },
+        { id: 'sys-sexta-santa', title: 'Sexta-feira Santa', date: fmt(goodFriday), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '✝️', description: null },
+        { id: 'sys-pascoa', title: 'Páscoa', date: fmt(easter), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🥚', description: null },
+        { id: 'sys-corpus', title: 'Corpus Christi', date: fmt(corpusChristi), type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⛪', description: null },
+        { id: 'sys-maes', title: 'Dia das Mães', date: fmt(mothersDay), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '🤱', description: null },
+        { id: 'sys-pais', title: 'Dia dos Pais', date: fmt(fathersDay), type: 'event', is_fixed: false, color_mode: 'event_only', is_system: true, is_active: true, emoji: '👨‍👦', description: null }
+    ] as CalendarEvent[];
 };
 
-export const getNationalHolidays = (year: number) => {
+export const getNationalHolidays = (year: number): CalendarEvent[] => {
     return [
-        { id: 'sys-ano-novo', title: 'Ano Novo', date: `${year}-01-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🍾' },
-        { id: 'sys-tiradentes', title: 'Tiradentes', date: `${year}-04-21`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⚔️' },
-        { id: 'sys-trabalho', title: 'Dia do Trabalho', date: `${year}-05-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💼' },
-        { id: 'sys-independencia', title: 'Independência do Brasil', date: `${year}-09-07`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: null },
-        { id: 'sys-aparecida', title: 'Nossa Senhora Aparecida', date: `${year}-10-12`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🙏' },
-        { id: 'sys-finados', title: 'Finados', date: `${year}-11-02`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💀' },
-        { id: 'sys-republica', title: 'Proclamação da República', date: `${year}-11-15`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🏛️' },
-        { id: 'sys-consciencia', title: 'Dia da Consciência Negra', date: `${year}-11-20`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '✊🏿' },
-        { id: 'sys-natal', title: 'Natal', date: `${year}-12-25`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🎄' },
-        { id: 'sys-revolucao', title: 'Revolução Constitucionalista', date: `${year}-07-09`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⚔️' }
-    ];
+        { id: 'sys-ano-novo', title: 'Ano Novo', date: `${year}-01-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🍾', description: null },
+        { id: 'sys-tiradentes', title: 'Tiradentes', date: `${year}-04-21`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⚔️', description: null },
+        { id: 'sys-trabalho', title: 'Dia do Trabalho', date: `${year}-05-01`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💼', description: null },
+        { id: 'sys-independencia', title: 'Independência do Brasil', date: `${year}-09-07`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: null, description: null },
+        { id: 'sys-aparecida', title: 'Nossa Senhora Aparecida', date: `${year}-10-12`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🙏', description: null },
+        { id: 'sys-finados', title: 'Finados', date: `${year}-11-02`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '💀', description: null },
+        { id: 'sys-republica', title: 'Proclamação da República', date: `${year}-11-15`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🏛️', description: null },
+        { id: 'sys-consciencia', title: 'Dia da Consciência Negra', date: `${year}-11-20`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '✊🏿', description: null },
+        { id: 'sys-natal', title: 'Natal', date: `${year}-12-25`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '🎄', description: null },
+        { id: 'sys-revolucao', title: 'Revolução Constitucionalista', date: `${year}-07-09`, type: 'holiday', is_fixed: false, color_mode: 'holiday', is_system: true, is_active: true, emoji: '⚔️', description: null }
+    ] as CalendarEvent[];
 };

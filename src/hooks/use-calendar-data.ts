@@ -27,7 +27,7 @@ interface UseCalendarDataProps {
   calendarEvents?: CalendarEvent[];
 }
 
-export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEvents = [] }: UseCalendarDataProps) => {
+export const useCalendarData = ({ month, year, today, mode = 'adm', calendarEvents = [] }: UseCalendarDataProps) => {
   const calendarData = useMemo(() => {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -80,7 +80,7 @@ export const useCalendarData = ({ month, year, today, mode = '24x48', calendarEv
       const specialEmojiIcon = specialEvent?.emoji || undefined;
 
       // Para o modo adm: feriado que pinta
-      const effectiveIsHoliday = mode === 'adm' ? isHolidayDay : isHolidayDay;
+      const effectiveIsHoliday = isHolidayDay;
 
       days.push({
         day,

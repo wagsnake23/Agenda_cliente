@@ -7,8 +7,6 @@ export const MONTHS = [
 
 export const DAYS_OF_WEEK = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
 
-export const REFERENCE_DATE = new Date(2024, 0, 1);
-
 export const SWIPE_THRESHOLD = 50;
 
 export const getDaysBetween = (date1: Date, date2: Date): number => {
@@ -31,18 +29,7 @@ export const getSeasonDataForDate = (month: number, day: number) => {
   return { name: 'Primavera', emoji: '🌸' };
 };
 
-// ─── Cores de fundo do calendário (lógica de escala, não remove) ───
-
-export const getColorForDate = (date: Date): { bg: string; text: string; border?: string } => {
-  const daysDiff = getDaysBetween(REFERENCE_DATE, date);
-  const colorIndex = daysDiff % 3;
-  const colors = [
-    { bg: 'bg-calendar-yellow', text: 'text-calendar-yellowText' },
-    { bg: 'bg-calendar-blue', text: 'text-calendar-blueText' },
-    { bg: 'bg-calendar-green', text: 'text-calendar-greenText' },
-  ];
-  return colors[colorIndex < 0 ? (3 + colorIndex) : colorIndex];
-};
+// --- Estações ---
 
 export const getBackgroundByType = (type: string) => {
   switch (type) {
@@ -87,30 +74,12 @@ export const getColorForDateClean = (date: Date, eventColor: { bg: string; text:
   return { bg: 'bg-white', border: 'border-slate-300', text: 'text-black' };
 };
 
-export const getColorForDateTwoTone = (date: Date): { bg: string; text: string } => {
-  const daysDiff = getDaysBetween(REFERENCE_DATE, date);
-  const colorIndex = daysDiff % 2;
-  const colors = [
-    { bg: 'bg-calendar-blue', text: 'text-calendar-blueText' },
-    { bg: 'bg-calendar-yellow', text: 'text-calendar-yellowText' },
-  ];
-  return colors[colorIndex < 0 ? (2 + colorIndex) : colorIndex];
-};
-
 export const getColorForMode = (
   date: Date,
-  mode: '24x48' | '12x36' | 'adm' = '24x48',
+  _mode: 'adm' = 'adm',
   eventColor: { bg: string; text: string; border?: string } | null = null
 ): { bg: string; text: string; border?: string } => {
-  switch (mode) {
-    case 'adm':
-      return getColorForDateClean(date, eventColor);
-    case '12x36':
-      return getColorForDateTwoTone(date);
-    case '24x48':
-    default:
-      return getColorForDate(date);
-  }
+  return getColorForDateClean(date, eventColor);
 };
 
 export const getMoonPhase = (date: Date): number => {

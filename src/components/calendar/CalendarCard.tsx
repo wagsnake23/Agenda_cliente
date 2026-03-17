@@ -18,7 +18,6 @@ interface CalendarCardProps {
     formatToday: () => string;
     isCenter?: boolean;
     position?: 'left' | 'right' | 'center' | 'far';
-    mode?: CalendarMode;
     agendamentos?: any[];
     onViewAgendamento?: (date: string, id?: string) => void;
     onOpenCreateDrawer?: () => void;
@@ -35,7 +34,6 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     formatToday,
     isCenter = false,
     position = 'center',
-    mode = '24x48',
     agendamentos = [],
     onViewAgendamento,
     onOpenCreateDrawer,
@@ -46,7 +44,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         month,
         year,
         today,
-        mode,
+        mode: 'adm',
         calendarEvents,
     });
 
@@ -261,7 +259,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
                             todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
                             todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
-                            mode === 'adm' && "bg-[#FEE2E2] text-red-800 active:bg-red-200 border-red-300/45",
+                            "bg-[#FEE2E2] text-red-800 active:bg-red-200 border-red-300/45",
                         )}
                     >
                         <span>{season.emoji} Hoje: {formatToday()}</span>

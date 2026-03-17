@@ -67,7 +67,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const [highlightedDay, setHighlightedDay] = useState<number | null>(null);
   const [api, setApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { mode, setMode } = useCalendarMode();
+  const { mode } = useCalendarMode();
   const { isAuthenticated } = useAuth();
   const { events: calendarEvents, setEvents } = useCalendarEventsContext();
   const { showSuccessToast, showErrorToast } = useToast();
@@ -580,8 +580,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
             goToToday={handleGoToToday}
             formatToday={formatToday}
             todayColors={todayColors}
-            scaleType={mode}
-            setScaleType={setMode}
             todayAppointmentsCount={todayAppointmentsCount}
             handleOpenTodayAppointments={handleOpenTodayAppointmentsBell}
           />
@@ -636,7 +634,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                         formatToday={formatToday}
                         isCenter={position === 'center'}
                         position={position}
-                        mode={mode}
                         agendamentos={agendamentosComEventosGerais}
                         onViewAgendamento={handleOpenViewDrawer}
                         onOpenCreateDrawer={handleOpenCreateDrawer}
