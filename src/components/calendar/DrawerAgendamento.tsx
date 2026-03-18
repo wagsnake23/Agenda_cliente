@@ -787,7 +787,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                                 <DropdownMenuTrigger asChild>
                                                                     <button 
                                                                         onClick={(e) => e.stopPropagation()}
-                                                                        className="size-[36px] flex items-center justify-center rounded-full bg-black/5 text-[#222] hover:bg-black/10 transition-all outline-none shadow-sm"
+                                                                        className="w-7 h-10 flex items-center justify-center rounded-xl bg-blue-200/60 text-blue-800/80 hover:bg-blue-300/60 transition-all outline-none shadow-sm"
                                                                     >
                                                                         <MoreVertical size={18} className="text-[#222]" />
                                                                     </button>
