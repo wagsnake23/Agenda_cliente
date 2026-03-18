@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect, useMemo } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown, Bell } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import NotificationBell from "../shared/NotificationBell";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -160,35 +161,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
                 {/* Sino de Notificações - Restaurado para span 2 */}
                 <div style={{ gridColumn: '3', gridRow: '1 / span 2' }} className="flex items-center justify-center px-2">
-                  <div
-                    onClick={todayAppointmentsCount > 0 ? handleOpenTodayAppointments : undefined}
-                    className={cn(
-                      "relative transition-transform hidden lg:block",
-                      todayAppointmentsCount > 0
-                        ? "cursor-pointer hover:scale-110"
-                        : "cursor-default opacity-50"
-                    )}
-                  >
-                    <Bell
-                      size={26}
-                      color={todayAppointmentsCount > 0 ? "#1e40af" : "#94a3b8"}
-                      strokeWidth={2.5}
-                      className={cn(
-                        todayAppointmentsCount > 0 && "filter drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]"
-                      )}
-                    />
-                    {todayAppointmentsCount > 0 && (
-                      <span className={cn(
-                        "absolute -top-[11px] -right-[13px] text-white text-[11px] font-[800] rounded-full px-[7px] py-[2.5px]",
-                        "animate-in zoom-in duration-300 flex items-center justify-center",
-                        "bg-[radial-gradient(circle_at_30%_30%,#ff6b6b_0%,#ef4444_60%,#b91c1c_100%)]",
-                        "shadow-[0_3px_6px_rgba(0,0,0,0.3),inset_0_1px_1.5px_rgba(255,255,255,0.5),inset_0_-1px_1.5px_rgba(0,0,0,0.3)]",
-                        "border border-red-600/20"
-                      )}>
-                        {todayAppointmentsCount}
-                      </span>
-                    )}
-                  </div>
+                  <NotificationBell
+                    onClick={handleOpenTodayAppointments}
+                    className="hidden lg:block shrink-0"
+                    iconSize={26}
+                  />
                 </div>
 
                 <div style={{ gridColumn: '4', gridRow: '1 / span 2' }} className="flex justify-end items-center self-center lg:mt-[12px]">

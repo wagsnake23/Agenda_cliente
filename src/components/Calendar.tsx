@@ -25,10 +25,10 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import { useAgendamentos } from '@/hooks/useAgendamentos';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/contexts/ToastProvider';
 import { useCalendarEventsContext } from '@/context/CalendarEventsContext';
+import { useAgendamentosContext } from '@/context/AgendamentosContext';
 import { supabase } from '@/lib/supabase';
 import { dedupeById } from '@/utils/dedupeById';
 import { getDynamicHolidays, getNationalHolidays } from '@/lib/dynamicHolidays';
@@ -44,7 +44,7 @@ interface CalendarProps {
 }
 
 // Converter do formato Supabase para o formato do DrawerAgendamento
-const toDrawerFormat = (ag: ReturnType<typeof useAgendamentos>['agendamentos'][number]): DrawerAgendamentoType => ({
+const toDrawerFormat = (ag: any): DrawerAgendamentoType => ({
   id: ag.id,
   userId: ag.user_id,
   dataInicio: ag.data_inicial,
@@ -70,15 +70,10 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   const { mode } = useCalendarMode();
   const { isAuthenticated } = useAuth();
   const { events: calendarEvents, setEvents } = useCalendarEventsContext();
+  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentosContext();
   const { showSuccessToast, showErrorToast } = useToast();
   const isInitialScroll = useRef(true);
 
-  // Hook de agendamentos do Supabase
-  const { agendamentos: agendamentosDB, criar, excluir, atualizar, loading: loadingAgendamentos, refetch, setAgendamentos } = useAgendamentos();
-
-  // Converter para o formato que o Drawer e CalendarCard esperam.
-  // A deduplicação é responsabilidade exclusiva do hook useAgendamentos.
-  // Este useMemo é uma transformção pura de formato, sem lógica de integridade.
   const agendamentos = useMemo(() => agendamentosDB.map(toDrawerFormat), [agendamentosDB]);
 
   // Cria uma versão estendida apenas para exibição no card de Agendamentos,
@@ -292,7 +287,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
     ]) as CalendarEvent[];
 
     // Combina com os eventos do banco (calendarEvents)
-    // Filtramos os do banco para não duplicar se o sistema já tiver algo no mesmo dia (opcional)
     return [...calendarEvents, ...systemEvents];
   }, [monthsToRender, calendarEvents]);
 
@@ -306,8 +300,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
   const holidayMessages = useHolidayMessages(month, year, enrichedEvents);
 
-  // Filtra as mensagens de Feriados para esconder os 'Eventos' não anuais 
-  // (já que eles vão aparecer no card de Agendamentos)
   const filteredHolidayMessages = useMemo(() => {
     return holidayMessages.filter(msg => msg.is_system || !(msg.type === 'event' && !msg.is_fixed));
   }, [holidayMessages]);
@@ -328,18 +320,14 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   useEffect(() => {
     setHighlightedDay(null);
     
-    // Se o drawer estiver aberto visualizando um dia e mudarmos o mês/ano do calendário, 
-    // fechamos o drawer se o dia não pertencer ao mês e nenhum agendamento que estava sendo visto for visível no novo mês.
     if (isDrawerOpen && drawerMode === 'view' && selectedDrawerDate) {
       const d = new Date(selectedDrawerDate + 'T12:00:00');
       const isDayInCurrentMonth = d.getMonth() === month && d.getFullYear() === year;
 
-      // Pegamos os agendamentos que estão sendo visualizados no drawer (naquela data)
       const visibleAgs = agendamentosComEventosGerais.filter(
         a => a.dataInicio <= selectedDrawerDate && a.dataFim >= selectedDrawerDate
       );
 
-      // Verificamos se algum deles ainda "existe" no card de agendamentos do mês navegado
       const anyStillInCard = visibleAgs.some(ag => {
         const inicio = new Date(ag.dataInicio + 'T12:00:00');
         const fim = new Date(ag.dataFim + 'T12:00:00');
@@ -389,7 +377,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
       const currentIndex = api.selectedScrollSnap();
       
       if (desiredIndex !== currentIndex) {
-        // No carregamento inicial, usamos o jump (true) para evitar o efeito de "rodar bastante"
         if (isInitialScroll.current) {
           api.scrollTo(desiredIndex, true);
           isInitialScroll.current = false;
@@ -471,116 +458,21 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
   useEffect(() => {
     const handleOpenDrawer = () => handleOpenCreateDrawer();
     const handleGlobalCreated = () => refetch();
+    const handleOpenToday = () => handleOpenTodayAppointmentsBell();
 
     window.addEventListener('open-agendamento-drawer', handleOpenDrawer);
     window.addEventListener('agendamento-criado', handleGlobalCreated);
+    window.addEventListener('open-today-drawer', handleOpenToday);
 
     return () => {
       window.removeEventListener('open-agendamento-drawer', handleOpenDrawer);
       window.removeEventListener('agendamento-criado', handleGlobalCreated);
+      window.removeEventListener('open-today-drawer', handleOpenToday);
     };
-  }, [isAuthenticated, refetch]);
+  }, [isAuthenticated, refetch, handleOpenTodayAppointmentsBell]);
 
-  // ---> INÍCIO: SETUP SUPABASE REALTIME <---
-  useEffect(() => {
-    const channel = supabase.channel("calendar-realtime");
-
-    async function atualizarEventosDoDia(payload: any) {
-      if (payload.eventType === "DELETE") {
-        setEvents((prev: any) => prev.filter((e: any) => e.id !== payload.old.id));
-        return;
-      }
-
-      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
-        const { data, error } = await supabase
-          .from("calendar_events")
-          .select("*")
-          .eq("id", payload.new.id)
-          .single();
-
-        if (error || !data) {
-          console.error("Erro ao buscar evento completo pro realtime:", error);
-          return;
-        }
-
-        const newEvent = { ...data, is_system: false };
-
-        if (payload.eventType === "INSERT") {
-          setEvents((prev: any) => {
-            if (prev.some((e: any) => e.id === newEvent.id)) return prev;
-            return [...prev, newEvent];
-          });
-        }
-        if (payload.eventType === "UPDATE") {
-          setEvents((prev: any) => prev.map((e: any) => (e.id === newEvent.id ? newEvent : e)));
-        }
-      }
-    }
-
-    async function atualizarCardAgendamentos(payload: any) {
-      if (payload.eventType === "DELETE") {
-        setAgendamentos((prev: any) => prev.filter((a: any) => a.id !== payload.old.id));
-        return;
-      }
-
-      if (payload.eventType === "INSERT" || payload.eventType === "UPDATE") {
-        const { data, error } = await supabase
-          .from("agendamentos")
-          .select(`
-            *,
-            profiles:user_id (
-              id, nome, apelido, email, foto_url, cargo, matricula, perfil
-            )
-          `)
-          .eq("id", payload.new.id)
-          .single();
-
-        if (error || !data) {
-          console.error("Erro ao buscar agendamento completo pro realtime:", error);
-          return;
-        }
-
-        if (payload.eventType === "INSERT") {
-          // dedupeById garante que o Realtime não crie duplicatas em relação ao insert otimista
-          setAgendamentos((prev: any) =>
-            dedupeById([...prev, data]).sort(
-              (a: any, b: any) => new Date(a.data_inicial).getTime() - new Date(b.data_inicial).getTime()
-            )
-          );
-        }
-        if (payload.eventType === "UPDATE") {
-          // dedupeById garante que o mapa de updates não introduza duplicatas
-          setAgendamentos((prev: any) =>
-            dedupeById(prev.map((a: any) => (a.id === data.id ? data : a)))
-          );
-        }
-      }
-    }
-
-    channel
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "agendamentos" },
-        (payload) => {
-          if (process.env.NODE_ENV === 'development') console.log("Realtime agendamentos:", payload);
-          atualizarCardAgendamentos(payload);
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "calendar_events" },
-        (payload) => {
-          if (process.env.NODE_ENV === 'development') console.log("Realtime eventos:", payload);
-          atualizarEventosDoDia(payload);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [setEvents, setAgendamentos]);
-  // ---> FIM: SETUP SUPABASE REALTIME <---
+  // ---> SINCRONIA REALTIME DE EVENTOS (CONTEXTO GLOBAL JÁ LIDADO PELO PROVIDER) <---
+  // Nota: A sincronia de Agendamentos agora é via AgendamentosContext global.
 
   return (
     <div className="w-full antialiased [font-smoothing:antialiased] [-moz-osx-font-smoothing:grayscale] transition-all duration-500 relative">
@@ -614,7 +506,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
       <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
 
-        {/* Mobile Flex Container para garantir 12px exatos de gap vertical entre os blocos (Card e Conteúdo) */}
         <div className="flex flex-col gap-3 lg:block w-full">
           <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-1.5 lg:mt-0 lg:py-7">
             <Carousel
@@ -681,7 +572,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               />
             </Carousel>
 
-            {/* Drawer de Visualização (Desktop: Sobre o primeiro card | Mobile: Abaixo do Carrossel) */}
             <div className={cn(
               "z-[100] transition-all duration-300",
               "lg:absolute lg:top-2 lg:left-0 lg:w-[calc((100%-4rem)/3)] lg:h-[calc(100%-92px)]",
@@ -708,7 +598,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               />
             </div>
 
-            {/* Modal de Criação (Centralizado) */}
             <DrawerAgendamento
               isOpen={isDrawerOpen && drawerMode === 'create'}
               onClose={handleCloseDrawer}
@@ -727,7 +616,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
               setSelectedAgendamentoId={setSelectedAgendamentoId}
             />
 
-            {/* Indicadores de bolinhas */}
             <div className="hidden lg:flex justify-center gap-3 mt-6 lg:mt-6 mb-4">
               {[-1, 0, 1].map((offset) => {
                 const date = addMonths(new Date(year, month, 1), offset);
@@ -752,7 +640,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
 
           <div className="max-w-[1600px] mx-auto w-full mt-0 lg:mt-[-20px] flex flex-col gap-3 lg:gap-0 lg:pb-16">
             <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 items-stretch">
-              {/* 1º - Agendamentos */}
               <div className={cn(
                 "w-full lg:flex-1 lg:min-w-[370px] order-1 lg:order-1 flex flex-col gap-3",
                 !hasAgendamentos && "hidden md:flex"
@@ -766,7 +653,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 />
               </div>
 
-              {/* 2º e 3º - Feriados e Fases da Lua */}
               <div className="contents lg:flex lg:w-full lg:flex-1 lg:min-w-[370px] lg:flex-col lg:order-2 lg:gap-8 gap-3">
                 <div className={`w-full flex-1 order-2 lg:order-none ${filteredHolidayMessages.length === 0 ? 'hidden md:block' : ''}`}>
                   <HolidayMessages messages={filteredHolidayMessages} highlightedDay={highlightedDay} month={month} year={year} />
@@ -776,7 +662,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
                 </div>
               </div>
 
-              {/* 4º - Aniversariantes */}
               <div className="w-full lg:flex-1 lg:min-w-[370px] order-3 lg:order-3">
                 <BirthdayMessages month={month} year={year} highlightedDay={highlightedDay} calendarEvents={calendarEvents} />
               </div>
@@ -784,24 +669,6 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
           </div>
         </div>
       </div>
-
-      <DrawerAgendamento
-        isOpen={isDrawerOpen && drawerMode === 'create'}
-        onClose={handleCloseDrawer}
-        mode="create"
-        variant="modal"
-        initialDate={selectedDrawerDate}
-        agendamentosNoDia={agendamentosComEventosGerais.filter(a => a.dataInicio <= (selectedDrawerDate || '') && a.dataFim >= (selectedDrawerDate || ''))}
-        todosAgendamentos={agendamentosComEventosGerais}
-        onSave={salvarAgendamento}
-        onDelete={excluirAgendamento}
-        onUpdate={editarAgendamento}
-        anchorRef={null as any}
-        selectedPeriod={selectedPeriod}
-        onSelectPeriod={toggleHighlightPeriod}
-        selectedAgendamentoId={selectedAgendamentoId}
-        setSelectedAgendamentoId={setSelectedAgendamentoId}
-      />
     </div>
   );
 };

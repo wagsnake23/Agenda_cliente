@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { LogIn, LogOut, Users, Calendar as CalendarIcon, ChevronDown } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import NotificationBell from './shared/NotificationBell';
 
 export const UserMenu = () => {
     const { profile, signOut, isAdmin } = useAuth();
@@ -222,15 +223,30 @@ const Header = () => {
                         <img
                             src="/logo.png"
                             alt="Logo Calendário"
-                            className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0"
+                            className="w-12 h-12 md:w-14 md:h-14 object-contain transition-transform duration-300 hover:scale-105 shrink-0 relative -left-[5px]"
                         />
-                        <h1
-                            className="text-[1.05rem] md:text-[1.5rem] font-black tracking-wider uppercase leading-none flex flex-row gap-1 select-none relative -left-[3px] md:-left-0"
-                            style={{ color: '#ef4444' }}
-                        >
-                            <span>CALENDÁRIO</span>
-                            <span>AGENDA</span>
-                        </h1>
+                        <div className="flex items-center gap-1">
+                            <h1
+                                className="text-[1.05rem] md:text-[1.5rem] font-extrabold tracking-normal uppercase leading-none flex flex-row gap-1 select-none relative -left-[13px] md:-left-0"
+                                style={{ color: '#1e40af' }}
+                            >
+                                <span>CALENDÁRIO</span>
+                                <span>AGENDA</span>
+                            </h1>
+                            <NotificationBell 
+                                iconSize={22} 
+                                className="ml-[-4px] mt-0.5" 
+                                onClick={() => {
+                                    if (location.pathname !== '/') {
+                                        navigate('/');
+                                        // Aguardar navegação antes de emitir evento
+                                        setTimeout(() => window.dispatchEvent(new CustomEvent('open-today-drawer')), 100);
+                                    } else {
+                                        window.dispatchEvent(new CustomEvent('open-today-drawer'));
+                                    }
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
 
