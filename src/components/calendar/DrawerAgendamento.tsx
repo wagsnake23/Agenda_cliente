@@ -705,7 +705,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             className={cn(
                                                 "p-1 pr-11 md:pr-1.5 md:pt-3 md:pb-1.5 md:px-2 rounded-2xl border overflow-hidden bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
-                                                    ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
+                                                    ? "border-2 border-blue-500 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
