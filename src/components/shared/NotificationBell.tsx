@@ -73,6 +73,7 @@ const NotificationBell: React.FC<NotificationBellProps> = ({ className, iconSize
                 <span className={cn(
                     "absolute -top-[10px] -right-[10px] text-white text-[11px] font-[900] rounded-full px-[4.5px] py-[0px]",
                     "animate-in zoom-in duration-300 flex items-center justify-center min-w-[20px] h-[20px]",
+                    "md:min-w-[23px] md:h-[23px] md:text-[12px] md:-top-[12px] md:-right-[12px]",
                     "bg-[radial-gradient(circle_at_30%_30%,#ff6b6b_0%,#ef4444_60%,#b91c1c_100%)]",
                     "shadow-[0_2px_4.5px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.5),inset_0_-0.5px_1px_rgba(0,0,0,0.3)]",
                     "border border-red-600/15"
