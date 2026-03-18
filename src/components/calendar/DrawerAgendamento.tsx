@@ -783,7 +783,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                     <>
                                                         {/* Menu Dropdown para Mobile */}
                                                         <div className="md:hidden absolute top-1 right-1 z-50">
-                                                            <DropdownMenu>
+                                                            <DropdownMenu modal={false}>
                                                                 <DropdownMenuTrigger asChild>
                                                                     <button 
                                                                         onClick={(e) => e.stopPropagation()}
