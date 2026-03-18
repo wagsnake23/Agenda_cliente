@@ -35,9 +35,9 @@ export const getBackgroundByType = (type: string) => {
   switch (type) {
     case 'holiday':
       return {
-        bg: 'bg-red-200',
+        bg: 'bg-gradient-to-b from-[#f08282] to-[#e45555]',
         border: 'border-red-400/80',
-        text: 'text-red-900'
+        text: 'text-white'
       };
     case 'event':
       return {
@@ -58,16 +58,26 @@ export const getBackgroundByType = (type: string) => {
 
 export const getColorForDateClean = (date: Date, eventColor: { bg: string; text: string; border?: string } | null = null): { bg: string; text: string; border?: string } => {
   const dayOfWeek = date.getDay();
-  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+  const isSunday = dayOfWeek === 0;
+  const isSaturday = dayOfWeek === 6;
 
   // Prioridade 1: Cor do evento
   if (eventColor) {
     return eventColor;
   }
 
-  // Prioridade 2: Fim de semana
-  if (isWeekend) {
-    return { bg: 'bg-[#FECACA]', border: 'border-red-400/80', text: 'text-[#991B1B]' };
+  // Prioridade 2: Domingo
+  if (isSunday) {
+    return { bg: 'bg-gradient-to-b from-[#f08282] to-[#e45555]', border: 'border-red-400/80', text: 'text-white' };
+  }
+
+  // Prioridade 3: Sábado (Cinza gradiente)
+  if (isSaturday) {
+    return { 
+      bg: 'bg-gradient-to-br from-[#f1f5f9] to-[#cbd5e1] md:from-[#f1f5f9] md:to-[#acb6c5]', 
+      border: 'border-slate-400/70', 
+      text: 'text-black' 
+    };
   }
 
   // Padrão: Dia útil
