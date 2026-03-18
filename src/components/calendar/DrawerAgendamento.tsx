@@ -733,20 +733,21 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 col-span-2 md:col-span-1 row-start-2 flex items-center gap-x-3 gap-y-1 overflow-hidden -ml-1 md:ml-0 mt-1 md:mt-0.5 flex-wrap md:flex-nowrap">
+                                                <div className="col-start-2 col-span-2 md:col-span-1 row-start-2 flex items-center gap-x-2 gap-y-1 overflow-hidden -ml-1 md:ml-0 mt-1 md:mt-0.5 flex-wrap md:flex-nowrap">
                                                     <div className="flex items-center gap-1.5 min-w-0">
                                                         <span className="text-[14px] md:text-[14px] opacity-70 shrink-0 leading-none">{isEventSpecial ? '📅' : '📋'}</span>
-                                                        <span className={cn("text-[12.5px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 truncate")}>
-                                                            {renderPeriod()}
-                                                            {timeStr ? <span className="ml-[4px] md:ml-[6px] shrink-0 font-bold">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 ml-[2px]">🕗</span> {timeStr}</span> : null}
-                                                        </span>
+                                                        <div className="flex items-center gap-2 overflow-hidden">
+                                                            <span className={cn("text-[12.5px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 truncate")}>
+                                                                {renderPeriod()}
+                                                                {timeStr ? <span className="ml-[4px] md:ml-[6px] shrink-0 font-bold">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 ml-[2px]">🕗</span> {timeStr}</span> : null}
+                                                            </span>
+                                                            {!isEventSpecial && (
+                                                                <span className="md:hidden text-[11px] font-black text-blue-700 whitespace-nowrap bg-blue-100/40 px-2 py-0.5 rounded-md border border-blue-200/30 shadow-sm leading-none flex items-center shrink-0">
+                                                                    {agenda.totalDias} {agenda.totalDias > 1 ? 'dias' : 'dia'}
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    
-                                                    {!isEventSpecial && (
-                                                        <span className="md:hidden text-[10px] font-black text-blue-700 whitespace-nowrap bg-blue-50/60 px-2 py-0.5 rounded-md border border-blue-100/40 shadow-sm leading-none flex items-center">
-                                                            {agenda.totalDias} dias
-                                                        </span>
-                                                    )}
                                                 </div>
                                                 {agenda.observacao && (
                                                     <div className={cn(
