@@ -2,8 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, SquarePen, Trash2, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { X, SquarePen, Trash2, User, Calendar as CalendarIcon, Clock, MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from '@/components/ui/input';
 import {
     Select,
@@ -697,13 +703,13 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                             id={`agendamento-${agenda.id}`}
                                             onClick={handleCardClick}
                                             className={cn(
-                                                "p-1 md:pt-3 md:pb-1.5 md:px-1.5 rounded-2xl border overflow-hidden bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
+                                                "p-1 pr-11 md:pr-1.5 md:pt-3 md:pb-1.5 md:px-2 rounded-2xl border overflow-hidden bg-gradient-to-br from-[#ebf4ff] via-[#f0f7ff] to-[#e1effe] hover:from-[#e1effe] hover:to-[#ebf4ff] transition-all duration-300 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.03),0_2px_4px_-2px_rgba(0,0,0,0.03),inset_0_1px_1px_rgba(255,255,255,0.8)] group relative cursor-pointer",
                                                 isSelected
                                                     ? "border-blue-500 ring-2 ring-blue-200 shadow-lg scale-[1.01] md:scale-[1.02]"
                                                     : "border-white/60 hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05),inset_0_2px_4px_rgba(255,255,255,1)]"
                                             )}
                                         >
-                                            <div className="grid grid-cols-[65px_1fr_52px_38px] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-1 items-center relative">
+                                            <div className="grid grid-cols-[65px_1fr_auto] md:grid-cols-[80px_1fr_auto_50px] grid-rows-[auto_auto_auto] gap-x-2 md:gap-x-3.5 gap-y-[4px] md:gap-y-1 items-center">
                                                 {/* COLUNA 1: USUÁRIO */}
                                                 <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center justify-center gap-1 md:gap-1.5 self-stretch my-0.5 -ml-1 md:ml-0">
                                                     <div className="w-[54px] h-[54px] md:w-[78px] md:h-[78px] md:-translate-y-1.5 rounded-xl overflow-hidden bg-slate-100 border-2 border-white shadow-sm shrink-0">
@@ -711,11 +717,11 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                             <img src={agenda.userPhoto} alt={agenda.userName} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-300">
-                                                                {isEventSpecial ? <span className="text-[1.8rem] md:text-[2.5rem] saturate-150 drop-shadow-sm">{emoji}</span> : <User className="w-4.5 h-4.5 md:w-[22px] md:h-[22px]" />}
+                                                                {isEventSpecial ? <span className="text-[1.8rem] md:text-[2.5rem] saturate-150 drop-shadow-sm">{emoji}</span> : <User className="size-7 md:size-10 text-blue-500/80" />}
                                                             </div>
                                                         )}
                                                     </div>
-                                                    <span className="text-[9px] md:text-[10px] md:-mt-1.5 font-bold text-slate-500 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
+                                                    <span className="text-[11px] md:text-[13.5px] md:-mt-1.5 font-bold text-slate-700/80 leading-tight text-center break-words max-w-[60px] md:max-w-[70px] uppercase">
                                                         {displayUserName}
                                                     </span>
                                                 </div>
@@ -727,19 +733,24 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className={cn(
-                                                    "col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0 mt-0.5",
-                                                    isEventSpecial ? "col-span-2" : ""
-                                                )}>
-                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">{isEventSpecial ? '📅' : '📋'}</span>
-                                                    <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "" : "whitespace-nowrap text-ellipsis")}>
-                                                        {renderPeriod()}
-                                                        {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
-                                                    </span>
+                                                <div className="col-start-2 col-span-2 md:col-span-1 row-start-2 flex items-center gap-x-3 gap-y-1 overflow-hidden -ml-1 md:ml-0 mt-1 md:mt-0.5 flex-wrap md:flex-nowrap">
+                                                    <div className="flex items-center gap-1.5 min-w-0">
+                                                        <span className="text-[14px] md:text-[14px] opacity-70 shrink-0 leading-none">{isEventSpecial ? '📅' : '📋'}</span>
+                                                        <span className={cn("text-[12.5px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 truncate")}>
+                                                            {renderPeriod()}
+                                                            {timeStr ? <span className="ml-[4px] md:ml-[6px] shrink-0 font-bold">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 ml-[2px]">🕗</span> {timeStr}</span> : null}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    {!isEventSpecial && (
+                                                        <span className="md:hidden text-[10px] font-black text-blue-700 whitespace-nowrap bg-blue-50/60 px-2 py-0.5 rounded-md border border-blue-100/40 shadow-sm leading-none flex items-center">
+                                                            {agenda.totalDias} dias
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 {agenda.observacao && (
                                                     <div className={cn(
-                                                        "col-start-2 col-span-2 row-start-3 italic text-[9.5px] text-slate-500 leading-tight py-0.5 pr-1 md:pr-2 break-words -ml-1 md:ml-0",
+                                                        "col-start-2 col-span-2 row-start-3 italic text-[9.5px] text-slate-500 leading-tight py-1 md:py-0.5 pr-1 md:pr-2 break-words -ml-1 md:ml-0 mt-1 md:mt-0",
                                                         isEventSpecial ? "md:text-[12px]" : "md:text-[10.5px]"
                                                     )}>
                                                         "{agenda.observacao}"
@@ -747,7 +758,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 )}
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
-                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5">
+                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5 mr-1 md:mr-0">
                                                     {!isEventSpecial && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
@@ -758,7 +769,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         );
                                                     })()}
                                                 </div>
-                                                <div className="col-start-3 row-start-2 justify-self-end flex items-center">
+                                                <div className="hidden md:flex col-start-3 row-start-2 justify-self-end items-center">
                                                     {!isEventSpecial && (
                                                         <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
                                                             {agenda.totalDias} dias
@@ -767,37 +778,83 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 </div>
 
                                                 {/* COLUNA 4: AÇÕES VERTICAL */}
+                                                {/* COLUNA 4: AÇÕES VERTICAL (DESKTOP) & DROPDOWN (MOBILE) */}
                                                 {profile && (agenda.userId === profile.id || profile.perfil === 'administrador') && agenda.userId !== 'system' && (
-                                                    <div className="col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                if (onEditRequest) {
-                                                                    onEditRequest(agenda);
-                                                                } else {
-                                                                    setModoEdicao(true);
-                                                                    setAgendamentoEditando(agenda);
-                                                                }
-                                                            }}
-                                                            className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
-                                                            title="Editar"
-                                                        >
-                                                            <SquarePen className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
-                                                        </button>
+                                                    <>
+                                                        {/* Menu Dropdown para Mobile */}
+                                                        <div className="md:hidden absolute top-1 right-1 z-50">
+                                                            <DropdownMenu>
+                                                                <DropdownMenuTrigger asChild>
+                                                                    <button 
+                                                                        onClick={(e) => e.stopPropagation()}
+                                                                        className="size-[36px] flex items-center justify-center rounded-full bg-black/5 text-[#222] hover:bg-black/10 transition-all outline-none shadow-sm"
+                                                                    >
+                                                                        <MoreVertical size={18} className="text-[#222]" />
+                                                                    </button>
+                                                                </DropdownMenuTrigger>
+                                                                <DropdownMenuContent align="end" className="w-36 rounded-xl shadow-xl border-slate-100 z-[400] bg-white p-1">
+                                                                    <DropdownMenuItem 
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            if (onEditRequest) {
+                                                                                onEditRequest(agenda);
+                                                                            } else {
+                                                                                setModoEdicao(true);
+                                                                                setAgendamentoEditando(agenda);
+                                                                            }
+                                                                        }}
+                                                                        className="flex items-center gap-3 font-bold text-slate-700 py-3 cursor-pointer rounded-lg hover:bg-slate-50 transition-colors"
+                                                                    >
+                                                                        <SquarePen size={17} className="text-blue-500" />
+                                                                        <span>Editar</span>
+                                                                    </DropdownMenuItem>
+                                                                    <div className="h-[1px] bg-slate-100 my-1 mx-1" />
+                                                                    <DropdownMenuItem 
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            setConfirmDeleteId(agenda.id);
+                                                                        }}
+                                                                        className="flex items-center gap-3 font-bold text-red-600 py-3 cursor-pointer rounded-lg hover:bg-red-50 focus:bg-red-50 focus:text-red-700 transition-colors"
+                                                                    >
+                                                                        <Trash2 size={17} className="text-red-500" />
+                                                                        <span>Excluir</span>
+                                                                    </DropdownMenuItem>
+                                                                </DropdownMenuContent>
+                                                            </DropdownMenu>
+                                                        </div>
 
-                                                        <div className="w-[60%] h-[1px] bg-blue-300/40 my-0.5 shadow-[0_1px_0_rgba(255,255,255,0.7)]" />
+                                                        {/* Barra Lateral para Desktop */}
+                                                        <div className="hidden md:flex col-start-4 row-start-1 row-span-3 self-stretch border-l border-blue-200/70 bg-gradient-to-b from-[#d9e7fa] to-[#c1d6f0] shadow-[inset_1px_0_2px_rgba(255,255,255,0.8),inset_-3px_-2px_6px_rgba(0,0,50,0.08)] -mt-1 -mb-1 -mr-1 md:-mt-3 md:-mb-1.5 md:-mr-1.5 flex flex-col items-center justify-center gap-0.5 md:gap-1 acoes rounded-r-2xl">
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    if (onEditRequest) {
+                                                                        onEditRequest(agenda);
+                                                                    } else {
+                                                                        setModoEdicao(true);
+                                                                        setAgendamentoEditando(agenda);
+                                                                    }
+                                                                }}
+                                                                className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-blue-600 hover:text-blue-800 hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
+                                                                title="Editar"
+                                                            >
+                                                                <SquarePen className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
+                                                            </button>
 
-                                                        <button
-                                                            onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                setConfirmDeleteId(agenda.id);
-                                                            }}
-                                                            className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-[#E53935] hover:text-[#C62828] hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
-                                                            title="Excluir"
-                                                        >
-                                                            <Trash2 className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
-                                                        </button>
-                                                    </div>
+                                                            <div className="w-[60%] h-[1px] bg-blue-300/40 my-0.5 shadow-[0_1px_0_rgba(255,255,255,0.7)]" />
+
+                                                            <button
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    setConfirmDeleteId(agenda.id);
+                                                                }}
+                                                                className="w-8 h-8 md:w-11 md:h-11 flex items-center justify-center rounded-full text-[#E53935] hover:text-[#C62828] hover:bg-white/60 hover:shadow-sm transition-all group/btn drop-shadow-sm"
+                                                                title="Excluir"
+                                                            >
+                                                                <Trash2 className="w-[18px] h-[18px] md:w-[22px] md:h-[22px] group-hover/btn:scale-110 transition-transform" />
+                                                            </button>
+                                                        </div>
+                                                    </>
                                                 )}
                                             </div>
                                         </div>
