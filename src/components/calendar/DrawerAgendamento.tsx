@@ -727,9 +727,12 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         {tipoNome}
                                                     </span>
                                                 </div>
-                                                <div className="col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0 mt-0.5">
-                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">📋</span>
-                                                    <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "whitespace-normal" : "whitespace-nowrap text-ellipsis")}>
+                                                <div className={cn(
+                                                    "col-start-2 row-start-2 flex items-center gap-1 md:gap-1.5 overflow-hidden -ml-1 md:ml-0 mt-0.5",
+                                                    isEventSpecial ? "col-span-2" : ""
+                                                )}>
+                                                    <span className="text-[13px] md:text-[14px] leading-none opacity-70 shrink-0">{isEventSpecial ? '📅' : '📋'}</span>
+                                                    <span className={cn("text-[12px] md:text-[clamp(13px,0.9vw,14px)] font-bold text-slate-700/80 flex items-center gap-x-1 flex-wrap md:flex-nowrap", isEventSpecial ? "" : "whitespace-nowrap text-ellipsis")}>
                                                         {renderPeriod()}
                                                         {timeStr ? <span className="ml-[2px] md:ml-[6px] inline-flex items-center gap-[3px] shrink-0">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 drop-shadow-sm ml-[2px]">🕗</span> {timeStr}</span> : null}
                                                     </span>

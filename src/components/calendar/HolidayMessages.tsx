@@ -35,7 +35,7 @@ const HolidayMessages: React.FC<HolidayMessagesProps> = ({ messages, highlighted
           <div className="flex items-center gap-2">
             <span className="text-lg md:text-xl drop-shadow-[1px_3px_4px_rgba(0,0,0,0.45)] filter saturate-[1.3] brightness-[1.1] select-none">📅</span>
             <h4 className="font-semibold text-white text-[14px] lg:text-[15px] uppercase tracking-[0.5px]">
-              Feriados e Eventos
+              Feriados e Datas
             </h4>
           </div>
 
