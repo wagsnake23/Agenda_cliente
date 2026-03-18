@@ -741,11 +741,6 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                                 {renderPeriod()}
                                                                 {timeStr ? <span className="ml-[4px] md:ml-[6px] shrink-0 font-bold">- <span className="text-[13px] md:text-[14px] leading-none saturate-150 ml-[2px]">🕗</span> {timeStr}</span> : null}
                                                             </span>
-                                                            {!isEventSpecial && (
-                                                                <span className="md:hidden text-[11px] font-black text-blue-700 whitespace-nowrap bg-blue-100/40 px-2 py-0.5 rounded-md border border-blue-200/30 shadow-sm leading-none flex items-center shrink-0">
-                                                                    {agenda.totalDias} {agenda.totalDias > 1 ? 'dias' : 'dia'}
-                                                                </span>
-                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -759,7 +754,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 )}
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
-                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5 mr-1 md:mr-0">
+                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5 mr-[-1px] md:mr-0">
                                                     {!isEventSpecial && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
@@ -770,10 +765,14 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                         );
                                                     })()}
                                                 </div>
-                                                <div className="hidden md:flex col-start-3 row-start-2 justify-self-end items-center">
+                                                <div className="flex col-start-3 row-start-2 justify-self-end items-center md:mr-0 mt-1 md:mt-0">
                                                     {!isEventSpecial && (
-                                                        <span className="text-[10px] md:text-[clamp(11.5px,0.85vw,12.5px)] font-black text-blue-700 whitespace-nowrap drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]">
-                                                            {agenda.totalDias} dias
+                                                        <span className={cn(
+                                                            "font-black text-[#1e40af] whitespace-nowrap leading-none flex items-center justify-center shrink-0 transition-all",
+                                                            "text-[10.5px] uppercase tracking-tight",
+                                                            "md:text-[clamp(11.5px,0.85vw,12.5px)] md:bg-transparent md:border-none md:shadow-none md:min-w-0 md:p-0"
+                                                        )}>
+                                                            {agenda.totalDias} {agenda.totalDias > 1 ? 'dias' : 'dia'}
                                                         </span>
                                                     )}
                                                 </div>
