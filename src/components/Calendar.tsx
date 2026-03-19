@@ -504,7 +504,7 @@ const Calendar = ({ month, year, onMonthChange, onYearChange, goToToday, formatT
         </div>
       </section>
 
-      <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
+       <div className="w-full max-w-[1600px] mx-auto px-0 md:p-4 relative md:mt-0 md:transition-transform md:duration-500 md:scale-[0.85] md:origin-top md:-mb-[7%]">
 
         <div className="flex flex-col gap-3 lg:block w-full">
           <div className="w-full relative overflow-visible pt-0 pb-0 md:pb-6 mt-1.5 lg:mt-0 lg:py-7">
