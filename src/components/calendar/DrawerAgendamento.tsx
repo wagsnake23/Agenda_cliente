@@ -754,7 +754,7 @@ const DrawerAgendamento: React.FC<DrawerAgendamentoProps> = ({
                                                 )}
 
                                                 {/* COLUNA 3: STATUS / DURAÇÃO */}
-                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5 mr-[-1px] md:mr-0">
+                                                <div className="col-start-3 row-start-1 justify-self-end py-0.5 mr-[-1px] md:mr-0 hidden md:block">
                                                     {!isEventSpecial && (() => {
                                                         const statusKey = (agenda.status || 'pendente').toLowerCase();
                                                         const style = STATUS_STYLES[statusKey] || STATUS_STYLES.pendente;
