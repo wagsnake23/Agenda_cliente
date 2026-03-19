@@ -35,9 +35,9 @@ export const getBackgroundByType = (type: string) => {
   switch (type) {
     case 'holiday':
       return {
-        bg: 'bg-gradient-to-b from-[#f08282] to-[#e45555]',
-        border: 'border-red-400/80',
-        text: 'text-white'
+        bg: 'bg-gradient-to-br from-[#fef2f2] to-[#fecaca]',
+        border: 'border-red-200/80',
+        text: 'text-[#991b1b]'
       };
     case 'event':
       return {
@@ -68,7 +68,7 @@ export const getColorForDateClean = (date: Date, eventColor: { bg: string; text:
 
   // Prioridade 2: Domingo
   if (isSunday) {
-    return { bg: 'bg-gradient-to-b from-[#f08282] to-[#e45555]', border: 'border-red-400/80', text: 'text-white' };
+    return { bg: 'bg-gradient-to-br from-[#fef2f2] to-[#fecaca]', border: 'border-red-200/80', text: 'text-[#991b1b]' };
   }
 
   // Prioridade 3: Sábado (Cinza gradiente)

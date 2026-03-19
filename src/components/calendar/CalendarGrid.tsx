@@ -80,7 +80,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
 
                 "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.05)]",
                 "bg-gradient-to-b from-[#e0f2fe] to-[#bae6fd]",
-                isSundayHeader ? "text-[#e45555]" : "text-[#1e3a8a]",
+                isSundayHeader ? "text-[#991b1b]" : "text-[#1e3a8a]",
                 isToday && "z-20"
               )}
             >
