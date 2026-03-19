@@ -72,14 +72,14 @@ const AuthPage: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-[#1e3a8a] via-[#111827] to-[#0b1221] flex items-center justify-center">
+            <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#312e81] flex items-center justify-center">
                 <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-white md:bg-[linear-gradient(135deg,#881337_0%,#4c0519_50%,#1a0208_100%)] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
+        <div className="min-h-screen bg-white md:bg-[linear-gradient(135deg,#0f172a_0%,#1e293b_50%,#312e81_100%)] flex flex-col items-center justify-center p-4 select-none relative overflow-hidden">
 
             {/* Logo lateral esquerda superior como botão link */}
             <div className="absolute top-6 left-6 z-[60]">
@@ -118,10 +118,25 @@ const AuthPage: React.FC = () => {
                             </span>
                         </h3>
 
-                        {/* Versão Mobile (Cor Sólida #ef4444 para combinar com Header Mobile) */}
-                        <h3 className="md:hidden flex font-black text-[1.05rem] tracking-wider uppercase whitespace-nowrap gap-1 text-[#ef4444] select-none">
-                            <span>CALENDÁRIO</span>
-                            <span>AGENDA</span>
+                        {/* Versão Mobile (Sincronizada com o estilo do Card) */}
+                        <h3 
+                            className="md:hidden flex font-black text-[1.05rem] uppercase tracking-wider items-center gap-1.5 select-none"
+                            style={{
+                                textShadow: '0 2px 10px rgba(0,0,0,0.15)'
+                            }}
+                        >
+                            <span className="text-[#ff1744] filter saturate-[1.3]">CALENDÁRIO</span>
+                            <span 
+                                style={{ 
+                                    background: 'linear-gradient(180deg, #1e3a8a 40%, #1e40af 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text',
+                                    color: 'transparent'
+                                }}
+                            >
+                                AGENDA
+                            </span>
                         </h3>
                     </div>
                 </button>
@@ -131,17 +146,25 @@ const AuthPage: React.FC = () => {
                 {/* Card de Login - No Mobile fundo branco direto, no Desktop com Card */}
                 <div className="bg-white md:bg-[#F8FAFC] md:rounded-[31px] md:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,1),inset_0_2px_10px_rgba(0,0,0,0.05)] overflow-hidden px-4 md:px-8 pt-3 md:pt-4 pb-6 md:pb-1 flex flex-col items-center md:border-[4px] md:border-white/60">
 
-                    {/* Logo Principal */}
-                    <img
-                        src="/logo.png"
-                        alt="Calendário"
-                        className="w-20 md:w-20 h-20 md:h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.3)] object-contain filter brightness-[1.1] mb-2 md:mb-1 transform hover:scale-105 transition-transform duration-500"
-                    />
+                    {/* Icone Superior (Cadeado no Mobile, Logo no Desktop) */}
+                    <div className="mb-4 md:mb-1 transform hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                        {/* Versão Desktop (Logo) */}
+                        <img
+                            src="/logo.png"
+                            alt="Calendário"
+                            className="hidden md:block w-20 h-20 drop-shadow-[0_10px_30px_rgba(37,99,235,0.3)] object-contain filter brightness-[1.1]"
+                        />
+                        {/* Versão Mobile (Cadeado Moderno) */}
+                        <div className="md:hidden w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 shadow-[0_4px_12px_rgba(0,0,0,0.08),inset_0_1px_1px_white] border border-slate-200/60 flex items-center justify-center">
+                            <span className="text-3xl filter drop-shadow-sm">🔐</span>
+                        </div>
+                    </div>
 
-                    {/* Títulos com Gradiente Premium - Refletindo o Estilo da Home */}
+                    {/* Títulos / Mensagem de Login */}
                     <div className="text-center mb-8 md:mb-6">
+                        {/* Versão Desktop (Branding) */}
                         <h1
-                            className="font-black text-[1.1rem] md:text-[1.5rem] uppercase tracking-wider flex flex-row items-center justify-center gap-2"
+                            className="hidden md:flex font-black md:text-[1.5rem] uppercase tracking-wider items-center justify-center gap-2"
                             style={{
                                 textShadow: '0 2px 10px rgba(0,0,0,0.15)'
                             }}
@@ -159,6 +182,13 @@ const AuthPage: React.FC = () => {
                                 AGENDA
                             </span>
                         </h1>
+
+                        {/* Versão Mobile (Mensagem Única) */}
+                        <div className="md:hidden flex flex-col items-center">
+                            <h2 className="text-[#1e3a8a] font-bold text-xl tracking-tight">
+                                Acesse sua conta
+                            </h2>
+                        </div>
                     </div>
 
                     {/* Formulário */}
