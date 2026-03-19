@@ -69,7 +69,8 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "rounded-[9px] md:rounded-[11px]",
                 "aspect-square md:aspect-auto",
                 "w-full md:h-[38px] lg:h-[48px]",
-                "py-1 relative overflow-hidden border border-blue-300/80 md:border-[0.5px] md:border-blue-300/70",
+                "py-1 relative overflow-hidden border border-blue-300/65 md:border-[0.5px] md:border-blue-300/55",
+                "bg-gradient-to-b from-[#f0f9ff] to-[#dbeafe]",
                 "saturate-[1.05]",
 
                 // Transição segura (somente cores e sombra)
@@ -79,7 +80,6 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                 "after:absolute after:inset-0 after:rounded-[9px] md:after:rounded-[11px] after:bg-gradient-to-b after:from-white/20 after:to-transparent after:pointer-events-none",
 
                 "shadow-[inset_0_1px_2px_rgba(255,255,255,0.9),inset_0_-1px_1px_rgba(0,0,0,0.05)]",
-                "bg-gradient-to-b from-[#e0f2fe] to-[#bae6fd]",
                 isSundayHeader ? "text-[#991b1b]" : "text-[#1e3a8a]",
                 isToday && "z-20"
               )}

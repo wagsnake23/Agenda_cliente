@@ -124,7 +124,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                 "relative group/card overflow-hidden"
             )}
             style={{
-                background: !isDesktopState ? 'linear-gradient(to bottom, #fcfcfc, #f1f5f9)' : 'white'
+                background: 'white'
             }}
         >
             {/* Brilho superior sutil */}
