@@ -224,8 +224,8 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             <div
                 className="relative p-0 md:px-4 md:pt-6 md:pb-4 md:mt-0 bg-transparent md:rounded-[20px] opacity-100 transition-colors duration-500 md:shadow-[inset_0_1px_3px_rgba(255,255,255,0.9),inset_0_-1px_2px_rgba(14,165,233,0.05)]"
                 style={{
-                    background: isDesktopState ? 'linear-gradient(to bottom, #f0f9ff, #e0f2fe)' : 'transparent',
-                    border: isDesktopState ? '0.5px solid rgba(14, 165, 233, 0.2)' : 'none'
+                    background: isDesktopState ? 'linear-gradient(to bottom, #f8fafc, #f1f5f9)' : 'transparent',
+                    border: isDesktopState ? '0.5px solid rgba(148, 163, 184, 0.2)' : 'none'
                 }}
             >
                 <CalendarGrid
@@ -240,6 +240,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                     month={month}
                     year={year}
                     selectedPeriod={selectedPeriod}
+                    isDesktop={isDesktopState}
                 />
 
                 {/* Botões de Ação Compactos - Mobile apenas */}
@@ -254,12 +255,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
                             "transition-all duration-300 cursor-pointer",
                             "h-[32px] px-3 rounded-[9px] flex items-center gap-1",
                             "bg-clip-padding saturate-[1.05] border border-black/[0.1]",
-                            "shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_4px_0_rgba(0,0,0,0.15),0_10px_20px_-5px_rgba(0,0,0,0.2)]",
-                            "active:translate-y-[2px] active:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_2px_0_rgba(0,0,0,0.15)] active:scale-[0.98]",
-                            todayColors.bg === 'bg-calendar-blue' && "bg-gradient-to-br from-[#3b82f6] to-[#1d4ed8] text-white",
-                            todayColors.bg === 'bg-calendar-green' && "bg-gradient-to-br from-[#2ecc71] to-[#27ae60] text-white",
-                            todayColors.bg === 'bg-calendar-yellow' && "bg-gradient-to-br from-[#fde047] to-[#f59e0b] text-[#1A1A1A]",
-                            "bg-[#FEE2E2] text-red-800 active:bg-red-200 border-red-300/45",
+                            "bg-gradient-to-b from-[#f0f9ff] to-[#e0f2fe] text-[#1e40af] border-blue-200/60",
+                            "shadow-[0_2px_0_rgba(0,0,0,0.06),0_4px_8px_rgba(0,0,0,0.1),inset_0_1.5px_1.5px_rgba(255,255,255,0.8)]",
+                            "active:translate-y-[1px] active:scale-[0.98] active:brightness-[0.98]",
                         )}
                     >
                         <span>{season.emoji} Hoje: {formatToday()}</span>

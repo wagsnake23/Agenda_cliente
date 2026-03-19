@@ -29,6 +29,7 @@ interface CalendarGridProps {
   month: number;
   year: number;
   selectedPeriod?: { start: string, end: string } | null;
+  isDesktop?: boolean;
 }
 
 const CalendarGrid: React.FC<CalendarGridProps> = ({
@@ -43,6 +44,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   month,
   year,
   selectedPeriod,
+  isDesktop = false,
 }) => {
 
   return (
